@@ -1,0 +1,60 @@
+<ol class="dd-list">
+    <%
+        var mitems = (items) ? items : [];
+        miindex = (index) ? index : 1;
+        mitems.forEach(function(mitem, indx){
+            var mitemlangs = (mitem.mitemlangs) ? mitem.mitemlangs : [];
+            var langids = mitem.objectlangs.split(",");
+            var milangs = langids.map(langid => {
+                var cmil = mitemlangs.find(mil => mil.langid==langid);
+                var name = (cmil) ? cmil.name : mitem.objecttitle;
+                return {id: langid, name: name};
+            })
+    %>
+            <li class="dd-item dd3-item" data-id="<%=mitem.id%>" data-oid="<%=mitem.objectid%>" data-type="<%=mitem.type%>" data-index="<%=miindex%>">
+                <div class="dd-handle dd3-handle">Drag</div>
+                <div class="dd3-content">
+                    <div class="collopse-wrap">
+                        <button class="btn-collapse collapsed" type="button" data-toggle="collapse" data-target="#menuCollapse<%=miindex%>" aria-expanded="false" aria-controls="menuCollapse<%=miindex%>"><%=mitem.objecttitle%></button>
+                        <div class="collapse" id="menuCollapse<%=miindex%>">
+                            <div class="card card-body">                
+                                <table class="table table-admin-menuitem">                
+                                    <tbody>
+                                        <%
+                                            milangs.forEach(mil => {
+                                                if(mil.id=="") return;
+                                        %>
+                                            <tr>
+                                                <td><%=mil.id%></td>
+                                                <td>
+                                                    <input class="milid<%=miindex%>" type="hidden" value="<%=mil.id%>">
+                                                    <input class="milname<%=miindex%>" type="text" value="<%=mil.name%>">
+                                                </td>
+                                            </tr>
+                                        <%
+                                            })
+                                        %>                                           
+                                    </tbody>
+                                </table>                
+                                <div class="text-right mb-3">
+                                    <button class="btn btn-sm btn-outline-danger btn-remove-menu-item">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+    <%
+            var children = (mitem.children) ? mitem.children : [];
+            if(children.length > 0){
+    %>
+                <%-include("menu-item-tree", { items: children, index: miindex + 1}) %>
+    <%
+            }else{
+                miindex++;
+            }            
+    %>
+            </li>
+    <%
+        })
+    %>    
+</ol>

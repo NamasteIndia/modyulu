@@ -1,0 +1,56 @@
+<% 
+    var post = (post) ? post : {};
+    var arrPC = [];
+    var pcategories = (post.categories) ? post.categories : [];
+    pcategories.forEach(item => {
+        arrPC.push(item.id);
+    });
+%>
+<% if(Object.keys(type.catetype).length > 0 && Object.keys(categories).length > 0){%>
+<% 
+    type.catetype.forEach(catetype => {
+%>
+        <div class="accordion accordion-ui ui-state-default mb-3" id="accordion<%=catetype.id%>">
+            <div class="card">
+                <div class="card-header" id="heading<%=catetype.id%>">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse<%=catetype.id%>" aria-expanded="true" aria-controls="collapse<%=catetype.id%>">
+                            <%=catetype.name%>
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapse<%=catetype.id%>" class="collapse show" aria-labelledby="heading<%=catetype.id%>" data-parent="#accordion<%=catetype.id%>">
+                    <div class="card-body">
+                    <%       
+                        if(catetype.cateitemtype=="hierarchy"){
+                    %>
+                            <%-include("box-post-category-tree", {cateRows: categories, listIDsInclude: arrPC, targetCatetype: catetype.id })%>
+                    <%
+                        }else{
+                            var select2Class = "select2CateAjax";
+                            var multiple = (catetype.cateitemtype=="single") ? "" : "multiple";
+                    %>
+                            <div class="form-group">
+                                <select name="categories[]" class="form-control form-select <%=select2Class%>" <%=multiple%> data-type="<%=catetype.id%>" data-slname="<%=catetype.name%>">
+                    <%
+                                pcategories.forEach(item =>{                                                                
+                                    if(catetype.id == item.catetype){
+                    %>
+                                        <option value="<%=item.id%>" selected><%=item.title%></option>
+                    <%
+                                    }
+                                })
+                    %>
+                                </select>
+                            </div>
+                    <%
+                        }
+                    %>
+                    </div>
+                </div>
+            </div>
+        </div>
+<% 
+    })
+}
+%>

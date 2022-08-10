@@ -1,0 +1,129 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>/user">User</a></li>
+                <li class="breadcrumb-item active" aria-current="page">List users</li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="datatable-search-header">
+                                <select id="slBulk">
+                                    <option value="">Bulk actions</option>
+                                    <option value="delete">Delete</option>
+                                </select>
+                                <button id="btnBulk" type="button" class="btn btn-primary">Apply</button>
+                                <div class="datatable-filter-holder">
+                                    <input class="item-filter" type="text" placeholder="Search">
+									<select class="item-filter">
+                                        <option value="%">All State</option>
+                                        <option value="on">Active</option>
+                                        <option value="off">None</option>
+                                    </select>
+                                    <select class="item-filter">
+                                        <option value="%">All Status</option>
+                                        <option value="on">Avaiable</option>
+                                        <option value="off">Block</option>
+                                    </select>
+                                    <button id="btnDTFileter" type="button" class="btn btn-primary">Filter</button>
+                                </div>
+                                <button class="btn btn-sm btn-outline-primary btn-load-modal-add">Add user</button>
+                            </div>
+                            <table id="datatable-sside" class="table table-bordered datatable-style" data-type="user">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" name="select_all" value="1" id="datatable-select-all"></th>
+                                        <th>Avatar</th>
+                                        <th>Username</th>
+                                        <th>Nickname</th>
+                                        <th>Role</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th class="text-center"><i class="fas fa-toggle-on" title="User Active"></i></th>
+                                        <th class="text-center"><i class="fas fa-power-off" title="User Block"></th>
+                                        <th class="text-right" style="max-width: 120px"><i class="fas fa-clock" title="Created at"></i></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Model -->
+    <div class="modal fade" id="frmModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><span id="frmTitleAction">Edit</span> User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <div class="error-modal-edit"></div>
+                    <form action="/<%=dashboard%>/user/edit" method="POST">
+                        <input type="hidden" name="id" id="id" autocomplete="off" required>
+                        <div class="form-group">
+                            <label for="username" class="col-form-label">Username</label>
+                            <input class="form-control" id="username" type="text" name="username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-form-label">Password</label>
+                            <input class="form-control" type="password" name="password" id="password" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="nickname" class="col-form-label">Nickname</label>
+                            <input class="form-control" type="text" name="nickname" id="nickname" placeholder="Nickname">
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="lastname" class="col-form-label">Lastname</label>
+                            <input class="form-control" type="text" name="lastname" id="lastname" placeholder="Lastname">
+                        </div> -->
+                        <div class="form-group">
+                            <label for="phone" class="col-form-label">Phone</label>
+                            <input class="form-control" type="text" name="phone" id="phone" placeholder="Phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-form-label">Email</label>
+                            <input class="form-control" type="text" name="email" id="email" placeholder="Email">
+                        </div>                        
+                        <% if(roles){%>
+                            <div class="form-group">
+                                <label for="role" class="col-form-label">Role</label>
+                                <select name="roleid" id="roleid" class="form-control">
+                                    <% roles.forEach(item => { %>
+                                        <option value="<%=item.id%>"><%=item.rolename%></option>
+                                    <% })%>
+                                </select>
+                            </div>
+                        <%}%>
+                        <div class="form-group">
+                            <div class="checkbox mr-5">
+                                <input class="form-check-input" type="checkbox" name="isactive" id="isactive" checked>
+                                <label class="form-check-label" for="isactive">Active</label>
+                            </div>
+                            <div class="checkbox">
+                                <input class="form-check-input" type="checkbox" name="isblock" id="isblock">
+                                <label class="form-check-label" for="isblock">Block</label>
+                            </div>
+                        </div>
+                        <div class="text-right mt-3">
+                            <button type="submit" class="btn btn-primary">Apply</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.user.js" charset="utf-8"></script>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.all.js" charset="utf-8"></script>
+    <%- include("./include/footer") %>

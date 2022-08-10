@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "username": "admin",
+  "password": "$2a$12$6Y7mDgUcZjkXHllgM7XfPulok8nshCg3FMlPKjkGhhhcHgm506glW",
+  "firstname": "Nguyễn",
+  "lastname": "Truyển",
+  "email": "truyennv888@gmail.com",
+  "phone": "0868959751",
+  "isblock": false,
+  "isactive": true,
+  "roleid": 1
+}

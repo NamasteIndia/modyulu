@@ -1,0 +1,19 @@
+<%
+    var page = (typeof page !== "undefined") ? page : {};
+    var pageContent = (page.pageContent) ? page.pageContent : {};
+%>
+<%- include("includes/header"); %>
+<main id="page-body">
+    <div class="container">
+        <%- page.breadcrumbs.html %>
+        <article class="page-single mb-50">
+            <div class="page-description">
+                <h1 class="page-title sbhTitle"><span><%=pageContent.title%></span></h1>
+            </div>
+            <div id="contentMakeToc" class="wrapcontent box-space">
+                <%-pageContent.content%>
+            </div>            
+        </article>
+    </div>
+</main>
+<%- include("includes/footer"); %>

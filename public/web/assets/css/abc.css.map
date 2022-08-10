@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACI,IADA,CACA,IAAI;AADR,IAAI,CAEA,IAAI,CAAA;EACA,KAAK,EAAE,GAAG;CACb",
+    "sources": [
+        "abc.scss"
+    ],
+    "names": [],
+    "file": "abc.css"
+}

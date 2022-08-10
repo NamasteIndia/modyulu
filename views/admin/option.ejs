@@ -1,0 +1,131 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item">
+                    <a href="/<%=dashboard%>">
+                        <i class="fas fa-home"></i> Dashboard
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Options</li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-right">
+                                <!-- <button class="btn btn-sm btn-primary px-4 btn-rounded mt-0 mb-3" data-toggle="modal" data-animation="bounce" data-target="#frmModal"><i class="fas fa-plus"></i> Add option</button> -->
+                            </div>
+                            <%
+                                if(options.length > 0){
+                            %>
+                                <form class="form-edit-page" action="/<%=dashboard%>/option/update" method="POST">
+                                    <div class="form-group-wrap" style="background: #f1f1f1; padding: 16px; border: 1px solid #ddd; margin-bottom: 20px; border-radius: 2px;">
+                                        <label>Thuộc tính dùng chung cho random text:</label>
+                                        <div><small>[appTitle],[appId], [appSize], [appCategory], [appDeveloper], [appDeveloperEmail], [appDeveloperAddress], [appDeveloperWebsite], [appInstall], [appRating], [appRatingCount], [appRateOneStar], [appRateTwoStar], [appRateThreeStar], [appRateFourStar], [appRateFiveStar], [appPrice], [appVersion], [appAndroidVersion], [appContentRating], [appReleaseDate], [appUpdateDate]</small></div>
+                                    </div>
+                                    <%
+                                        options.forEach(option =>{
+                                    %>
+                                        <div class="form-group-wrap">
+                                            <input type="hidden" name="key[]" value="<%=option.metakey%>">
+                                            <input type="hidden" name="type[]" value="<%=option.inputtype%>">
+                                    <%
+                                            switch(option.inputtype){
+                                                case 'checkbox':
+                                    %>
+                                                <div class="checkbox">
+                                                    <input class="metavalue" type="hidden" name="metavalue[]" value="<%=option.metavalue%>">
+                                                    <input class="form-check-input site-option-checkbox" type="checkbox" <%if(option.metavalue=='true' ){ %>checked<%}%>>
+                                                    <label class="form-check-label"><%=option.fieldlabel%></label>
+                                                </div>
+
+                                    <%
+                                                break;
+                                                case 'textarea':
+                                    %>
+                                                    <div class="form-group">
+                                                        <label for="<%=option.metakey%>"><%=option.fieldlabel%></label>
+                                                        <!-- <div><small><%=option.description%></small></div> -->
+                                                        <textarea class="form-control" name="metavalue[]" placeholder="<%=option.description%>"><%=option.metavalue%></textarea>
+                                                    </div>
+                                    <%
+                                                break;
+                                                default:
+                                    %>
+                                                        <div class="form-group">
+                                                            <label for="<%=option.metakey%>"><%=option.fieldlabel%></label>
+                                                            <!-- <div><small><%=option.description%></small></div> -->
+                                                            <input class="form-control" type="text" name="metavalue[]" value="<%=option.metavalue%>" placeholder="<%=option.description%>">
+                                                        </div>
+                                    <%
+                                                break;
+                                            }
+                                    %>
+                                        </div>
+                                    <%
+                                        });
+                                    %>
+                                    <div class="text-right">
+                                        <button class="btn btn-primary" type="submit">Save</button>
+                                    </div>
+                                </form>
+                            <%
+                                }
+                            %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Model Edit -->
+    <div class="modal fade" id="frmModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add option</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/<%=dashboard%>/option/add" method="POST">
+                        <div class="form-group">
+                            <label for="metakey" class="col-form-label">Key</label>
+                            <input class="form-control" type="text" name="metakey" placeholder="_meta_key" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="metavalue" class="col-form-label">Value</label>
+                            <input class="form-control" type="text" name="metavalue" placeholder="Value">
+                        </div>
+                        <div class="form-group">
+                            <label for="fieldlabel" class="col-form-label">Label</label>
+                            <input class="form-control" type="text" name="fieldlabel" placeholder="Label" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-form-label">Description</label>
+                            <textarea class="form-control" name="description" placeholder="Description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtype" class="col-form-label">Type</label>
+                            <select name="inputtype" class="form-control">
+                                <option value="input">Text</option>
+                                <option value="textarea">Long Text</option>
+                                <option value="checkbox">Checkbox</option>
+                            </select>
+                        </div>
+                        <div class="text-right mt-3">
+                            <button type="submit" class="btn btn-primary">Apply</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.all.js" charset="utf-8"></script>
+    <%- include("./include/footer") %>

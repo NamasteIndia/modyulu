@@ -1,0 +1,43 @@
+<% 
+    var className = (className)?className:"profile-comments";
+    var rows = (rows)? rows: [];
+    var curLang = (page.curLang) ? page.curLang : {};
+    if (rows.length) {
+%>
+<ul class="<%=className%>">
+    <% rows.forEach(comment => { %>
+        <%
+            let post = (comment.post) ? comment.post : {};
+            let cmtauthor = (comment.author) ? comment.author : {};
+            let postLink = (curLang.ismain) ? `/${post.slug}` : `/${curLang.id}/${post.slug}`;
+            postLink = (post.slug) ? `${postLink}.html#cmt-${comment.id}` : "javascript:void(0)";
+            let avatar = cmtauthor.avatar || "/assets/image/no-image-200.jpg";
+        %>
+        <li class="comment">
+            <div class="comment-holder">
+                <div class="cmt-thumbnail">
+                    <img src="<%=avatar%>" alt="<%=cmtauthor.nickname%>">
+                </div>
+                <div class="cmt-info-box">
+                    <div class="cib-header">
+                        <span class="author"><%-comment.name%></span>
+                        <span class="time"><% var cmtDate = functions.formart_datetime(comment.createdAt, "full");%><%-cmtDate%></span>
+                        <a class="btn-view-post" href="<%=postLink%>">
+                            <i class="tb-icon icon-chat"></i>
+                            <%
+                                if(comment.countchilds > 0){
+                                    %><span><%=comment.countchilds%></span><%
+                                }
+                            %>
+                        </a>
+                    </div>                  
+                    <div class="cib-body">
+                        <p><%=comment.content%></p>
+                    </div>
+                </div>
+            </div>
+            <%-include("comment-profile", {rows: comment.children, className: "profile-reply-comments"}) %>
+        </li>
+        <%  });  %>
+</ul>
+<%  }  %>

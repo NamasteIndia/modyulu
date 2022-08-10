@@ -1,0 +1,8 @@
+<%
+    var posts = (posts) ? posts : [];
+    posts.forEach(post => {
+%>
+        <div class="item"><%- include("apk", {post: post}); %></div>
+<%
+    });
+%>

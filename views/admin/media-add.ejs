@@ -1,0 +1,44 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item">
+                    <a href="/<%=dashboard%>">
+                        <i class="fas fa-home"></i> Dashboard
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/<%=dashboard%>/media">Media</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Upload</li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="um-wrapper">
+                                <input type="file" name="file" multiple="multiple">
+                                <div class="um-area">
+                                    <div class="um-title">
+                                        <p>Drop and drag files here</p>
+                                        <p>or</p>
+                                        <button>Choose files here</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-3 pb-3">
+                                <div>File size: <strong>10Mb</strong></div>
+                                <div>File type support: <strong>jpg</strong>, <strong>png</strong></div>
+                            </div>
+                            <div id="um-results" class="um-results"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/<%=dashboard%>/assets/libs/uploadmedia/uploadmedia.js"></script>
+    <%- include("./include/footer") %>

@@ -1,0 +1,314 @@
+<%
+    var page = (typeof page !== "undefined") ? page : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var apk = (page.pageContent) ? page.pageContent : {};
+    var apkMeta = (page.apkMeta) ? page.apkMeta : {};
+    var apkMod = (page.apkMod) ? page.apkMod : [];
+    var appTitle = apk.title;
+    appTitle += (!apkMeta.off_mod_text) ? modText : "";
+    appTitle += (!apkMeta.off_apk_text) ? apkText : "";
+    appTitle += ` ${apkMeta.version}`;
+    appTitle += (apkMeta.mod_text && apkMeta.mod_text.length>0) ? ` (${apkMeta.mod_text})` : "";
+    var author = (apk.Author) ? apk.Author : {};
+    var authorName = ( author.nickname ) ? author.nickname : `${author.firstname} ${author.lastname}`;
+    var thumb = (apk.icon) ? apk.icon : {};
+    var thumbnail = (thumb.urlicon) ? thumb.urlicon : `${domain}/assets/image/no-image.jpg`;
+    var lastUpdated = functions.formart_datetime(apk.modifiedat, "day");
+    var lastUpdatedSEO = functions.formart_datetime(apk.modifiedat, "seo");
+    var lastUpdatedText = functions.formart_timestamp_text(apk.modifiedat);
+    var _modText = (apkMeta.mod_text) ? apkMeta.mod_text : __('textNoMod');
+    var _lastModText = (apkMod.description) ? apkMod.description : __('textNoMod');
+    var category = (apk.defaultcate) ? apk.defaultcate : {};
+    var btnDownloadText =  `${__('downloadText')} ${apk.title} [${apkMeta.apk_size}]`;
+    var slugFromTitle = functions.convert_slug(apk.title);
+    var permalinkDownload = `${homeUrl}/download/${slugFromTitle}-${apk.id}`;
+    var apkYouLike = (page.apkYouLike && page.apkYouLike.rows) ? page.apkYouLike.rows : [];
+    var breadcrumbs = (page.breadcrumbs.html) ? page.breadcrumbs.html : '';
+    var tocDom = (page.toc) ? page.toc.join("") : "";
+    var tags = (page.tags) ? page.tags : [];
+%>
+<%- include("includes/header"); %>
+<main id="page-body">
+    <div class="container">
+        <div class="mb-20">
+            <%- breadcrumbs %>
+        </div>
+        <div class="page-single">
+            <article id="article">
+                <div class="page-description">
+                    <div class="entry-apk-rating box-space">
+                        <h1 class="page-title"><%=appTitle%></h1>
+                        <figure class="thumb">
+                            <img src="<%=thumbnail%>" alt="Icon <%=appTitle%>">
+                        </figure>
+                        <div class="info">
+							<%
+                                var ratingLines = (page.ratingLines) ? page.ratingLines : {};
+                                var ratingPoint = (ratingLines.point) ? ratingLines.point : 0;
+                                var ratingPercent = ratingPoint * 100 / 5;
+                            %>
+                            <div class="rating">
+                                <div class="box-stars">
+                                    <span class="score">★★★★★</span>
+                                    <span class="over" style="width: <%=ratingPercent%>%;">★★★★★</span>
+                                </div>
+                                <% if(ratingPoint>0){%>
+                                <div class="label">
+                                    <span class="ratingValue"><%=ratingPoint%></span>
+                                    <span>/5</span>
+                                </div>
+                                <%}%>
+                            </div>
+                            <div id="sendFeedback" class="relatorio">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+                                    <g transform="translate(-253.36 -221.36)">
+                                        <circle cx="7" cy="7" r="7" transform="translate(253.36 221.36)" fill="#707070"/>
+                                        <g transform="translate(259.288 224.072)">
+                                            <path d="M227.79,359.945a.9.9,0,1,1-.9-.9A.9.9,0,0,1,227.79,359.945Z" transform="translate(-226 -351.442)" fill="#fff"/>
+                                            <path d="M227.79,104.945v4.475a.9.9,0,0,1-1.79,0v-4.475a.9.9,0,0,1,1.79,0Z" transform="translate(-226 -104.05)" fill="#fff"/>
+                                        </g>
+                                    </g>
+                                </svg>
+                                <span><%=__("textRelatorio")%></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapcontent">
+                        <p><%-apk.description%></p>
+                    </div>
+                </div>
+                <%
+                    if(tocDom.length > 0){
+                %>
+                    <div class="entry-toc mb-20" id="toc">
+                        <div class="accordion tnvToc open">
+                            <div class="ahead">                               
+                                <span><%= __('textTableOfContent'); %></span>
+                                <svg class="toggle" xmlns="http://www.w3.org/2000/svg" width="16" height="9.887" viewBox="0 0 16 9.887">
+                                    <g  transform="translate(24 58.794) rotate(180)">
+                                        <g transform="translate(8 48.907)">
+                                            <path d="M14.113,48.907,8,55.02,1.887,48.907,0,50.794l8,8,8-8Z" transform="translate(0 -48.907)"/>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="abody" id="tocList"><%-tocDom%></div>
+                        </div>
+                    </div>
+                <%
+                    }
+                %>
+                <figure class="entry-app-info">
+                    <h2 class="sbhTitle box-space">
+                        <span class="bb-dark-2"><%=__('textInfoApkTitle')%> <%=apk.title%></span>
+                    </h2>
+                    <div class="table-res">
+                        <table class="apk-info-table box-space">
+                            <tbody>                                
+                                <tr>
+                                    <th><%=__('appInforName')%></th>
+                                    <td><%=apk.title%></td>
+                                </tr>
+                                <tr>                                    
+                                    <th><%=__('textUpdated')%></th>
+                                    <td><time datetime="<%=lastUpdatedSEO%>"><%=lastUpdatedText%></time></td>
+                                </tr>
+                                <%
+                                    var apkOs = (page.apkMeta.os) ? page.apkMeta.os : "4.3+";
+                                    apkOs = (apkOs.toLowerCase() =='vary') ? "4.3+" : apkOs;
+                                    apkOs = (apkOs.match(/\+$/g)!=null) ? apkOs : `${apkOs}+`;
+                                %>
+                                <tr>                                   
+                                    <th><%=__('appInforCompatibleWith')%></th>
+                                    <td>Android <%=apkOs%></td>
+                                </tr>
+                                <tr>                                   
+                                    <th><%=__('appInforLastVersion')%></th>
+                                    <td><%=page.apkMeta.version%></td>
+                                </tr>
+                                <tr>                                   
+                                    <th><%=__('appInforSize')%></th>
+                                    <td><%=apkMeta.apk_size%></td>
+                                </tr>                                
+                                <%
+                                    if(category){
+                                %>
+                                <tr>                                   
+                                    <th><%=__('appInforCategory')%></th>
+                                    <td><a href="<%=homeUrl%>/<%=category.fullslug%>"><%=category.title%></a></td>
+                                </tr>
+                                <% 
+                                    } 
+                                %>
+                                <%
+                                    var developer_name = (apkMeta.developer_name) ? apkMeta.developer_name : "";
+                                    var developer_slug = functions.convert_slug(developer_name);
+                                    if(developer_name.length>0){
+                                %>
+                                <tr>
+                                    <th><%=__('appInforDeveloper')%></th>
+                                    <td><a href="<%=homeUrl%>/developer/<%=developer_slug%>"><%=developer_name%></a></td>
+                                </tr>
+                                <% 
+                                    } 
+                                %>
+                                <tr>                                   
+                                    <th><%=__('appInforPrice')%></th>
+                                    <%
+                                        var priceTextTd = (apkMeta.pricetext == 0 || apkMeta.pricetext=="") ? "free" : apkMeta.pricetext;
+                                        priceTextTd = (priceTextTd.toLowerCase()==="free") ? __("textFree") : priceTextTd;
+                                    %>
+                                    <td><%=priceTextTd%></td>
+                                </tr>
+                                <%
+                                    if(apkMeta.package_name && apkMeta.playstore_url){
+                                %>
+                                <tr>                                   
+                                    <th><%=__('appInforPlayLink')%></th>
+                                    <td><a href="<%=apkMeta.playstore_url%>" rel="nofollow" target="_blank"><%=apkMeta.package_name%></a></td>
+                                </tr>
+                                <%
+                                    }
+                                %>                                
+                                <tr>                                   
+                                    <th><%=__('appInforMod')%></th>
+                                    <td><%=_modText%></td>
+                                </tr>                               
+                            </tbody>
+                        </table>
+                    </div>
+                </figure>
+                <div class="mb-20">
+                    <%- include("includes/ads-slot", {slot: 1, hasSpace: true}); %>
+                </div>
+                <div class="entry-download text-center mb-20">
+                    <a href="<%=permalinkDownload%>" class="btn btn-red btn-icon btn-download br-50" onclick="ga('send', 'event', 'Measure', 'Click', 'Download');">                        
+                        <svg class="icon"  xmlns="http://www.w3.org/2000/svg" width="37.307" height="24.871" viewBox="0 0 37.307 24.871">
+                            <g transform="translate(-6 -84.895)">
+                                <g transform="translate(6 84.895)">
+                                    <path d="M30.086,94.714a11.656,11.656,0,0,0-21.77-3.109,9.327,9.327,0,0,0,1.01,18.6H29.534a7.754,7.754,0,0,0,.552-15.49ZM18.653,107.1l-7.772-7.772h4.663V93.105h6.218v6.218h4.663Z" transform="translate(0 -85.333)" fill="#fff"/>
+                                </g>
+                            </g>
+                        </svg>                          
+                        <span><%=__("btnDownloadText")%></span>
+                    </a>                    
+                </div>
+                <div class="entry-mod mb-20">
+                    <div class="accordion open">
+                        <div class="ahead">                        
+                            <span><%=__('textModFeatures')%></span>
+                            <svg class="toggle" xmlns="http://www.w3.org/2000/svg" width="16" height="9.887" viewBox="0 0 16 9.887">
+                                <g  transform="translate(24 58.794) rotate(180)">
+                                    <g transform="translate(8 48.907)">
+                                        <path d="M14.113,48.907,8,55.02,1.887,48.907,0,50.794l8,8,8-8Z" transform="translate(0 -48.907)"/>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="abody wrapcontent"><%-_lastModText%></div>
+                    </div> 
+                </div>                               
+                <%                                
+                    if(page.screenshoots && page.screenshoots.length > 0){
+                %>                        
+                        <div class="entry-slide apk-slider box-space">
+                            <div class="apk-slider-holder">
+                <%
+                            page.screenshoots.forEach(function(ss, index){              
+                %>
+                                <img class="ss-item" src="<%=ss.url%>" alt="<%=appTitle%> <%=(index+1)%>">
+                <%
+                            })
+                %>
+                            </div>
+                        </div>
+                <%
+                    }
+                %>
+                <div class="entry-description mb-20">                                     
+                    <div id="contentMakeToc" class="wrapcontent"><%-apk.content%></div>
+                </div>
+                <%
+                    var faqs = (page.faqs) ? page.faqs : [];
+                    if(faqs.length > 0){
+                        var FAQTitle = `${__('textFAQTitle')} ${apk.title}`;
+                %>
+                        <div class="entry-faq">
+                            <h2 class="mb-10"><%=FAQTitle%></h2>
+                <%
+                        faqs.forEach(function(faq, indx){
+                            var classNameFaq = (indx > 0) ? '' : 'open';
+                            classNameFaq = '';
+                            
+                %>
+                            <%- include("includes/faq", {faq: faq, classNameFaq: classNameFaq}) %>
+                <%
+                        });
+                %>
+                        </div>
+                <%
+                    }
+                %>
+                <div class="mb-20">
+				    <%- include("includes/ads-slot", {slot: 2, hasSpace: true}); %>
+                </div>
+                <div class="entry-download text-center mb-20">
+                    <a href="<%=permalinkDownload%>" class="btn btn-red btn-icon btn-download br-50" onclick="ga('send', 'event', 'Measure', 'Click', 'Download');">
+                        <svg class="icon"  xmlns="http://www.w3.org/2000/svg" width="37.307" height="24.871" viewBox="0 0 37.307 24.871">
+                            <g transform="translate(-6 -84.895)">
+                                <g transform="translate(6 84.895)">
+                                    <path d="M30.086,94.714a11.656,11.656,0,0,0-21.77-3.109,9.327,9.327,0,0,0,1.01,18.6H29.534a7.754,7.754,0,0,0,.552-15.49ZM18.653,107.1l-7.772-7.772h4.663V93.105h6.218v6.218h4.663Z" transform="translate(0 -85.333)" fill="#fff"/>
+                                </g>
+                            </g>
+                        </svg>
+                        <span><%=btnDownloadText%></span>
+                    </a>
+                </div>
+                <!--Entry Tags-->
+                <%
+                    if(tags.length>0){
+                %>
+                        <div class="entry-tags list-tags mb-20">
+                            <span class="tags-title"><%=__('textTags')%></span>
+                <%
+                            tags.forEach(tag => {
+                                let tagPermalink = `${homeUrl}/tag/${tag.slug}/`;
+                %>
+                                <a class="tag" href="<%=tagPermalink%>" title="<%=tag.title%>"><%=tag.title%></a>
+                <%
+                            })
+                %>
+                        </div>
+                <%
+                    }
+                %>
+            </article>
+            <%
+                if(page.apkYouLike.count > 0){
+            %>
+                    <div class="entry-related mb-30">
+                        <div class="sbhTitle">
+                            <%
+                                var sbSimilarTitle = (breadcrumbs.match(/\/apps/g)!=null)?__('textDiscoverMoreInterestingApps'):__('textDiscoverMoreInterestingGames');
+                            %>
+                            <span class="bb-dark-2"><%=sbSimilarTitle%></span>
+                        </div>
+                        <div class="box-related">
+                            <ul class="apks w3">
+                                <%- include("includes/list-apk2", {posts: apkYouLike}); %>
+                            </ul>
+                        </div>
+                    </div>
+            <%
+                }
+            %>
+            <div class="entry-comment">
+                <div class="sbhTitle box-space">
+                    <span class="bb-dark-2"><%= __("textShareYourThoughts"); %></span>
+                </div>                
+                <%- include("includes/comment-box"); %>
+            </div>            
+        </div>
+    </div>
+</main>
+<%- include("includes/footer"); %>

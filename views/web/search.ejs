@@ -1,0 +1,33 @@
+<%
+    var page = (typeof page !== "undefined") ? page : {};
+    var pageContent = (page.pageContent) ? page.pageContent : {};
+    var apks = page.postSearch.rows || [];
+    var maxPage = page.postSearch.maxPage;
+%>
+<%- include("includes/header"); %>
+<main id="page-body">
+    <div class="container">
+        <div id="breadcrumb" class="breadcumb">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><span><%=pageContent.title%></span></li>
+            </ul>
+        </div>
+        <h1 class="page-title text-center mb-20"><%=pageContent.title%></h1>
+        <%
+            if(apks.length > 0){
+        %>
+                <ul class="blogs w3">
+                    <%- include("includes/list-search", {posts: apks}); %>
+                </ul>
+                <div class="pagination mb-50"><ul><%-page.pagination%></ul></div>
+        <%
+            }else{
+        %>
+                <p class="mb-50"><%=__('msgEmptySearch')%></p>
+        <%
+            }
+        %>
+    </div>
+</main>
+<%- include("includes/footer"); %>

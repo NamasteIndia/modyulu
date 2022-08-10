@@ -1,0 +1,76 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>/post/<%=type.id%>"><%=type.name%></a></li>
+                <li class="breadcrumb-item active" aria-current="page">List <%=type.name%></li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="datatable-search-header">
+                                <select id="slBulk">
+                                    <option value="">Bulk actions</option>
+                                    <option value="trash">Trash</option>                                                                 
+                                    <option value="delete">Delete</option>                                                                 
+                                </select>
+                                <button id="btnBulk" type="button" class="btn btn-primary">Apply</button>
+                                <div class="datatable-filter-holder">
+                                    <input class="item-filter" type="text" placeholder="Search">
+                                    <input class="item-filter" type="hidden" value="%">
+                                    <select class="item-filter">
+                                        <option value="%">All Ads</option>
+                                        <% if(adss){%>                                    
+                                            <% adss.forEach(item => { %>
+                                                <option value="<%=item.id%>"><%=item.name%></option>
+                                            <% }) %>
+                                        <%}%>
+                                    </select>
+                                    <select class="item-filter">
+                                        <option value="%">Ads All</option>
+                                        <option value="on">On</option>
+                                        <option value="off">Off</option>
+                                    </select>
+                                    <select class="item-filter item-trash">
+                                        <option value="%">All posts</option>
+                                        <option value="published">Published</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="trash">Trash</option>
+                                    </select>
+                                    <button id="btnDTFileter" type="button" class="btn btn-primary">Filter</button>
+                                </div>
+                                <a href="/<%=dashboard%>/post/<%=posttype%>/add" class="btn btn-sm btn-outline-primary">Add new</a>
+                            </div>
+                            <table id="datatable-sside" class="table table-bordered datatable-style" data-type="post/<%=posttype%>">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" name="select_all" value="1" id="datatable-select-all"></th>
+                                        <th style="max-width: 185px">Title</th>
+                                        <th>Author</th>
+                                        <th>Ads</th>
+                                        <th class="text-center"><i class="fas fa-money-bill-alt" title="Check Ads"></i></th>
+                                        <th class="text-center"><i class="fas fa-globe-americas" title="All languages"></i></th>
+                                        <th class="text-center"><i class="fas fa-capsules" title="Allow Follow"></th>
+                                        <th class="text-center"><i class="fas fa-boxes" title="Allow Index"></th>
+                                        <th class="text-center"><i class="fas fa-power-off" title="Rigntone Category status"></th>                                        
+                                        <th class="text-right" style="max-width: 120px"><i class="fas fa-clock" title="Last modified at"></i></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var posttype = "<%=posttype%>";
+    </script>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.postringtone.js" charset="utf-8"></script>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.all.js" charset="utf-8"></script>
+    <%- include("./include/footer") %>

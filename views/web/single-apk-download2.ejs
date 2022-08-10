@@ -1,0 +1,77 @@
+<%
+    var page = (typeof page !== "undefined") ? page : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var apk = (page.apk) ? page.apk : {};
+    var pageContent = (page.pageContent) ? page.pageContent : {};
+    var linkdownload = (page.linkdownload) ? page.linkdownload : {};
+    var pageTitle = `${__('downloadText')} ${apk.title}`;
+    var pageFQA = pageContent.content;
+    var linkTitle = (linkdownload.title) ? linkdownload.title : "";
+    linkTitle = (!linkdownload.original) ? `${linkTitle} [${linkdownload.size}]` : linkTitle;
+    var thumb = (apk.icon) ? apk.icon : {};
+    var thumbnail = (thumb.urlicon) ? thumb.urlicon : `${domain}/assets/image/no-image.jpg`;
+    var file = (linkdownload.link) ? linkdownload.link : "";
+    var postUrl = (apk.slug) ? `${homeUrl}/${apk.slug}/` : domain;
+%>
+<%- include("includes/header", {adspagename: "pagedownload"}); %>
+<main id="page-body">
+    <div class="container">
+        <div class="mb-30">
+            <%- page.breadcrumbs.html %>
+        </div>
+        <article class="page-single">
+            <div class="apk-download wrapcontent text-center">
+                <div class="entry-thumb mb-20">
+                    <figure>
+                        <img src="<%=thumbnail%>" alt="<%-apk.title%>">
+                    </figure>
+                </div>
+                <h1 class="page-title"><%=pageTitle%></h1>
+                <%- include("includes/ads-slot", {slot: 1, hasSpace: true}); %>
+                <p><%=linkTitle%></p>
+                <div id="pageDownload2WrapButton" class="entry-download mb-20">
+                    <a href="javascript:void(0)" class="btn btn-red btn-icon btn-download btn-download2 br-50">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="37.307" height="24.871" viewBox="0 0 37.307 24.871">
+                            <g transform="translate(-6 -84.895)">
+                              <g transform="translate(6 84.895)">
+                                <path d="M30.086,94.714a11.656,11.656,0,0,0-21.77-3.109,9.327,9.327,0,0,0,1.01,18.6H29.534a7.754,7.754,0,0,0,.552-15.49ZM18.653,107.1l-7.772-7.772h4.663V93.105h6.218v6.218h4.663Z" transform="translate(0 -85.333)" fill="#fff"/>
+                              </g>
+                            </g>
+                        </svg>                          
+                        <span><%=__('textStartDownload')%></span>
+                    </a>
+                    <span class="counter">5</span>
+                </div>
+                <p><%=__('pageDownloadText31')%>, <a href="#" id="downloadHere" rel="nofollow" target="_blank"><%=__('clickHere')%></a></p>
+            </div>
+            <div class="entry-faq-download2 mb-30">
+                <div class="head-title-2 mb-10"><%=__("textDownloadFAQ")%></div>
+                <%-pageFQA%>
+            </div>            
+            <div class="text-center mb-50">
+                <a href="<%=postUrl%>" class="btn br-50 btn-backtopost">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10.717" height="11.038" viewBox="0 0 10.717 11.038">
+                        <g transform="matrix(-0.999, -0.035, 0.035, -0.999, 105.305, 270.226)">
+                          <g transform="translate(103.949 255.717)">
+                            <g transform="translate(3.883)">
+                              <g transform="translate(0)">
+                                <path d="M200.408,5.048,194.584,0l-.509.587,5.486,4.754L194.075,10.1l.509.587,5.824-5.048a.389.389,0,0,0,0-.587Z" transform="translate(-194.075)"/>
+                              </g>
+                            </g>
+                            <g transform="translate(0)">
+                              <g transform="translate(0)">
+                                <path d="M14.307,5.048,8.483,0,7.974.587,13.46,5.341,7.974,10.1l.509.587,5.824-5.048a.389.389,0,0,0,0-.587Z" transform="translate(-7.974)"/>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                    </svg>
+                    <%=__("textGoToPost");%>
+                </a>
+            </div>
+        </article>
+    </div>
+</main>
+<script>var counter=5,interval=setInterval(function(){var e=document.getElementById("pageDownload2WrapButton");e.getElementsByClassName("counter")[0].innerHTML=counter,counter<=0&&(clearInterval(interval),e.getElementsByTagName("a")[0].href="<%=file%>",document.getElementById("downloadHere").href = "<%=file%>",e.classList.add("done")),counter--},1e3);</script>
+
+<%- include("includes/footer"); %>

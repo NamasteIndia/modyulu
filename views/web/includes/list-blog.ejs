@@ -1,0 +1,9 @@
+<%
+    var posts = (posts) ? posts : [];
+    posts.forEach(p => {
+        var post = functions.postMaping(p) || post;
+%>
+        <li><%- include("blog", {post: post}); %></li>
+<%
+    });
+%>

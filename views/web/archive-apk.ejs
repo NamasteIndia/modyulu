@@ -1,0 +1,48 @@
+<%
+    var page = (typeof page !== "undefined") ? page : {};
+    var pageContent = (page.pageContent) ? page.pageContent : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var curUrl = `${homeUrl}/${page.pageContent.fullslug}`;
+    var apks = (page.apkNewUpdate && page.apkNewUpdate.rows) ? page.apkNewUpdate.rows : [];
+    var sort = (page.sort) ? page.sort : "updated";
+    var categories = (page.catesSidebar) ? page.catesSidebar : [];
+%>
+<%- include("includes/header"); %>
+<main id="page-body">
+    <div class="container">
+        <%- page.breadcrumbs.html %>
+        <div class="page-description mb-30">
+            <h1 class="page-title sbhTitle"><span><%- pageContent.title %></span></h1>
+            <div class="wrapcontent">
+                <%- pageContent.description %>
+            </div>
+        </div>
+        <div class="list-holder">
+            <ul class="sort-controls">
+                <li>
+                    <a id="btn-sc-category" href="javascript:void(0)" rel="nofollow"><%= __("sbCateTitle"); %></a>
+                </li>
+                <li class="<%= (sort=='updated') ? 'active' : '' %>">
+                    <a href="<%=curUrl%>/" rel="nofollow"><%=__("textRecentlyUpdated");%></a>
+                </li>
+                <li class="<%= (sort=='new') ? 'active' : '' %>">
+                    <a href="<%=curUrl%>/?sort=new" rel="nofollow"><%=__("textNewReleases");%></a>
+                </li>
+                <li class="<%= (sort=='popular') ? 'active' : '' %>">
+                    <a href="<%=curUrl%>/?sort=popular" rel="nofollow"><%=__("textPopular");%></a>
+                </li>                
+            </ul>
+            <div class="box-categories box-space">
+                <%- include("includes/list-category", {categories: categories}); %>
+            </div>
+            <ul class="apks w3 apkincategories box-space">
+                <%- include("includes/list-apk2", {posts: apks}); %>
+            </ul>
+            <div class="pagination box-space"><ul><%-page.pagination%></ul></div>
+            <div class="mb-50">
+                <%- include("includes/ads-slot", {slot: 1}); %>
+            </div>
+        </div>        
+    </div>
+</main>
+<%- include("includes/footer"); %>

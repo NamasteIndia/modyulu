@@ -1,0 +1,86 @@
+[
+  {
+    "id": "category-apk",
+    "name": "Categories",
+    "description": "Categories of Apk",
+    "type": "category",
+    "allowindex": true,
+    "allowfollow": true,
+    "cateitemtype": "hierarchy",
+    "roottext": "",
+    "exttext": "",
+    "hassitemap": true
+  },
+  {
+    "id": "developer-apk",
+    "name": "Developer",
+    "description": "Developer of Apk",
+    "type": "category",
+    "allowindex": false,
+    "allowfollow": false,
+    "cateitemtype": "single",
+    "roottext": "developer",
+    "exttext": "",
+    "hassitemap": false
+  },
+  {
+    "id": "category-blog",
+    "name": "Categories",
+    "description": "Categories of How to",
+    "type": "category",
+    "allowindex": true,
+    "allowfollow": true,
+    "cateitemtype": "hierarchy",
+    "roottext": "",
+    "exttext": "",
+    "hassitemap": true
+  },
+  {
+    "id": "tags",
+    "name": "Tags",
+    "description": "Tags for Apk and Post",
+    "type": "category",
+    "allowindex": true,
+    "allowfollow": true,
+    "cateitemtype": "multiple",
+    "roottext": "tag",
+    "exttext": "",
+    "hassitemap": true
+  },
+  {
+    "id": "post-apk",
+    "name": "Apk",
+    "description": "App and Game for Android",
+    "type": "post",
+    "allowindex": true,
+    "allowfollow": true,
+    "roottext": "",
+    "exttext": ".html",
+    "hassitemap": true,
+    "catetype": ["category-apk", "developer-apk", "tags"]
+  },
+  {
+    "id": "post-ringstone",
+    "name": "Ringtones",
+    "description": "Mp3 ringtones",
+    "type": "post"
+  },
+  {
+    "id": "post-blog",
+    "name": "Blog",
+    "description": "How to articles",
+    "type": "post",
+    "allowindex": true,
+    "allowfollow": true,
+    "roottext": "",
+    "exttext": ".html",
+    "hassitemap": true,
+    "catetype": ["category-blog", "tags"]
+  },
+  {
+    "id": "post-page",
+    "name": "Page",
+    "description": "Page single",
+    "type": "post"
+  }
+]

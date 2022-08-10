@@ -1,0 +1,42 @@
+<%
+    var page = (typeof page !== "undefined") ? page : {};
+    var pageContent = (page.pageContent) ? page.pageContent : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var curUrl = `${homeUrl}/${page.pageContent.fullslug}`;
+    var apks = (page.apkNewUpdate && page.apkNewUpdate.rows) ? page.apkNewUpdate.rows : [];
+%>
+<%- include("includes/header"); %>
+<main id="page-body">
+    <div class="container">
+        <%- page.breadcrumbs.html %>
+        <div class="page-description">
+            <h1 class="page-title sbhTitle"><span><%- pageContent.title %></span></h1>
+            <div class="wrapcontent">
+                <%- pageContent.description %>
+            </div>
+        </div>
+        <div class="list-holder">
+            <ul class="postsInTag box-space">
+            <%
+                apks.forEach(apk => {
+                    let appTitle = (apk.title) ? apk.title : "";
+                    let appSEOTitle = (apk.seotitle) ? apk.seotitle : "";
+                    let permalink = `${homeUrl}/${apk.slug}/`;
+                    if(apk.posttype=='post-apk'){
+                        appTitle += (apk.apk && !apk.apk.off_mod_text) ? modText : "";
+                        appTitle += (apk.apk && !apk.apk.off_apk_text) ? apkText : "";
+                    }
+            %>
+                    <li><a href="<%=permalink%>" title="<%=appTitle%>"><%=appTitle%></a> - <span><%=appSEOTitle%></span></li>
+            <%                    
+                });
+            %>
+            </ul>
+            <div class="pagination box-space"><ul><%-page.pagination%></ul></div>
+            <div class="mb-50">
+                <%- include("includes/ads-slot", {slot: 1}); %>
+            </div>
+        </div>        
+    </div>
+</main>
+<%- include("includes/footer"); %>

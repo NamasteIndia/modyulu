@@ -1,0 +1,83 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>/post/<%=type.id%>"><%=type.name%></a></li>
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>/post/<%=type.id%>/edit/<%=post.id%>"><%=post.title%></a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%=language.name%></li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="accordion mb-3" id="accordionMainPost">
+                        <div class="card">
+                            <div class="card-header" id="headingMainPost">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseMainPost" aria-expanded="false" aria-controls="collapseMainPost">
+                                        <img src="/<%=dashboard%>/assets/img/flags/<%=language.id%>.png" alt="<%=language.name%>"> <%=language.name%>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseMainPost" class="collapse show" aria-labelledby="headingMainPost" data-parent="#accordionMainPost">
+                                <div class="card-body">
+                                    <form class="form-redirect" action="/<%=dashboard%>/post/<%=type.id%>/lang/add" method="POST">
+                                        <div class="form-group">
+                                            <%
+                                                var html = (post.posttype == "post-page") ? "" : ".html";
+                                            %>
+                                            <a target="_blank" href="<%=domain%>/<%=language.id%>/<%=post.slug%><%=html%>">Xem bài viết</a>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title">Tittle</label>
+                                            <input type="hidden" name="postid" value="<%=post.id%>">
+                                            <input type="hidden" name="langid" value="<%=language.id%>">
+                                            <input type="text" class="form-control" name="title" placeholder="Tittle" value="<%=post.title%>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <textarea class="form-control" name="description" placeholder="Description"><%=post.description%></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="content">Content</label>
+                                            <textarea class="form-control tinymce" name="content" placeholder="Content"><%=post.content%></textarea>
+                                        </div>
+                                        <div class="form-group seo-progress-bar">
+                                            <label for="seotitle">SEO Title</label>
+                                            <input type="text" class="form-control seo-progress-text" name="seotitle" placeholder="SEO Title" value="<%=post.seotitle%>">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuegood="40" aria-valuemin="0" aria-valuemax="65"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group seo-progress-bar">
+                                            <label for="seodescription">SEO Description</label>
+                                            <textarea class="form-control seo-progress-text" name="seodescription" placeholder="SEO Description"><%=post.seodescription%></textarea>
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuegood="125" aria-valuemin="0" aria-valuemax="155"></div>
+                                            </div>
+                                        </div>
+                                        <div class="checkbox mr-5">
+                                            <input class="form-check-input" type="checkbox" name="offadslang">
+                                            <label class="form-check-label" for="offadslang">Tắt Ads trang <%=language.name%></label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <input class="form-check-input" type="checkbox" name="offadsdownload">
+                                            <label class="form-check-label" for="offadsdownload">Tắt Ads trang download <%=language.name%></label>
+                                        </div>
+                                        <div class="form-group text-right">
+                                            <button class="btn btn-primary" type="submit">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/<%=dashboard%>/assets/libs/tinymce/tinymce.min.js"></script>
+    <script src="/<%=dashboard%>/assets/js/tiny.js"></script>
+    <%- include("./include/footer") %>

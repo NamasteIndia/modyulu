@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "slug": "uncategorized",
+    "fullslug": "uncategorized",
+    "title": "Uncategorized",
+    "seotitle": "Uncategorized",
+    "description": "",
+    "seodescription": "",
+    "catetype": "uncategorized",
+    "catestatus": "published",
+    "author": 1
+  },
+  {
+    "id": 2,
+    "slug": "games",
+    "fullslug": "games",
+    "title": "Games",
+    "seotitle": "Games",
+    "description": "",
+    "seodescription": "",
+    "catetype": "category-apk",
+    "catestatus": "published",
+    "author": 1
+  },
+  {
+    "id": 3,
+    "slug": "apps",
+    "fullslug": "apps",
+    "title": "Apps",
+    "seotitle": "apps",
+    "description": "",
+    "seodescription": "",
+    "catetype": "category-apk",
+    "catestatus": "published",
+    "author": 1
+  }
+]

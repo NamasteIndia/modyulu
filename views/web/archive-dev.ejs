@@ -1,0 +1,31 @@
+<%
+    var page = (typeof page !== "undefined") ? page : {};
+    var pageContent = (page.pageContent) ? page.pageContent : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var curUrl = `${homeUrl}/${page.pageContent.fullslug}`;
+    var apks = (page.apkNewUpdate && page.apkNewUpdate.rows) ? page.apkNewUpdate.rows : [];
+    var sort = (page.sort) ? page.sort : "updated";
+    var categories = (page.catesSidebar) ? page.catesSidebar : [];
+%>
+<%- include("includes/header"); %>
+<main id="page-body">
+    <div class="container">
+        <%- page.breadcrumbs.html %>
+        <div class="page-description">
+            <h1 class="page-title sbhTitle"><span><%- pageContent.title %></span></h1>
+            <div class="wrapcontent">
+                <%- pageContent.description %>
+            </div>
+        </div>
+        <div class="list-holder">            
+            <ul class="apks w3 apkincategories box-space">
+                <%- include("includes/list-apk2", {posts: apks}); %>
+            </ul>
+            <div class="pagination box-space"><ul><%-page.pagination%></ul></div>
+            <div class="mb-50">
+                <%- include("includes/ads-slot", {slot: 1}); %>
+            </div>
+        </div>        
+    </div>
+</main>
+<%- include("includes/footer"); %>

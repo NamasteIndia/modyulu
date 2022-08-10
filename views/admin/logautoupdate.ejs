@@ -1,0 +1,69 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item">
+                    <a href="/<%=dashboard%>">
+                        <i class="fas fa-home"></i> Dashboard
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/<%=dashboard%>/logautoupdate">
+                        Log Auto Update
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    List Log
+                </li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="datatable-search-header">                               
+                                <div class="datatable-filter-holder">
+                                    <input class="item-filter datepicker" type="text" placeholder="Form Date">
+                                    <input class="item-filter datepicker" type="text" placeholder="To Date">
+                                    <input class="item-filter" type="text" placeholder="Search">
+                                    <select class="item-filter">
+                                        <option value="%">All</option>
+                                        <option value="success">Success</option>
+                                        <option value="error">Error</option>
+                                    </select>
+                                    <button id="btnDTFileter" type="button" class="btn btn-primary">Filter</button>
+                                </div>
+                            </div> 
+                            <table id="datatable-sside" class="table table-bordered datatable-style" data-type="logautoupdate">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>App Name</th>
+                                        <th>Version</th>
+                                        <th>SEO Title</th>
+                                        <th>Message</th>
+                                        <th>Note</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/<%=dashboard%>/assets/libs/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.logautoupdate.js" charset="utf-8"></script>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.all.js" charset="utf-8"></script>
+    <script>
+        $(function(){
+            $( ".datepicker" ).datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dateFormat: "dd/mm/yy"
+            });
+        })
+    </script>
+    <%- include("./include/footer") %>

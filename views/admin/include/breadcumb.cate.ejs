@@ -1,0 +1,31 @@
+<li class="breadcrumb-item">
+    <a href="#">
+        <i class="fas fa-home"></i> Dashboard
+    </a>
+</li>
+<% 
+        if(catetype=='catetype-apk'){
+    %>
+    <li class="breadcrumb-item"><a href="#">Apk</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Categories</li>
+    <%
+        }
+        if(catetype=='developer-apk'){
+    %>
+        <li class="breadcrumb-item"><a href="#">Apk</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Developers</li>
+        <%
+        }
+        if(catetype=='catetype-blog'){
+            %>
+            <li class="breadcrumb-item"><a href="#">Blog</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Categories</li>
+            <%
+                }
+                if(catetype=='tag-blog'){
+                    %>
+                <li class="breadcrumb-item"><a href="#">Blog</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tags</li>
+                <%
+                        }
+                    %>

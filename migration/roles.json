@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "rolename": "Administrator",
+    "description": "Full privileges",
+    "ismaster": true
+  },
+  {
+    "id": 2,
+    "rolename": "Manager"
+  },
+  {
+    "id": 3,
+    "rolename": "Editor"
+  },
+  {
+    "id": 4,
+    "rolename": "Author Content"
+  },
+  {
+    "id": 5,
+    "rolename": "Author View"
+  },
+  {
+    "id": 6,
+    "rolename": "Edit redirect"
+  }
+]

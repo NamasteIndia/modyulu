@@ -1,0 +1,77 @@
+{
+  "app": {
+    "siteName": "Happymod.com",
+    "siteSlug": "happymod",
+    "apkText": " Apk",
+    "modText": " Mod",
+    "gameSlug": "games",
+    "gameId": 2,
+    "appSlug": "apps",
+    "appId": 3,
+    "langLeech": "",
+    "langLeechDescription": "Khac en langLeech = ?lang=pt"
+  },
+  "server": {
+    "port": 80,
+    "domain": "http://localhost",
+    "dashboard": "admin",
+    "secret": "hm-secret-keyznfe"
+  },
+  "database": {
+    "host": "localhost",
+    "database": "testdb",
+    "username": "root",
+    "password": "123",
+    "dialect": "mysql",
+    "logging": false,
+    "force": false,
+    "alter": false,
+    "pool": {
+      "max": 50,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    },
+    "table": {
+      "prefix": "cms_",
+      "engine": "InnoDB"
+    }
+  },
+  "apkleech": {
+    "getinfo": "http://gpapi.yopy.io:8282/api/apps/",
+    "getfile": "https://gapk.techbigs.download/getapk.php?sign=-1&pkg=",
+    "getfiletime": 720,
+    "cronrows": 20
+  },
+  "media": {
+    "widths": [300, 600, 800, 1024],
+    "filesize": 40,
+    "optimize": {
+      "quality": 75,
+      "compressionlevel": 7
+    },
+    "filetypes": ["image/png", "image/jpeg"]
+  },
+  "ringtone": {
+    "filesize": 40,
+    "filetypes": ["audio/mpeg"]
+  },
+  "interactive": {
+    "viewtime": 5
+  },
+  "tracer": {
+    "maxerrloginnumber": 5,
+    "blockerrlogintime": 1
+  },
+  "mailserver": {
+    "email": "support@techgara.com",
+    "zoho": {
+      "host": "smtp.transmail.com",
+      "port": 587,
+      "auth": {
+        "user": "emailapikey",
+        "pass": "wSsVR61z8h/5XKd6mjX5I+o/z1tRDwmlHEwvjgGlvn7/T/iWosdqwULIBwGkH6AZRTJoFTtD8ukqnUxT1mBfiI4oyAoHDyiF9mqRe1U4J3x17qnvhDzDW2VbkBOOKowJwA9sn2ZhFssn+g=="
+      }
+    }
+  }
+}

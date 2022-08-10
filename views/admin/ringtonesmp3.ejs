@@ -1,0 +1,103 @@
+<%- include("./include/header") %>
+<!--Main content-->
+<div class="site-body">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0">
+            <li class="breadcrumb-item"><a href="/<%=dashboard%>"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/<%=dashboard%>/post/<%=type.id%>">Ringtones</a></li>
+            <li class="breadcrumb-item"><a href="/<%=dashboard%>/ringtone/<%=post.id%>"><%=post.title%></a></li>
+            <li class="breadcrumb-item active" aria-current="page">List Mp3</li>
+        </ol>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="card-body">                            
+                        <div class="datatable-search-header">
+                            <select id="slBulk">
+                                <option value="">Bulk actions</option>                                                            
+                                <option value="delete">Delete</option>                                                                 
+                            </select>
+                            <button id="btnBulk" type="button" class="btn btn-primary">Apply</button>
+                            <div class="datatable-filter-holder">
+                                <input class="item-filter" type="text" placeholder="Search">
+                                <input class="item-filter" type="hidden" value="<%=post.id%>">
+                                <button id="btnDTFileter" type="button" class="btn btn-primary">Filter</button>
+                            </div>                                
+                            <button id="btn-add-ringtones" class="btn btn-outline-primary">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Add MP3 for <%=post.title%></span>
+                            </button>
+                            <!-- <input id="ringtoneUploadFiles" type="file" data-id="<%=post.id%>" name="files[]" class="input-ringtones d-none" accept=".mp3" multiple> -->
+                            <form
+                                id="ringtoneUpload"
+                                class="d-none"
+                                action="https://ring.techbigs.download/"
+                                method="POST"
+                                enctype="multipart/form-data"
+                                data-id="<%=post.id%>"
+                            ><input id="ringtoneUploadFiles" type="file" name="files[]" accept=".mp3,.m4r,.ogg,.wma" multiple /></form>
+                        </div>
+                        <table id="datatable-sside" class="table table-bordered datatable-style" data-type="post/<%=post.posttype%>/file">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" name="select_all" value="1" id="datatable-select-all"></th>
+                                    <th>Name</th>
+                                    <th>Url</th>
+                                    <th>Author</th>
+                                    <th>Size</th>
+                                    <th class="text-right" style="max-width: 120px;"><i class="fas fa-clock" title="Last modified at"></i></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Model Edit -->
+<div class="modal fade" id="frmModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Ringtone</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="error-modal-edit"></div>
+                <form class="form-modal" action="/<%=dashboard%>/post/<%=post.posttype%>/file/edit" method="POST">
+                    <input type="hidden" name="id" id="id" autocomplete="off" required>
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">Name</label>
+                        <input class="form-control" type="text" name="name" id="name" placeholder="From">
+                    </div>
+                    <div class="form-group">
+                        <label for="url" class="col-form-label">Url</label>
+                        <input class="form-control" type="text" name="url" id="url" disabled placeholder="Url">
+                    </div>
+                    <div class="form-group">
+                        <label for="filesize" class="col-form-label">Size</label>
+                        <input class="form-control" type="text" name="filesize" id="filesize" placeholder="Size">
+                    </div>
+                    <div class="text-right mt-3">
+                        <button type="submit" class="btn btn-primary">Apply</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var postid = "<%=post.id%>";
+    var posttype = "<%=post.posttype%>";
+</script>
+<script src="/<%=dashboard%>/libsjs/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>
+<script src="/<%=dashboard%>/libsjs/blueimp-file-upload/js/jquery.fileupload.js"></script>
+<script src="/<%=dashboard%>/assets/datatables/datatable.ringtone.js" charset="utf-8"></script>
+<script src="/<%=dashboard%>/assets/datatables/datatable.all.js" charset="utf-8"></script>
+<%- include("./include/footer") %>

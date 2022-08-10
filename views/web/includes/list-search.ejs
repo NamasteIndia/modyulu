@@ -1,0 +1,8 @@
+<%
+    var posts = (posts) ? posts : [];
+    posts.forEach(post => {
+%>
+        <li><%- include("search-item", {post: post}); %></li>
+<%
+    });
+%>

@@ -1,0 +1,38 @@
+<%
+    var mitem = (mitem) ? mitem : {};
+    var miindex = (miindex) ? miindex : 0;
+    var milangs = (milangs) ? milangs : [];
+%>
+<li class="dd-item dd3-item" data-id="<%=mitem.id%>" data-oid="<%=mitem.objectid%>" data-type="<%=mitem.type%>" data-index="<%=miindex%>">
+    <div class="dd-handle dd3-handle">Drag</div>
+    <div class="dd3-content">
+        <div class="collopse-wrap">
+            <button class="btn-collapse collapsed" type="button" data-toggle="collapse" data-target="#menuCollapse<%=miindex%>" aria-expanded="false" aria-controls="menuCollapse<%=miindex%>"><%=mitem.objecttitle%></button>
+            <div class="collapse" id="menuCollapse<%=miindex%>">
+                <div class="card card-body">                
+                    <table class="table table-admin-menuitem">                
+                        <tbody>
+                            <%
+                                milangs.forEach(mil => {
+                                    if(mil.id=="") return;
+                            %>
+                                <tr>
+                                    <td><%=mil.id%></td>
+                                    <td>
+                                        <input class="milid<%=miindex%>" type="hidden" value="<%=mil.id%>">
+                                        <input class="milname<%=miindex%>" type="text" value="<%=mil.name%>">
+                                    </td>
+                                </tr>
+                            <%
+                                })
+                            %>                                           
+                        </tbody>
+                    </table>                
+                    <div class="text-right mb-3">
+                        <button class="btn btn-sm btn-outline-danger btn-remove-menu-item">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

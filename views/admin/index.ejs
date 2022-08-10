@@ -1,0 +1,134 @@
+<%- include("./include/header") %>
+<%
+    var todoList = (todoList) ? todoList : {};
+    var errAutoUpdate = (errAutoUpdate) ? errAutoUpdate : {};
+%>
+<!--Main content-->
+<div class="site-body">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0">
+            <li class="breadcrumb-item"><a href="/<%=dashboard%>"><i class="fas fa-home"></i> Dashboard</a></li>
+        </ol>
+    </nav>        
+    <div class="container-fluid">
+        <div class="row">
+            <% if(successAutoUpdate.count > 0){%>
+            <div class="col col-lg-6">
+                <div class="accordion mb-3" id="accordionSuccessAutoUpdate">
+                    <div class="card">
+                        <div class="card-header" id="headingSuccessAutoUpdate">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseSucessAutoUpdate" aria-expanded="false" aria-controls="collapseSucessAutoUpdate">
+                                    <%=successAutoUpdate.count%> App update version thành công 24 giờ qua
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseSucessAutoUpdate" class="collapse show" aria-labelledby="headingSuccessAutoUpdate" data-parent="#accordionSuccessAutoUpdate">
+                            <div class="card-body">
+                                <div class="noticeAutoUpdateVersionList">
+                                <%
+                                    successAutoUpdate.rows.forEach(app =>{
+                                        var postLink = (app.post) ? app.post : {};
+                                        var redLink = `/${dashboard}/post/post-apk/edit/${app.postid}`;
+                                        redLink = (postLink.slug) ? `${domain}/${postLink.slug}/` : redLink;
+                                %>
+                                        <div class="item">
+                                            <div class=" badge badge-pill badge-info time"><%=functions.formart_datetime(app.createdAt, "time")%></div>
+                                            <div class="text">
+                                                <span class="old"><%=app.oldtitle%></span>
+                                                <span class="new"><a target="_blank" href="<%=redLink%>"><%=app.newtitle%></a></span>
+                                            </div>
+                                        </div>
+                                <%
+                                    });
+                                %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%}%>
+            <% if(errAutoUpdate.count > 0){%>
+            <div class="col col-lg-6">
+                <div class="accordion mb-3" id="accordionErrAutoUpdate">
+                    <div class="card">
+                        <div class="card-header" id="headingErrAutoUpdate">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseErrAutoUpdate" aria-expanded="false" aria-controls="collapseErrAutoUpdate">
+                                    <%=errAutoUpdate.count%> App lỗi update version 24 giờ qua
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseErrAutoUpdate" class="collapse show" aria-labelledby="headingErrAutoUpdate" data-parent="#accordionErrAutoUpdate">
+                            <div class="card-body">
+                                <div class="noticeAutoUpdateVersionList">
+                                <%
+                                    errAutoUpdate.rows.forEach(app =>{
+                                        var postLink = (app.post) ? app.post : {};
+                                        var redLink = `/${dashboard}/post/post-apk/edit/${app.postid}`;
+                                        redLink = (postLink.slug) ? `${domain}/${postLink.slug}/` : redLink;
+                                %>
+                                        <div class="item">
+                                            <div class="badge badge-pill badge-info time"><%=functions.formart_datetime(app.createdAt, "time")%></div>
+                                            <div class="text">
+                                                <div class="old"><a target="_blank" href="<%=redLink%>"><%=app.oldtitle%></a></div>
+                                                <div class="new error">
+                                                    <span><%=app.message%></span>
+                                                    <span class="badge badge-pill badge-danger" title="Version cũ"><%=app.oldversion%></span>
+                                                    <span class="badge badge-pill badge-success" title="Version mới"><%=app.newversion%></span>
+                                                    <a href="javascription:void(0)" data-id="<%=app.id%>" class="badge badge-danger btn-remove-notice">x</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                <%
+                                    });
+                                %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%}%>
+            <% if(todoList.count > 0){%>
+            <div class="col col-lg-6">
+                <div class="accordion mb-3" id="accordionToDoAutoUpdate">
+                    <div class="card">
+                        <div class="card-header" id="headingToDoAutoUpdate">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseToDoAutoUpdate" aria-expanded="false" aria-controls="collapseToDoAutoUpdate">
+                                    <%=todoList.count%> App chuẩn bị check version
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseToDoAutoUpdate" class="collapse show" aria-labelledby="headingToDoAutoUpdate" data-parent="#accordionToDoAutoUpdate">
+                            <div class="card-body">
+                                <ul class="todolist">
+                                <%
+                                    todoList.rows.forEach(todo =>{
+                                %>
+                                        <li>
+                                            <span class="badge badge-pill badge-danger time">
+                                                <%
+                                                    var scheduletime = todo.scheduletime;
+                                                    scheduletime = functions.formart_datetime(scheduletime, "time");
+                                                %>
+                                                <%-scheduletime%>
+                                            </span>
+                                            <span><%=todo.title%></span>                                            
+                                        </li>
+                                <%
+                                    })
+                                %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%}%>
+        </div>        
+    </div>
+</div>
+<%- include("./include/footer") %>

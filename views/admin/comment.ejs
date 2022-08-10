@@ -1,0 +1,134 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>/comment">Comments</a></li>
+                <li class="breadcrumb-item active" aria-current="page">List Comments</li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="datatable-search-header">
+                                <select id="slBulk">
+                                    <option value="">Bulk actions</option>
+                                    <option value="delete">Delete</option>
+                                </select>
+                                <button id="btnBulk" type="button" class="btn btn-primary">Apply</button>
+                                <div class="datatable-filter-holder">
+                                    <input class="item-filter" type="text" placeholder="Search">
+                                    <select class="item-filter">
+                                        <option value="%" <%if(status=='%'){%>selected<%}%>>All Comment</option>
+                                        <option value="published" <%if(status=='published'){%>selected<%}%>>Approve</option>
+                                        <option value="pending" <%if(status=='pending'){%>selected<%}%>>Pending</option>
+                                        <option value="spam" <%if(status=='spam'){%>selected<%}%>>Spam</option>
+                                        <option value="trash" <%if(status=='trash'){%>selected<%}%>>Trash</option>
+                                    </select>
+                                    <input class="item-filter" type="hidden" value="<%=(typeof postid === 'undefined')?'%':postid;%>">
+                                    <button type="button" id="btnDTFileter" class="btn btn-primary">Filter</button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="datatable-sside" class="table table-bordered datatable-style" data-type="comment">
+                                    <thead>
+                                        <tr>
+                                            <th style="max-width: 20px;"><input type="checkbox" name="select_all" value="1" id="datatable-select-all"></th>
+                                            <th>Author</th>
+                                            <th>Comment</th>
+                                            <th>Post</th>
+                                            <th style="max-width: 100px;"><i class="fas fa-clock"></i></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Model Edit -->
+    <div class="modal fade" id="frmModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit comment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <div class="error-modal-add"></div>
+                    <form action="/<%=dashboard%>/comment/edit" method="POST">
+                        <div class="form-group">
+                            <label for="commentstatus" class="col-form-label">Status</label>
+                            <select class="form-control" id="commentstatus" name="commentstatus">                                  
+                                <option value="published">Approve</option>
+                                <option value="pending">Pending</option>
+                                <option value="spam">Spam</option>
+                                <option value="trash">Trash</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="content" class="col-form-label">Comment</label>
+                            <input type="hidden" id="id" name="id">
+                            <input type="hidden" id="parentid" name="parentid">
+                            <input type="hidden" id="postid" name="postid">
+                            <textarea class="form-control" type="text" id="content" name="content" placeholder="Comment"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-form-label">Fullname</label>
+                            <input class="form-control" type="text" id="name" name="name" placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-form-label">Email</label>
+                            <input class="form-control" type="text" id="email" name="email" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="website" class="col-form-label">Website</label>
+                            <input class="form-control" type="text" id="website" name="website" placeholder="Website">
+                        </div>
+                        <div class="text-right mt-3">
+                            <button type="submit" class="btn btn-primary">Apply</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Model Relay -->
+    <div class="modal fade" id="frmReplyModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reply comment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <div class="error-modal-add"></div>
+                    <form id="frmReplyComment" action="/<%=dashboard%>/comment/reply" method="POST">
+                        <div class="form-group">
+                            <p class="commentText"></p>
+                            <input type="hidden" name="parentid">
+                            <input type="hidden" name="postid">
+                            <textarea style="min-height: 200px;" class="form-control" type="text" name="content" placeholder="Relay content"></textarea>
+                        </div>
+                        <div class="text-right mt-3">
+                            <button type="submit" class="btn btn-primary">Reply</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.comment.js" charset="utf-8"></script>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.all.js" charset="utf-8"></script>
+    <%- include("./include/footer") %>

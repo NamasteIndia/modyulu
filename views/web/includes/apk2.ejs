@@ -1,0 +1,30 @@
+<%
+    var post = (post) ? post : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var apk = (post.apk) ? post.apk : {};
+    var noimage = `${domain}/assets/image/no-image-100.jpg`;
+    var thumb = (post.icon) ? post.icon : {};
+    var thumbnail = (thumb.urlicon) ? thumb.urlicon : noimage;
+    var permalink = `${homeUrl}/${post.slug}.html`;
+    var title = post.title;
+    var modFeature = (apk.mod_text) ? `Mod: ${apk.mod_text}` : __("textNoMod");
+    var apkVersion = (apk.version) ? apk.version : __("textUnknow");
+%>
+<a class="apk-icon" href="<%=permalink%>" title="<%=title%>">
+    <figure class="thumb">
+        <img class="img-lazy" data-src="<%=thumbnail%>" src="<%=noimage%>" alt="<%=title%>">
+    </figure>
+    <div class="info">
+        <div class="title truncate"><%=title%></div>
+        <div class="version truncate">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13.437" height="11.277" viewBox="0 0 13.437 11.277">
+                <path d="M155.808,161.792H155a5.64,5.64,0,0,1-9.138,4.169l1.12-1.338a3.9,3.9,0,0,0,6.272-2.833h-.975a.259.259,0,0,1-.2-.424l.954-1.139,1.01-1.207.71.847h0l1.254,1.5a.259.259,0,0,1-.2.428Z" transform="translate(-142.612 -155.872)" fill="#212121"/>
+                <path d="M94.8,101.061l-1.12,1.338a3.9,3.9,0,0,0-6.528,2.872c0,.1,0,.21.013.31h.939a.258.258,0,0,1,.2.424l-.778.929-1.186,1.416-.067-.08L84.379,106a.258.258,0,0,1,.2-.423h.844q-.008-.153-.008-.31a5.639,5.639,0,0,1,9.39-4.209Z" transform="translate(-84.3 -99.6)" fill="#212121"/>
+            </svg>
+            <%=apkVersion%>
+        </div>
+        <div class="mod truncate">
+            <%=modFeature%>
+        </div>
+    </div>
+</a>

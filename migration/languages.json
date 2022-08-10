@@ -1,0 +1,10 @@
+[
+  {
+    "id": "en",
+    "codelang": "en",
+    "name": "English",
+    "area": "en",
+    "ismain": true,
+    "isblock": false
+  }
+]

@@ -1,0 +1,39 @@
+<div class="language-bar">
+    <ul class="lang-controls">
+    <%
+        var langsexist = [];
+        var postlang = (postlang) ? postlang : {};
+        post.PostLang.forEach(pl =>{
+            langsexist.push(pl.langid);
+        });
+        languages.forEach(lang =>{
+            if(langsexist.includes(lang.id)){
+    %>
+            <li>
+                <a href="/<%=dashboard%>/post/<%=posttype%>/lang/delete/<%=post.id%>/<%=lang.id%>" class="btn btn-sm btn-danger btn-action btn-action-remove"><i class="fas fa-times"></i></a>
+                <a class="btn btn-sm btn-language btn-primary" href="/<%=dashboard%>/post/<%=posttype%>/lang/edit/<%=post.id%>/<%=lang.id%>">
+                    <img src="/<%=dashboard%>/assets/img/flags/<%=lang.id%>.png" atl="<%=lang.name%>">
+                    <span><%=lang.name%></span>
+                </a>
+            </li>
+    <%
+        }else{
+    %>
+            <li>
+                <a href="/<%=dashboard%>/post/<%=posttype%>/lang/add/<%=post.id%>/<%=lang.id%>" class="btn btn-sm btn-outline-primary btn-action"><i class="fas fa-plus"></i></a>
+                <a class="btn btn-sm btn-language btn-outline-primary" href="/<%=dashboard%>/post/<%=posttype%>/lang/add/<%=post.id%>/<%=lang.id%>">
+                    <img src="/<%=dashboard%>/assets/img/flags/<%=lang.id%>.png" atl="<%=lang.name%>">
+                    <span><%=lang.name%></span>
+                </a>
+            </li>
+    <%
+            }
+        });
+    %>
+        <li>
+            <a class="btn btn-sm btn-language btn-outline-primary" href="/<%=dashboard%>/post/<%=posttype%>/add">
+                <span>New post</span>
+            </a>
+        </li>
+    </ul>
+</div>

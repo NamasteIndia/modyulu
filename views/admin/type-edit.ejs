@@ -1,0 +1,122 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item">
+                    <a href="/<%=dashboard%>">
+                        <i class="fas fa-home"></i> Dashboard
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/<%=dashboard%>/type">Types</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Edit <%=type.description%></li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h4 class="page-title">Edit Type</h4>
+                        </div>
+                        <div class="card-body">
+                            <form action="/<%=dashboard%>/type/edit/<%=type.id%>" method="POST">
+                                <div class="form-group">
+                                    <label for="name" class="col-form-label">Name</label>
+                                    <input class="form-control" value="<%=type.name%>" type="text" id="name" name="name" placeholder="Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description" class="col-form-label">Description</label>
+                                    <textarea class="form-control" id="description" name="description" placeholder="Description"><%=type.description%></textarea>
+                                </div>                                
+                                <%
+                                    var oldTypeIds = [];                                    
+                                    oldTypeIds = type.posttype.map(pt => pt.id);                                    
+                                    if(type.type == "category"){
+                                %>
+                                        <div class="form-group posttype-group">
+                                            <label for="type" class="col-form-label">For Posts</label>
+                                            <select class="form-control select2" id="posttype" name="posttype" multiple>
+                                                <%
+                                                    listTypes.forEach(t => {
+                                                        if(t.type == "post"){
+                                                %>
+                                                            <option value="<%=t.id%>" <%if(oldTypeIds.includes(t.id)){%>selected<%}%>><%=t.description%></option>
+                                                <%
+                                                        }
+                                                    })
+                                                %>
+                                            </select>
+                                        </div>
+                                        <div class="form-group cateitemtype-group">
+                                            <label for="type" class="col-form-label">Item Type</label>
+                                            <select class="form-control" id="cateitemtype" name="cateitemtype">
+                                                <option value="hierarchy" <%if(type.cateitemtype=="hierarchy"){%>selected<%}%>>Hierarchy</option>
+                                                <option value="single" <%if(type.cateitemtype=="single"){%>selected<%}%>>Single</option>
+                                                <option value="multiple" <%if(type.cateitemtype=="multiple"){%>selected<%}%>>Multiple</option>
+                                            </select>
+                                        </div>                                        
+                                <%
+                                    }                                    
+                                    oldTypeIds = type.catetype.map(pt => pt.id);
+                                    if(type.type=="post"){
+                                %>
+                                        <div class="form-group catetype-group">
+                                            <label for="type" class="col-form-label">Has Categories</label>
+                                            <select class="form-control select2" id="catetype" name="catetype" multiple>
+                                                <%
+                                                    listTypes.forEach(t => {
+                                                        if(t.type == "category"){
+                                                %>
+                                                            <option value="<%=t.id%>" <%if(oldTypeIds.includes(t.id)){%>selected<%}%>><%=t.description%></option>
+                                                <%
+                                                        }
+                                                    })
+                                                %>
+                                            </select>
+                                        </div>                                        
+                                <%
+                                    }
+                                %>
+                                <div class="form-group">
+                                    <label for="roottext" class="col-form-label">Root</label>
+                                    <input class="form-control" value="<%=type.roottext%>" type="text" id="roottext" name="roottext" placeholder="Root">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exttext" class="col-form-label">Extension</label>
+                                    <input class="form-control" value="<%=type.exttext%>" type="text" id="exttext" name="exttext" placeholder="Extension">
+                                </div>
+                                <div class="form-group">                                    
+                                    <div class="checkbox mr-5 mb-2">
+                                        <input class="form-check-input" type="checkbox" id="allowfollow" name="allowfollow" <%if(type.allowfollow==true){%>checked<%}%>>
+                                        <label class="form-check-label" for="allowfollow">Default Follow</label>
+                                    </div>
+                                    <div class="checkbox mr-5 mb-2">
+                                        <input class="form-check-input" type="checkbox" id="allowindex" name="allowindex" <%if(type.allowindex==true){%>checked<%}%>>
+                                        <label class="form-check-label" for="allowindex">Default Index</label>
+                                    </div>
+                                    <div class="checkbox mr-5 mb-2">
+                                        <input class="form-check-input" type="checkbox" id="hassitemap" name="hassitemap" <%if(type.hassitemap==true){%>checked<%}%>>
+                                        <label class="form-check-label" for="hassitemap">Has sitemap</label>
+                                    </div>
+                                    <div class="checkbox mb-2">
+                                        <input class="form-check-input" type="checkbox" id="isblock" name="isblock" <%if(type.isblock==true){%>checked<%}%>>
+                                        <label class="form-check-label" for="isblock">Disable</label>
+                                    </div>
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <script src="/<%=dashboard%>/assets/datatables/datatable.type.js" charset="utf-8"></script>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.all.js" charset="utf-8"></script>
+    <%- include("./include/footer") %>

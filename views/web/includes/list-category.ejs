@@ -1,0 +1,12 @@
+<%
+    var categories = (categories) ? categories : [];
+%>
+<ul class="bsc-list">
+    <%
+        categories.forEach(c => {
+    %>
+            <%- include("category", {category: c}); %>
+    <%
+        })
+    %>
+</ul>

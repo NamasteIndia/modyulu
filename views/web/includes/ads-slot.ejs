@@ -1,0 +1,35 @@
+<%
+    var slot = (slot) ? slot : 0;
+    var adsShowManager = (page.adsShowManager) ? page.adsShowManager : {};
+    var adsText = "";
+    var hasSpace = (hasSpace) ? hasSpace : false;
+    var isSidebar = (isSidebar) ? isSidebar : false;
+    var className = (hasSpace) ? 'box-space' : '';
+    className = (isSidebar) ? `${className} bs-ads` : className;
+    if(adsShowManager.showads){
+        switch(slot){
+            case 1:
+                adsText = (adsShowManager.slot1) ? adsShowManager.slot1 : "";
+                break;
+            case 2:
+                adsText = (adsShowManager.slot2) ? adsShowManager.slot2 : "";
+                break;
+            case 3:
+                adsText = (adsShowManager.slot3) ? adsShowManager.slot3 : "";
+                break;
+            case 4:
+                adsText = (adsShowManager.slot4) ? adsShowManager.slot4 : "";
+                break;
+            default: 
+                adsText = "";
+                break;
+        }
+    }
+    if(adsText!=""){
+%>
+    <div class="ads <%=className%>">
+        <p><%=adsText%></p>
+    </div>
+<%
+    }
+%>

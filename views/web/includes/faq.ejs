@@ -1,0 +1,19 @@
+<%    
+    var faq = (faq) ? faq : {};
+    var classNameFaq = (classNameFaq) ? classNameFaq : '';
+    if(faq.title){
+%>
+    <div class="accordion <%=classNameFaq%>">
+        <div class="ahead">
+            <span><%=faq.title%></span>
+            <span class="toggle">+</span>
+        </div>
+        <div class="abody">
+            <div class="wrapcontent">                
+                <%-faq.content%>
+            </div>
+        </div>
+    </div>
+<%
+    }
+%>

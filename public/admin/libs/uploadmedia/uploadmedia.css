@@ -1,0 +1,83 @@
+.um-wrapper {
+    width: 100%;
+    height: 200px;
+    margin: 0 auto;
+}
+
+.um-wrapper input[type="file"] {
+    display: none;
+}
+
+.um-wrapper .um-area {
+    width: 100%;
+    height: 100%;
+    border: 4px dashed #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.um-wrapper.here .um-area {
+    animation: here .5s linear infinite;
+}
+
+.um-wrapper.right .um-area {
+    border-color: #0087F7;
+}
+
+.um-wrapper .um-title {
+    /*pointer-events: none;*/
+    text-align: center;
+    line-height: 1em;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.um-wrapper .um-title p {
+    margin: 5px auto;
+}
+
+.um-wrapper .um-title button {
+    padding: .5rem;
+    border: 1px solid #0087F7;
+    border-radius: 50px;
+    color: #0087F7;
+    background: transparent;
+    outline: none;
+    transition: background .5s ease;
+}
+
+.um-wrapper .um-title button:hover {
+    cursor: pointer;
+    background: #0087F7;
+    color: #fff;
+}
+
+.media-item {
+    padding: .75rem 0;
+    border-top: 1px solid #eee;
+}
+
+.media-item .thumbnail {
+    float: left;
+    margin-right: 10px;
+}
+
+.media-item .filename strong {
+    font-weight: bold;
+    display: block;
+}
+
+.media-item .status {
+    float: right;
+}
+
+@keyframes here {
+    from {
+        border-color: #dddddd;
+    }
+    to {
+        border-color: red;
+    }
+}

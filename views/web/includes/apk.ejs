@@ -1,0 +1,29 @@
+<%
+    var post = (post) ? post : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var apk = (post.apk) ? post.apk : {};
+    var noimage = `${domain}/assets/image/no-image.jpg`;
+    var thumb = (post.thumb) ? post.thumb : {};
+    var thumbnail = (thumb.url) ? thumb.url : noimage;
+    //var modifiedAt = (post.modifiedat) ? functions.formart_timestamp_text(post.modifiedat) : "";
+    //var modifiedAtSeo = (post.modifiedat) ? functions.formart_datetime(post.modifiedat, 'seo') : "";
+    var permalink = `${homeUrl}/${post.slug}.html`;
+    var title = post.title;
+    var modFeature = (apk.mod_text) ? `Mod: ${apk.mod_text}` : __("textNoMod");
+    var apkVersion = (apk.version) ? apk.version : __("textUnknow");
+%>
+<a class="apk-image" href="<%=permalink%>" title="<%=title%>">
+    <figure>
+        <img class="img-lazy" data-src="<%=thumbnail%>" src="<%=noimage%>" alt="<%=title%>">
+    </figure>
+    <div class="info">
+        <div class="title truncate"><%=title%></div>
+        <div class="version truncate">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16.742" height="14.051" viewBox="0 0 16.742 14.051">
+                <path d="M158.255,162.474h-1.009a7.027,7.027,0,0,1-11.386,5.194l1.4-1.667a4.854,4.854,0,0,0,7.814-3.529h-1.214a.322.322,0,0,1-.247-.529l1.188-1.42,1.258-1.5.884,1.056h0l1.562,1.866a.322.322,0,0,1-.246.533Z" transform="translate(-141.838 -155.138)" fill="#fff"/>
+                <path d="M97.383,101.412l-1.4,1.667a4.854,4.854,0,0,0-8.133,3.578c0,.131.005.261.016.386h1.17a.322.322,0,0,1,.246.528l-.969,1.158-1.477,1.765-.084-.1-2.363-2.824a.322.322,0,0,1,.246-.527h1.052q-.01-.191-.01-.386a7.026,7.026,0,0,1,11.7-5.244Z" transform="translate(-84.319 -99.633)" fill="#fff"/>
+            </svg>              
+            <%=apkVersion%> - <%=modFeature%>
+        </div>
+    </div>
+</a>

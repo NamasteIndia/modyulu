@@ -1,0 +1,143 @@
+<%
+    var page = (typeof page !== "undefined") ? page : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var pageContent = (page.pageContent) ? page.pageContent : {};
+    var slideApks = (page.homeApkChoices) ? page.homeApkChoices : {};
+    var gameApks = (page.homeBestGames) ? page.homeBestGames : {};
+    var appApks = (page.homeBestApps) ? page.homeBestApps : {};
+    var blogs = (page.homeLastestBlogs) ? page.homeLastestBlogs : [];
+    var maxApkRecords = 15;
+%>
+<%- include("includes/header"); %>
+<main id="page-body" class="container">
+    <%
+        if(slideApks.count>0){
+    %>
+        <div class="secbox sbhometrendapk">
+            <div class="sbheader">
+                <div class="sbhTitle">
+                    <span><%=__("textEditorChoices");%></span>
+                </div>
+            </div>
+            <div class="sbbody">
+                <ul class="apks w3">
+                    <%- include("includes/list-apk", {posts: slideApks.rows}); %>
+                </ul>
+            </div>
+        </div>
+    <%
+        }
+    %>
+    <%- include("includes/ads-slot", {slot: 1, hasSpace: true}); %>
+    <div class="secbox sbhomegames box-space">
+        <div class="sbheader">
+            <div class="sbhTitle">
+                <span><%=__("textBestUpdatedGames");%></span>
+            </div>
+        </div>
+        <div class="sbbody">            
+            <ul class="apks w3">
+                <%- include("includes/list-apk2", {posts: gameApks.rows}); %>
+            </ul>
+            
+            <%
+                if(gameApks.count>maxApkRecords){
+            %>
+                <div class="pagination">
+                    <a href="<%=homeUrl%>/jogos/" class="btn br-50 seemoreapk">
+                        <%=__("textSeeMore");%>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10.35" height="10.683" viewBox="0 0 10.35 10.683">
+                            <g transform="translate(3.883)">
+                                <g transform="translate(0)">
+                                    <path d="M200.408,5.048,194.584,0l-.509.587,5.486,4.754L194.075,10.1l.509.587,5.824-5.048a.389.389,0,0,0,0-.587Z" transform="translate(-194.075)"/>
+                                </g>
+                            </g>
+                            <g transform="translate(0)">
+                                <g transform="translate(0)">
+                                    <path d="M14.307,5.048,8.483,0,7.974.587,13.46,5.341,7.974,10.1l.509.587,5.824-5.048a.389.389,0,0,0,0-.587Z" transform="translate(-7.974)"/>
+                                </g>
+                            </g>
+                        </svg>
+                    </a>
+                </div>
+            <%
+                }
+            %>
+        </div>
+    </div>
+    <%- include("includes/ads-slot", {slot: 2, hasSpace: true}); %>
+    <div class="secbox sbhomeapps box-space">
+        <div class="sbheader">           
+            <div class="sbhTitle">
+                <span><%=__("textBestUpdatedApps");%></span>
+            </div>
+        </div>
+        <div class="sbbody">
+            <ul class="apks w3">
+                <%- include("includes/list-apk2", {posts: appApks.rows}); %>
+            </ul>
+            <%
+                if(appApks.count>maxApkRecords){
+            %>
+                <div class="pagination">
+                    <a href="<%=homeUrl%>/apps/" class="btn br-50 seemoreapk">
+                        <%=__("textSeeMore");%>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10.35" height="10.683" viewBox="0 0 10.35 10.683">
+                            <g transform="translate(3.883)">
+                                <g transform="translate(0)">
+                                    <path d="M200.408,5.048,194.584,0l-.509.587,5.486,4.754L194.075,10.1l.509.587,5.824-5.048a.389.389,0,0,0,0-.587Z" transform="translate(-194.075)"/>
+                                </g>
+                            </g>
+                            <g transform="translate(0)">
+                                <g transform="translate(0)">
+                                    <path d="M14.307,5.048,8.483,0,7.974.587,13.46,5.341,7.974,10.1l.509.587,5.824-5.048a.389.389,0,0,0,0-.587Z" transform="translate(-7.974)"/>
+                                </g>
+                            </g>
+                        </svg>
+                    </a>
+                </div>
+            <%
+                }
+            %>
+        </div>
+    </div>
+    <%- include("includes/ads-slot", {slot: 3, hasSpace: true}); %>
+    <%
+        if(blogs.length>0){
+    %>
+        <div class="secbox sbhomeblogs box-space">
+            <div class="sbheader">
+                <div class="sbhTitle">
+                    <span><%=__("textTutorial");%></span>
+                </div>
+            </div>
+            <div class="sbbody">
+                <ul class="blogs w3">
+                    <%- include("includes/list-blog", {posts: blogs}); %>
+                </ul>                
+            </div>
+        </div>
+    <%
+        }
+    %>
+    <%
+        var homeContent = (pageContent.content) ? pageContent.content : "";
+        if(homeContent.length > 0){
+    %>
+    <%- include("includes/ads-slot", {slot: 4, hasSpace: true}); %>
+        <div class="secbox sbhomeseo">
+            <div class="sbheader">
+                <div class="sitename"><%=sitenameSlug%></div>
+                <h1><%=pageContent.title%></h1>
+            </div>
+            <div class="sbbody">
+                <div class="wrapcontent">
+                    <%- homeContent %>
+                </div>
+            </div>
+        </div>
+    <%
+        }
+    %>
+</main>
+<%- include("includes/footer"); %>

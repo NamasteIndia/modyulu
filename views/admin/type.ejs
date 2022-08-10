@@ -1,0 +1,60 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>/type">Types</a></li>
+                <li class="breadcrumb-item active" aria-current="page">List types</li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="datatable-search-header">
+                                <select id="slBulk">
+                                    <option value="">Bulk actions</option>
+                                    <option value="delete">Delete</option>
+                                </select>
+                                <button id="btnBulk" type="button" class="btn btn-primary">Apply</button>
+                                <div class="datatable-filter-holder">
+                                    <input class="item-filter" type="text" placeholder="Search">
+                                    <select class="item-filter">
+                                        <option value="%">All types</option>
+                                        <option value="category">Category</option>
+                                        <option value="post">Post</option>
+                                    </select>
+                                    <button type="button" id="btnDTFileter" class="btn btn-primary">Filter</button>
+                                </div>
+                                <a href="/<%=dashboard%>/type/add" class="btn btn-outline-primary">Add New</a>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="datatable-sside" class="table table-bordered datatable-style" data-type="type">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" name="select_all" value="1" id="datatable-select-all"></th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Root</th>
+                                            <th>Extension</th>
+                                            <th>Type</th>
+                                            <th>Item type</th>
+                                            <th class="text-center"><i class="fas fa-capsules" title="Allow Follow"></i></th>
+                                            <th class="text-center"><i class="fas fa-boxes" title="Allow Index"></i></th>
+                                            <th class="text-center"><i class="fas fa-sitemap" title="Has Sitemap"></i></th>
+                                            <th class="text-center"><i class="fas fa-power-off" title="Enable"></i></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.type.js" charset="utf-8"></script>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.all.js" charset="utf-8"></script>
+    <%- include("./include/footer") %>

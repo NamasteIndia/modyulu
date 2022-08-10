@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="<%=page.curLang.id%>">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <meta name="googlebot" content="noindex">
+    <meta name="googlebot-news" content="nosnippet">
+    <meta name="robots" content="noindex, nofollow">
+    <%-page.seoMeta%>    
+    <%
+        try{
+            var seoSchema = (page.seoSchema && page.seoSchema.length > 0) ? `[${page.seoSchema}]` : "";
+            var seoSchemaArr = (seoSchema.length > 0) ? JSON.parse(seoSchema) : [];
+            seoSchemaArr.forEach(schemaDom => {
+                var schemaText = JSON.stringify(schemaDom) || "";
+                if(schemaText.length > 2){
+                    var schemaItem = `<script type="application/ld+json">${schemaText}</script>`;
+    %>
+                <!-- Schema -->
+                <%- schemaItem %>
+    <%
+                }
+            });
+        }catch(err){
+    %>
+            <%-(page.seoSchema && 1==1) ? `<script type="application/ld+json">{"@context":"https://schema.org","@graph":[${page.seoSchema}]}</script>` : ""%>
+    <%
+            console.log("Error parse JSON")
+        }
+    %>
+    <link rel="icon" href="/assets/image/favicon.png" data-spai-eager="1" sizes="32x32">
+    <link rel="icon" href="/assets/image/favicon.png" data-spai-eager="1" sizes="192x192">
+    <link rel="stylesheet" href="/assets/js/owl/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+        var domain = "<%=domain%>",
+            token = "<%=(session.ajaxpagetoken)?session.ajaxpagetoken:''%>",
+            langid = `<%=(page.curLang && page.curLang.id) ? page.curLang.id : "en"; %>`,
+            ismainlang = `<%=(page.curLang && page.curLang.id) ? page.curLang.ismain : false; %>`,
+            ldomain = (ismainlang) ? domain : `${domain}/${langid}`;
+    </script>
+    <%
+        var adspagename = (adspagename) ? adspagename : "",
+            adsredirect = (adsredirect) ? adsredirect : false,
+            adspost = {},
+            adspage = {},
+            adsapk = {},
+            adsShowManager = {};
+        if(adspagename == "pagedownload"){
+            adspost = (page.apk) ? page.apk : {};
+            adspage = (adspost.Ads) ? adspost.Ads : {};
+            adsapk = (adspost.apk) ? adspost.apk : {};
+            adsShowManager.showads = (!adspost.offadsall && !adspost.offadsdownload && !adspage.offads);
+            adsShowManager.slot1 = adspage.slot5;
+            adsShowManager.slot2 = adspage.slot6;
+            adsShowManager.slot3 = adspage.slot3;
+            adsShowManager.slot4 = adspage.slot4;
+        }else{
+            adspost = (page.pageContent) ? page.pageContent : {};
+            adspage = (adspost.Ads) ? adspost.Ads : {};
+            adsShowManager.showads = (!adspost.offads && !adspost.offadsall && !adspage.offads);
+            adsShowManager.slot1 = adspage.slot1;
+            adsShowManager.slot2 = adspage.slot2;
+            adsShowManager.slot3 = adspage.slot3;
+            adsShowManager.slot4 = adspage.slot4;
+            if(adspagename == "pagehome"){
+                adsShowManager.slot1 = adspost.adsslot1;
+                adsShowManager.slot2 = adspost.adsslot2;
+                adsShowManager.slot3 = adspost.adsslot3;
+                adsShowManager.slot4 = adspost.adsslot4;
+            }
+        }
+        adsShowManager.adscode = (adspage.adscode) ? adspage.adscode : "";
+        adsShowManager.islazy =  (adspage.islazy) ? adspage.islazy : false;
+        // Gan ma cho bien global
+        page.adsShowManager = adsShowManager;
+    %>
+    <script>
+        var showads = ("<%=(adsShowManager.showads)?adsShowManager.showads:false%>" == "true");
+        var adscode = "<%=(adsShowManager.adscode)?adsShowManager.adscode:'';%>";
+        var adslazy = ("<%=(adsShowManager.islazy)?adsShowManager.islazy:false;%>" == "true");
+		// Lazyload header
+        var adsheader = "<%=(adsheader && adsheader.adscode) ? adsheader.adscode : '';%>";
+        var adsheaderLazy = "<%=(adsheader && adsheader.islazy) ? adsheader.islazy : false;%>";
+		// End lazyload header
+        var hasWebP = !1;
+        !function() {
+            var A = new Image;
+            A.onload = function() {                
+                hasWebP = !!(A.height > 0 && A.width > 0)
+            }, A.onerror = function() {
+                hasWebP = !1
+            }, A.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA"            
+        }();        
+        function lazyImage(lzl) {
+            return function(e) {
+                var observer,
+                    options = {
+                        rootMargin: "0px",
+                        threshold: 0.05
+                    },
+                    allTheLazyImages = document.querySelectorAll("." + lzl);
+                function lazyLoader(e) {
+                    e.forEach(function(e) {
+                        e.intersectionRatio > 0 && lazyLoadImage(e.target);
+                    });
+                }
+                function lazyLoadImage(e) {
+                    e.onload = function() {
+                        e.classList.remove(lzl);
+                    };
+                    e.dataset.lazybackground && (e.style.backgroundImage = "url(".concat(e.dataset.lazybackground, ")")), e.getAttribute("data-src") && ((e.src = hasWebP && -1 != e.dataset.src.indexOf("googleusercontent.com") ? e.dataset.src + "-rw" : e.dataset.src), "IntersectionObserver" in window && observer.unobserve(e));
+                }
+                if("IntersectionObserver" in window)(observer = new IntersectionObserver(lazyLoader, options)), allTheLazyImages.forEach(function(e) {
+                    observer.observe(e);
+                });
+                else for (var i = 0; i < allTheLazyImages.length; i++) lazyLoadImage(allTheLazyImages[i]);
+            }
+        }
+        function lazyScript(c, e) {
+            var n = document.createElement("script");
+            n.async = !0, e && (n.onload = e), document.head.appendChild(n), n.src = c
+        }
+        function lazyAds(lzl) {
+            return function(e) {
+                var observer;
+                var options = {
+                    rootMargin: "0px",
+                    threshold: 0.05
+                };        
+                var allTheLazyAds = document.querySelectorAll("." + lzl);
+                function lazyLoader(e) {
+                    e.forEach(function(e) {
+                        e.intersectionRatio > 0 && lazyLoadAds(e.target);
+                    });
+                }
+                function lazyLoadAds(e) {
+                    "IntersectionObserver" in window && observer.unobserve(e);
+                    e.classList.remove(lzl);
+                    var codeName = e.id;
+                    googletag.cmd.push(function() {
+                        googletag.display(codeName);
+                        googletag.pubads().refresh([window.__gptslot__[codeName]]);
+                    });
+                }
+                if ("IntersectionObserver" in window)(observer = new IntersectionObserver(lazyLoader, options)), allTheLazyAds.forEach(function(e) {
+                    observer.observe(e);
+                });
+                else for (var i = 0; i < allTheLazyAds.length; i++) lazyLoadAds(allTheLazyAds[i]);
+            };
+        }
+        var lazyLoad = false;
+        function onLazyLoad(){
+            if (lazyLoad === true) return;
+            lazyLoad = true;
+            document.removeEventListener('scroll', onLazyLoad);
+            document.removeEventListener('mousemove', onLazyLoad);
+            document.removeEventListener('mousedown', onLazyLoad);
+            document.removeEventListener('touchstart', onLazyLoad);
+            //ADS script            
+            //lazyScript("//securepubads.g.doubleclick.net/tag/js/gpt.js");
+            if(showads && adslazy && adscode.length > 0){
+				if(adsheader!="" && adsheaderLazy=="true"){
+                    (function() {
+                        var n = document.createElement("script");
+                        n.async = !0, n.setAttribute('data-ad-client', adsheader), document.head.appendChild(n), n.src = '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+                    })();
+                }
+                (function() {
+                    var n = document.createElement("script");
+                    n.async = !0, n.setAttribute('data-ad-client', adscode), document.head.appendChild(n), n.src = '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+                })();
+            }
+            setTimeout(function() {
+                !function(e, a, t, n, g, c, o) {
+                    e.GoogleAnalyticsObject = g, e.ga = e.ga || function() {
+                        (e.ga.q = e.ga.q || []).push(arguments)
+                    }, e.ga.l = 1 * new Date, c = a.createElement(t), o = a.getElementsByTagName(t)[0], c.async = 1, c.src = "https://www.google-analytics.com/analytics.js", o.parentNode.insertBefore(c, o)
+                }(window, document, "script", 0, "ga"), ga("create", "UA-156911014-1", "auto"), ga("send", "pageview");
+                // Tracking error page
+                window.onerror = function(message, source, lineno, colno, error) {
+                    var label = location.href + ': ' + message + ' (' + source + ':' + lineno + (colno ? ':' + colno : '') + ')';
+                    //console.log(label)
+                    ga('send', 'event', 'performance', 'error', label, 1, {
+                        nonInteraction: true
+                    });
+                    window.onerror = null;
+                };
+            }, 1)
+        }
+        document.addEventListener("scroll", onLazyLoad),
+        document.addEventListener("mousemove", onLazyLoad),
+        document.addEventListener("mousedown", onLazyLoad),
+        document.addEventListener("touchstart", onLazyLoad),
+        document.addEventListener("load", function() {
+            document.body.clientHeight != document.documentElement.clientHeight && 0 == document.documentElement.scrollTop && 0 == document.body.scrollTop || onLazyLoad()
+        });
+    </script>
+    <%
+        if(adsheader!==null && adsheader.adscode !== "" && adsheader.islazy==false){
+    %>
+    <script async data-ad-client="<%=adsheader.adscode%>" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <%
+        }
+    %>
+    <%
+        if(adsShowManager.showads && !adsShowManager.islazy && adsShowManager.adscode.length > 0){
+    %>
+    <script async data-ad-client="<%=adsShowManager.adscode%>" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <%
+        }
+    %>
+</head>
+<%
+    var page = (typeof page !== "undefined") ? page : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var pageContent = (page.pageContent) ? page.pageContent : {};
+        var dptype = (pageContent.posttype) ? "p" : "";
+        dptype = (pageContent.catetype) ? "c" : dptype;
+        var dpid = (pageContent.id) ? pageContent.id : "",
+        className = (className) ? className : '';    
+%>
+<body class="<%=className%>">
+    <div id="adminBar" data-pid="<%=dpid%>" data-ptype="<%=dptype%>"></div>
+    <header id="page-header">
+        <div class="container">
+            <div class="ph-left">
+                <a class="nm-icon nmi-menu-toggle" href="javascript:void(0);" onclick="document.getElementById('menu-holder').classList.toggle('open');">
+                    <svg version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" 
+                         xmlns:xlink="http://www.w3.org/1999/xlink" 
+                         x="0px" y="0px"
+                         width="20" height="20"
+	                     viewBox="0 0 384.97 384.97" 
+                         style="enable-background:new 0 0 384.97 384.97;" 
+                         xml:space="preserve">
+                        <g>
+                            <path d="M12.03,84.212h360.909c6.641,0,12.03-5.39,12.03-12.03c0-6.641-5.39-12.03-12.03-12.03H12.03
+                                C5.39,60.152,0,65.541,0,72.182C0,78.823,5.39,84.212,12.03,84.212z"/>
+                            <path d="M372.939,180.455H12.03c-6.641,0-12.03,5.39-12.03,12.03s5.39,12.03,12.03,12.03h360.909c6.641,0,12.03-5.39,12.03-12.03
+                                S379.58,180.455,372.939,180.455z"/>
+                            <path d="M372.939,300.758H12.03c-6.641,0-12.03,5.39-12.03,12.03c0,6.641,5.39,12.03,12.03,12.03h360.909
+                                c6.641,0,12.03-5.39,12.03-12.03C384.97,306.147,379.58,300.758,372.939,300.758z"/>
+                        </g>
+                    </svg>
+                </a>
+                <a class="logo" href="<%=homeUrl%>">
+                    <img src="/assets/image/logo.png" alt="Logo <%=sitename%>"/>
+                    <span>HappyMod</span>
+                </a>
+                <a class="nm-icon nmi-search-toggle" 
+                    href="javascript:void(0);" 
+                    onclick="document.getElementById('search-holder').classList.toggle('open'); this.classList.toggle('open');"
+                >
+                    <svg class="icon-search" 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        width="20" 
+                        height="20" 
+                        viewBox="0 0 19.262 19.262">
+                        <path d="M19.026,17.895l-5.477-5.478a7.639,7.639,0,1,0-1.135,1.135l5.477,5.478a.8.8,0,1,0,1.135-1.135Zm-11.4-4.248a6.019,6.019,0,1,1,6.019-6.019A6.026,6.026,0,0,1,7.624,13.647Z" transform="translate(0 -0.003)"/>
+                    </svg>
+                    <svg class="icon-close"
+                         version="1.1" 
+                         xmlns="http://www.w3.org/2000/svg" 
+                         xmlns:xlink="http://www.w3.org/1999/xlink" 
+                         x="0px" y="0px"
+                         width="20" height="20" 
+                         viewBox="0 0 47.971 47.971" 
+                         xml:space="preserve">
+                        <g>
+                            <path d="M28.228,23.986L47.092,5.122c1.172-1.171,1.172-3.071,0-4.242c-1.172-1.172-3.07-1.172-4.242,0L23.986,19.744L5.121,0.88
+                                c-1.172-1.172-3.07-1.172-4.242,0c-1.172,1.171-1.172,3.071,0,4.242l18.865,18.864L0.879,42.85c-1.172,1.171-1.172,3.071,0,4.242
+                                C1.465,47.677,2.233,47.97,3,47.97s1.535-0.293,2.121-0.879l18.865-18.864L42.85,47.091c0.586,0.586,1.354,0.879,2.121,0.879
+                                s1.535-0.293,2.121-0.879c1.172-1.171,1.172-3.071,0-4.242L28.228,23.986z"/>
+                        </g>
+                    </svg>
+                </a>
+            </div>
+            <div class="ph-right">
+                <div id="menu-holder" class="">
+                    <div class="menu-bg-toggle">
+                        <a class="nmi-menu-toggle" href="javascript:void(0)" onclick="document.getElementById('menu-holder').classList.toggle('open');">
+                            <svg version="1.1" 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                x="0px" y="0px"
+                                width="15" height="15" 
+                                viewBox="0 0 47.971 47.971" 
+                                xml:space="preserve">
+                                <g>
+                                    <path d="M28.228,23.986L47.092,5.122c1.172-1.171,1.172-3.071,0-4.242c-1.172-1.172-3.07-1.172-4.242,0L23.986,19.744L5.121,0.88
+                                        c-1.172-1.172-3.07-1.172-4.242,0c-1.172,1.171-1.172,3.071,0,4.242l18.865,18.864L0.879,42.85c-1.172,1.171-1.172,3.071,0,4.242
+                                        C1.465,47.677,2.233,47.97,3,47.97s1.535-0.293,2.121-0.879l18.865-18.864L42.85,47.091c0.586,0.586,1.354,0.879,2.121,0.879
+                                        s1.535-0.293,2.121-0.879c1.172-1.171,1.172-3.071,0-4.242L28.228,23.986z"/>
+                                </g>
+                            </svg>
+                        </a>
+                        <a class="logo-in-nav">
+                            <img src="assets/image/logo.png" alt="logo"/>
+                        </a>
+                        <%
+                            var mainNav = (page.menuHeader) ? page.menuHeader : {};
+                            var htmlMainNav = (mainNav.language) ? mainNav.menu : mainNav;
+                            var htmlLanguage = mainNav.language || "";
+                        %>
+                        <ul class="menu"><%- htmlMainNav %></ul>
+                        <!-- <div class="login box-dropdown">
+                            <a href="javascript:void(0)" class="dd-toggle" rel="nofollow">
+                                <svg class="avatar" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 20 20">
+                                    <path d="M10,0A10,10,0,1,0,20,10,10.029,10.029,0,0,0,10,0Zm0,3a2.946,2.946,0,0,1,3,3,2.946,2.946,0,0,1-3,3A2.946,2.946,0,0,1,7,6,2.946,2.946,0,0,1,10,3Zm0,14.2A7.3,7.3,0,0,1,4,14c0-2,4-3.1,6-3.1S16,12,16,14A7.3,7.3,0,0,1,10,17.2Z" fill="#fff"/>
+                                </svg>
+                            </a>
+                            <div class="dd-content">
+                                <a href="<%=homeUrl%>/login"><%=__("textLogin")%></a>
+                                <a href="<%=homeUrl%>/register"><%=__("textSignUp")%></a>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="search-holder" class="">            
+            <form action="/" class="form-search" autocomplete='off'>
+                <input type="text" name="s" placeholder="<%=__('textSearchPlaceholder')%>..." autocomplete="off"/>
+                <button>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 19.262 19.262">
+                        <path d="M19.026,17.895l-5.477-5.478a7.639,7.639,0,1,0-1.135,1.135l5.477,5.478a.8.8,0,1,0,1.135-1.135Zm-11.4-4.248a6.019,6.019,0,1,1,6.019-6.019A6.026,6.026,0,0,1,7.624,13.647Z" transform="translate(0 -0.003)"/>
+                    </svg>
+                </button>
+                <pre id="suggest-text"></pre>
+                <div id="suggestions"></div>
+            </form>
+        </div>
+    </header>

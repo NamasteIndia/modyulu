@@ -1,0 +1,34 @@
+<%
+    var tracer = (tracer) ? tracer : [];
+    if(tracer.length > 0){
+%>
+<div class="accordion accordion-ui ui-state-default mb-3" id="accordionTracer">
+    <div class="card">
+        <div class="card-header" id="headingTracer">
+            <h4 class="mb-0">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseTracer" aria-expanded="true" aria-controls="collapseTracer">
+                    <%=tracer.length%> logs recently
+                </button>
+            </h4>
+        </div>
+        <div id="collapseTracer" class="collapse show" aria-labelledby="headingTracer" data-parent="#accordionTracer">
+            <div class="card-body">
+                <table class="tb-logging">
+                <%                                        
+                    tracer.forEach(t => {
+                        let author = (t.Author) ? t.Author : {};
+                %>
+                        <tr>
+                            <td><%=functions.formart_datetime(t.createdAt, "full")%></td>
+                            <td><%=author.username%></td>
+                            <td><%=t.notes.toLowerCase()%></td>
+                        </tr>                                           
+                <%
+                    })
+                %>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<% } %>

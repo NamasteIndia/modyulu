@@ -1,0 +1,44 @@
+<% 
+    var page = (typeof page !== "undefined") ? page : {};
+    var homeUrl = (page.curLang.ismain) ? "" : `/${page.curLang.id}`;
+    var comments = (page.comments && page.comments.rows) ? page.comments.rows : [];
+%>
+<%- include("includes/header"); %>
+<main id="page-body">    
+    <div class="container">       
+        <div class="box box-profile">
+            <div class="title">
+                <ul class="bu-nav">
+                    <li>
+                        <a href="<%=homeUrl%>/account/profile" rel="nofollow">
+                            <span><%=__('textProfile')%></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=homeUrl%>/account/password" rel="nofollow">
+                            <span><%=__('textChangePassword')%></span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="<%=homeUrl%>/account/comment" rel="nofollow">
+                            <span><%=__('textComments')%></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-content">
+            <%-include("includes/comment-profile", {rows: comments, className: "profile-comments"}) %>
+            <%
+                if(comments.length > 5){
+            %>
+                    <div class="text-center mb-3">
+                        <button id="btn-loadmore-pcmts"><%=__('btnViewMore')%></button>
+                    </div>
+            <%
+                }
+            %>
+            </div>
+        </div>
+    </div>    
+</main>
+<%- include("includes/footer"); %>

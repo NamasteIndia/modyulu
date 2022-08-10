@@ -1,0 +1,168 @@
+<%
+    var page = (typeof page !== "undefined") ? page : {};
+    var pageContent = (page.pageContent) ? page.pageContent : {};
+    var curLang = (page.curLang) ? page.curLang : {};    
+    var comments = (page.comments && page.comments.rows) ? page.comments.rows : [];
+    var ratingLines = (page.ratingLines) ? page.ratingLines : {};
+    var stars = (ratingLines.stars) ? ratingLines.stars : [0,0,0,0,0];
+    var percentStars = (ratingLines.percent) ? ratingLines.percent : [0,0,0,0,0];
+    var maxPercent = Math.max(...percentStars);
+    percentStars = percentStars.map(p => {
+        if(p>0) return parseInt(((p * 100) / maxPercent).toFixed(0));
+        return 0;
+    });
+    var numComment = ratingLines.numComment || 0;
+    var numReview = ratingLines.numReview || 0;
+    var numReviewLang = ratingLines.numReviewLang || 0;
+    var numRLHide = numReviewLang - 5;
+    var commentPermalink = (curLang.ismain) ? `${domain}/comment/add` : `${domain}/${curLang.id}/comment/add`;
+%>
+<div id="comments" data-pid="<%=pageContent.id%>" data-lid="<%=curLang.id%>">
+<%
+    if( ratingLines.point > 0){
+%>
+    <div class="rating-detail">
+        <div class="rt-l">
+            <div class="score"><%=ratingLines.point%></div>
+            <div class="info">
+                <div><%=__('textTotalReview');%>:<span class="total"><%=numReview%></span></div>                
+            </div>
+        </div>
+        <div class="rt-r">
+            <div class="line">
+                <span class="title">
+                    <span>5</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15.574" height="15.002" viewBox="0 0 15.574 15.002">
+                        <path d="M13.044,14.365,8.3,14.053,6.519,9.569,4.734,14.053,0,14.365l3.631,3.083L2.44,22.125l4.08-2.579,4.08,2.579L9.407,17.448Z" transform="translate(1.265 -8.217)" fill="none" stroke="#707070" stroke-width="1"/>
+                    </svg>
+                </span>
+                <span class="score score-5" style="width:<%= percentStars[4] %>%"></span>
+                <span class="count count-5"><%= stars[4] %></span>
+            </div>
+            <div class="line">
+                <span class="title">
+                    <span>4</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15.574" height="15.002" viewBox="0 0 15.574 15.002">
+                        <path d="M13.044,14.365,8.3,14.053,6.519,9.569,4.734,14.053,0,14.365l3.631,3.083L2.44,22.125l4.08-2.579,4.08,2.579L9.407,17.448Z" transform="translate(1.265 -8.217)" fill="none" stroke="#707070" stroke-width="1"/>
+                    </svg>
+                </span>
+                <span class="score score-4" style="width:<%= percentStars[3] %>%"></span>
+                <span class="count count-4"><%= stars[3] %></span>
+            </div>
+            <div class="line">
+                <span class="title">
+                    <span>3</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15.574" height="15.002" viewBox="0 0 15.574 15.002">
+                        <path d="M13.044,14.365,8.3,14.053,6.519,9.569,4.734,14.053,0,14.365l3.631,3.083L2.44,22.125l4.08-2.579,4.08,2.579L9.407,17.448Z" transform="translate(1.265 -8.217)" fill="none" stroke="#707070" stroke-width="1"/>
+                    </svg>
+                </span>
+                <span class="score score-3" style="width: <%= percentStars[2] %>%"></span>
+                <span class="count count-3"><%= stars[2] %></span>
+            </div>
+            <div class="line">
+                <span class="title">
+                    <span>2</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15.574" height="15.002" viewBox="0 0 15.574 15.002">
+                        <path d="M13.044,14.365,8.3,14.053,6.519,9.569,4.734,14.053,0,14.365l3.631,3.083L2.44,22.125l4.08-2.579,4.08,2.579L9.407,17.448Z" transform="translate(1.265 -8.217)" fill="none" stroke="#707070" stroke-width="1"/>
+                    </svg>
+                </span>
+                <span class="score score-2" style="width: <%= percentStars[1] %>%"></span>
+                <span class="count count-2"><%= stars[1] %></span>
+            </div>
+            <div class="line">
+                <span class="title">
+                    <span>1</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15.574" height="15.002" viewBox="0 0 15.574 15.002">
+                        <path d="M13.044,14.365,8.3,14.053,6.519,9.569,4.734,14.053,0,14.365l3.631,3.083L2.44,22.125l4.08-2.579,4.08,2.579L9.407,17.448Z" transform="translate(1.265 -8.217)" fill="none" stroke="#707070" stroke-width="1"/>
+                    </svg>
+                </span>
+                <span class="score score-1" style="width:<%= percentStars[0] %>%"></span>
+                <span class="count count-1"><%= stars[0] %></span>
+            </div>
+        </div>                        
+    </div>
+<%
+    }
+%>
+    <div class="form-comment">
+        <form action="<%=commentPermalink%>" method="POST">
+            <div class="frm-row box-space">
+                <label for="content"><%=__('textYourComment');%> <span class="mark">(*)</span></label>
+                <div class="msg-reply-holder"></div>
+                <textarea name="content" id="content" cols="30" rows="10" required></textarea>
+                <input type="hidden" name="postid" value="<%=page.pageContent.id%>">
+                <input type="hidden" name="parentid" value="">
+                <input type="hidden" name="token" value="<%=(session.ajaxpagetoken)?session.ajaxpagetoken:'';%>">
+            </div>
+            <div class="frm-row">
+                <div class="rating-bar">                    
+                    <input type="radio" name="rating" value="5" id="rating-5">
+                    <label for="rating-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15.574" height="15.002" viewBox="0 0 15.574 15.002">
+                            <path d="M13.044,14.365,8.3,14.053,6.519,9.569,4.734,14.053,0,14.365l3.631,3.083L2.44,22.125l4.08-2.579,4.08,2.579L9.407,17.448Z" transform="translate(1.265 -8.217)" fill="none" stroke="#707070" stroke-width="1"/>
+                        </svg>
+                    </label>
+                    <input type="radio" name="rating" value="4" id="rating-4">
+                    <label for="rating-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15.574" height="15.002" viewBox="0 0 15.574 15.002">
+                            <path d="M13.044,14.365,8.3,14.053,6.519,9.569,4.734,14.053,0,14.365l3.631,3.083L2.44,22.125l4.08-2.579,4.08,2.579L9.407,17.448Z" transform="translate(1.265 -8.217)" fill="none" stroke="#707070" stroke-width="1"/>
+                        </svg>
+                    </label>
+                    <input type="radio" name="rating" value="3" id="rating-3">
+                    <label for="rating-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15.574" height="15.002" viewBox="0 0 15.574 15.002">
+                            <path d="M13.044,14.365,8.3,14.053,6.519,9.569,4.734,14.053,0,14.365l3.631,3.083L2.44,22.125l4.08-2.579,4.08,2.579L9.407,17.448Z" transform="translate(1.265 -8.217)" fill="none" stroke="#707070" stroke-width="1"/>
+                        </svg>
+                    </label>
+                    <input type="radio" name="rating" value="2" id="rating-2">
+                    <label for="rating-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15.574" height="15.002" viewBox="0 0 15.574 15.002">
+                            <path d="M13.044,14.365,8.3,14.053,6.519,9.569,4.734,14.053,0,14.365l3.631,3.083L2.44,22.125l4.08-2.579,4.08,2.579L9.407,17.448Z" transform="translate(1.265 -8.217)" fill="none" stroke="#707070" stroke-width="1"/>
+                        </svg>
+                    </label>
+                    <input type="radio" name="rating" value="1" id="rating-1">                
+                    <label for="rating-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15.574" height="15.002" viewBox="0 0 15.574 15.002">
+                            <path d="M13.044,14.365,8.3,14.053,6.519,9.569,4.734,14.053,0,14.365l3.631,3.083L2.44,22.125l4.08-2.579,4.08,2.579L9.407,17.448Z" transform="translate(1.265 -8.217)" fill="none" stroke="#707070" stroke-width="1"/>
+                        </svg>
+                    </label>
+                </div>
+                <button class="btn btn-submit br-50"><%=__('textSubmitComment');%></button>
+            </div>
+        </form>
+    </div>
+    <div class="holder-comments">
+        <%
+            if(numComment>0){
+        %>
+            <div class="lc-head">
+                <div class="lch-sort box-dropdown">
+                    <a href="javascript:void(0)" class="dd-toggle lchs-current" data-sort="best"><%=__('textSortByBest');%></a>
+                    <ul class="dd-content">
+                        <li><a class="lchs-item" rel="nofollow" href="javascript:void(0)" data-sort="best" data-text="<%=__('textSortByBest');%>"><%=__('textSortByBest');%></a></li>
+                        <li><a class="lchs-item" rel="nofollow" href="javascript:void(0)" data-sort="top" data-text="<%=__('textSortByTopRated');%>"><%=__('textSortByTopRated');%></a></li>
+                        <li><a class="lchs-item" rel="nofollow" href="javascript:void(0)" data-sort="new" data-text="<%=__('textSortByNewsest');%>"><%=__('textSortByNewsest');%></a></li>
+                    </ul>
+                </div>
+            </div>
+        <%
+            }
+        %>
+        <div class="lch-body">
+            <div class="lc-wrap">
+                <%- include("comment-loop", {comments: comments}) %>
+            </div>
+            <%
+                if(numComment > 5){
+            %>
+                    <div class="wraploadmore">
+                        <a href="javascript:void(0)" class="btn-seemore btn-seemore-comment" rel="nofollow" data-pid="<%=pageContent.id%>" data-total="<%=numReviewLang%>" data-lid="<%=curLang.id%>" data-numhide="<%=numRLHide%>">
+                            <%= __('textSeeMoreReview'); %> (<span><%=numRLHide%></span>)
+                        </a>
+                    </div>
+            <%
+                }
+            %>
+        </div>
+    </div>
+  </div>

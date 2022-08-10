@@ -1,0 +1,112 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>/redirect">Redirect</a></li>
+                <li class="breadcrumb-item active" aria-current="page">List Redirects</li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="datatable-search-header">
+                                <select id="slBulk">
+                                    <option value="">Bulk actions</option>
+                                    <option value="delete">Delete</option>
+                                </select>
+                                <button id="btnBulk" type="button" class="btn btn-primary">Apply</button>
+                                <div class="datatable-filter-holder">
+                                    <input class="item-filter" type="text" placeholder="Search">
+                                    <select class="item-filter">
+                                        <option value="%">All Objects</option>
+                                        <option value="post">Post</option>
+                                        <option value="category">Category</option>
+                                    </select>
+                                    <select class="item-filter">
+                                        <option value="%">All Status</option>
+                                        <option value="on">Avaiable</option>
+                                        <option value="off">Disabled</option>
+                                    </select>
+                                    <button id="btnDTFileter" type="button" class="btn btn-primary">Filter</button>
+                                </div>
+                                <button class="btn btn-sm btn-outline-primary btn-load-modal-add">Add Link transfer</button>
+                            </div>
+                            <table id="datatable-sside" class="table table-bordered datatable-style" data-type="redirect">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" name="select_all" value="1" id="datatable-select-all"></th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Author</th>
+                                        <th>Type</th>
+                                        <th>Object</th>                                        
+                                        <th class="text-center"><i class="fas fa-power-off" title="Redirect status"></th>
+                                        <th class="text-right" style="max-width: 120px"><i class="fas fa-clock" title="Last modified at"></i></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <!-- Model -->
+    <div class="modal fade" id="frmModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><span id="frmTitleAction">New</span> Link Transfer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <div class="error-modal-edit"></div>
+                    <form action="/<%=dashboard%>/redirect/edit" method="POST">
+                        <input type="hidden" name="id" id="id" autocomplete="off" required>
+                        <div class="form-group">
+                            <label for="oldslug" class="col-form-label">From</label>
+                            <input class="form-control" type="text" name="oldslug" id="oldslug" placeholder="From">
+                        </div>
+                        <div class="form-group">
+                            <label for="newslug" class="col-form-label">To</label>
+                            <input class="form-control" type="text" name="newslug" id="newslug" placeholder="To">
+                        </div>
+                        <div class="form-group">
+                            <label for="type" class="col-form-label">Transfer type</label>
+                            <select class="form-control" name="type" id="type">
+                                <option value="301">301</option>
+                                <option value="302">302</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="objtype" class="col-form-label">Object</label>
+                            <select class="form-control" name="objtype" id="objtype">
+                                <option value="post">Post</option>
+                                <option value="category">Category</option>
+                                <option value="othersite">Other site</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <input class="form-check-input" type="checkbox" name="isblock" id="isblock">
+                                <label class="form-check-label" for="isblock">Block</label>
+                            </div>
+                        </div>
+                        <div class="text-right mt-3">
+                            <button type="submit" class="btn btn-primary">Apply</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.redirect.js" charset="utf-8"></script>
+    <script src="/<%=dashboard%>/assets/datatables/datatable.all.js" charset="utf-8"></script>
+    <%- include("./include/footer") %>

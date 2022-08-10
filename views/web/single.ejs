@@ -1,0 +1,108 @@
+<%
+    var page = (typeof page !== "undefined") ? page : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var pageContent = (page.pageContent) ? page.pageContent : {};
+    var author = (pageContent.Author) ? pageContent.Author : {};
+    var authorName = ( author.nickname ) ? author.nickname : `${author.firstname} ${author.lastname}`;
+    var blogs = (page.apkYouLike && page.apkYouLike.rows) ? page.apkYouLike.rows : [];
+    var lastUpdated = functions.formart_datetime(pageContent.modifiedat, "day");
+    var lastUpdatedSEO = functions.formart_datetime(pageContent.modifiedat, "seo");
+    var tocDom = (page.toc) ? page.toc.join("") : "";
+    var tags = (page.tags) ? page.tags : [];
+%>
+<%- include("includes/header"); %>
+<main id="page-body">
+    <div class="container">
+        <%- page.breadcrumbs.html %>
+        <article class="page-single">
+            <div class="page-description">
+                <h1 class="page-title"><%=pageContent.title%></h1>               
+            </div>
+            <%
+                if(tocDom.length > 0){
+            %>
+                <div class="entry-toc box-space">
+                    <div class="accordion tnvToc">
+                        <div class="ahead">                            
+                            <span><%= __('textTableOfContent'); %></span>
+                            <svg class="toggle" xmlns="http://www.w3.org/2000/svg" width="16" height="9.887" viewBox="0 0 16 9.887">
+                                <g  transform="translate(24 58.794) rotate(180)">
+                                    <g transform="translate(8 48.907)">
+                                        <path d="M14.113,48.907,8,55.02,1.887,48.907,0,50.794l8,8,8-8Z" transform="translate(0 -48.907)"/>
+                                    </g>
+                                </g>
+                            </svg>                              
+                        </div>
+                        <div class="abody" id="tocList"><%-tocDom%></div>
+                    </div>
+                </div>
+            <%
+                }
+            %>
+            <%- include("includes/ads-slot", {slot: 1, hasSpace: true}); %>
+            <div id="contentMakeToc" class="entry-description wrapcontent"><%- pageContent.content; %></div>
+            <!--Entry Tags-->
+            <%
+                if(tags.length>0){
+            %>
+                    <div class="entry-tags list-tags mb-20">
+                        <span class="tags-title"><%=__('textTags')%></span>
+            <%
+                        tags.forEach(tag => {
+                            let tagPermalink = `${homeUrl}/tag/${tag.slug}/`;
+            %>
+                            <a class="tag" href="<%=tagPermalink%>" title="<%=tag.title%>"><%=tag.title%></a>
+            <%
+                        })
+            %>
+                    </div>
+            <%
+                }
+            %>
+            <%
+                var faqs = (page.faqs) ? page.faqs : [];
+                if(faqs.length > 0){
+            %>
+                    <div class="entry-faq">
+            <%
+                    faqs.forEach(function(faq, indx){
+                        var classNameFaq = (indx > 0) ? '' : 'open';
+                        classNameFaq = '';
+                        
+            %>
+                        <%- include("includes/faq", {faq: faq, classNameFaq: classNameFaq}) %>
+            <%
+                    });
+            %>
+                    </div>
+            <%
+                }
+            %>
+            <%- include("includes/ads-slot", {slot: 2, hasSpace: true}); %>
+            <%
+                if(blogs.length > 0){
+            %>
+                <div class="entry-related">
+                    <div class="sbhTitle box-space">
+                        <span><%= __("recommendTitle"); %></span>
+                    </div>                
+                    <ul class="blogs w3">
+                        <%- include("includes/list-blog", {posts: blogs}); %>
+                    </ul>
+                </div>
+            <%
+                }
+            %>            
+            <div class="entry-comment">
+                <div class="sbhTitle box-space">
+                    <span><%= __("textShareYourThoughts"); %></span>
+                </div>                
+                <%- include("includes/comment-box"); %>
+            </div>
+            <!--
+            <%- include("includes/discord-box"); %>
+            -->
+        </article>
+    </div>
+</main>
+<%- include("includes/footer"); %>

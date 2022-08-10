@@ -1,0 +1,55 @@
+<%    
+    var post = (page.apk) ? page.apk : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var apk = (apk) ? apk : {};
+    var mod = (mod) ? mod : {};
+    var links = (mod.links) ? mod.links : [];
+    var isOriginal = (isOriginal) ? isOriginal : false;
+    var color = (color) ? color : "";
+    var btnColorClass = (color && color=="green") ? 'btn-green' : 'btn-red';
+    var modTitle = mod.title;
+    //modTitle += (apk.mod_text!="") ? ` (${apk.mod_text})` : '';
+    var newSlug = functions.convert_slug(post.title);
+    var baseLink = (isOriginal) ? `${homeUrl}/download/original/${newSlug}-${post.id}-` : `${homeUrl}/download/mod/${newSlug}-${post.id}-`;
+    var classHidden = (classHidden) ? classHidden : '';
+    if(links.length > 0){
+%>
+<div class="accordion mod-accordion mb-10 <%=classHidden%>">
+    <div class="ahead">
+        <span><%=modTitle%></span>
+        <span class="toggle">+</span>
+    </div>
+    <div class="abody">
+        <div class="wrap-box-mod">
+            <div class="wrapcontent">                
+                <%- (mod.description.length > 0) ? mod.description : ''; %>
+            </div>
+            <div class="links">
+                <%
+                    links.forEach(link => {
+                        let fileTitle = link.title;
+                        fileTitle = fileTitle.toLowerCase();
+                        let fileTypeName = (fileTitle.match(/obb/g)) ? 'OBB' : 'APK';
+                        let linkName = `${mod.title} [${link.size}]`;
+                        let modPermalink = link.link;
+                        modPermalink = (modPermalink.match(/\.zip$/g)) ? `${baseLink}2` : `${baseLink}1`;
+                        modPermalink = (isOriginal) ? modPermalink : `${baseLink}${link.id}`;
+                        let itemClass = (fileTypeName=='OBB') ? 'item-obb' : 'item-apk';
+                        let itemIcon = (fileTypeName=='OBB') ? '<i class="icon-svg icon-obb"></i>' : '<i class="icon-svg icon-apk"></i>';
+                %>
+                            <div class="item <%=itemClass%>">
+                                <a href="<%=modPermalink%>" title="<%=linkName%>">
+                                    <%-itemIcon%>
+                                    <span><%=linkName%></span>
+                                </a>
+                            </div>
+                <%                        
+                    });
+                %>
+            </div>
+        </div>
+    </div>
+</div>
+<%
+    }
+%>

@@ -1,0 +1,114 @@
+@media (max-width: 767px) {
+  #wpadminbar {
+    position: fixed !important;
+  }
+  .row {
+    margin-left: -8px;
+    margin-right: -8px;
+  }
+  [class*='col-'] {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .single .breadcrumb-item.active {
+    display: none;
+  }
+
+  .header-nav-box.header-nav-box-6 .appie-btn-box form {
+    display: none;
+  }
+
+  .appie-header-main-menu {
+    display: none;
+    ul {
+      > li {
+        .sub-menu {
+          position: relative;
+          width: 100%;
+          left: 0;
+          top: auto;
+          opacity: 1;
+          visibility: visible;
+          display: none;
+          right: auto;
+          -webkit-transform: translateX(0);
+          transform: translateX(0);
+          transition: all none 0s ease-out;
+          box-shadow: none;
+          text-align: left;
+          border-top: 0;
+          transition: 0s;
+          padding: 0;
+          > li {
+            a {
+              i {
+                display: none;
+              }
+            }
+            .sub-menu {
+              margin-left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .appie-page-title-item {
+    .thumb {
+      display: none;
+    }
+    .title {
+      font-size: 26px;
+    }
+  }
+
+  .appie-service-area {
+    &.appie-service-3-area {
+      padding-top: 100px;
+    }
+    .appie-section-title {
+      text-align: center !important;
+    }
+  }
+
+  .appie-single-service-2 {
+    text-align: center;
+    padding: 20px;
+
+    &.appie-single-service-about {
+      padding-right: 50px;
+      padding-left: 50px;
+    }
+  }
+
+  .service-details-sidebar {
+    margin-right: 0;
+    margin-bottom: 30px;
+  }
+
+  .appie-services-8-area {
+    &.service-thumb {
+      display: none;
+    }
+  }
+
+  .appie-features-tabs-btn {
+    .nav {
+      flex-direction: row !important;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+  }
+
+  .appie-features-content {
+    padding-top: 30px;
+  }
+
+  .appie-features-content {
+    .title {
+      font-size: 30px;
+      line-height: 40px;
+    }
+  }
+}

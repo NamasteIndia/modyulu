@@ -1,0 +1,23 @@
+<%
+    var page = (typeof page !== "undefined") ? page : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+%>
+<%- include("includes/header", {className: 'page-404'}); %>
+<main id="page-body">
+    <div class="container">
+        <div class="breadcumb">
+            <ul>
+                <li><a href="/"><%=__("textHome")%></a></li>
+                <li><span>404</span></li>
+            </ul>
+        </div>
+        <div class="wrapcontent text-center">
+            <h1 class="title-404">404</h1>
+            <img class="img-404" src="/assets/image/404.gif" alt="<%=__('textPageNotFound')%>">
+            <div class="page-direct">
+                <%=__("textBackTo")%> <a href="<%=homeUrl%>" title="<%=__('textBackTo')%> <%=sitename%>"><%=sitename%></a>
+            </div>
+        </div>
+    </div>
+</main>
+<%- include("includes/footer"); %>

@@ -1,0 +1,112 @@
+<% 
+    var page = (typeof page !== "undefined") ? page : {};
+    var profileUser = (page.profileUser) ? page.profileUser : {};
+    var frmAction = '/account/profile';
+    frmAction =  (page.curLang.ismain) ? frmAction : `/${page.curLang.id}${frmAction}`;
+    var urlWithLang = (page.curLang.ismain) ? "" : `/${page.curLang.id}`;
+    var avatarUrl = (session.avatar) ? session.avatar : "/assets/image/no-image-200.jpg";
+%>
+<%- include("includes/header"); %>
+<main id="page-body">    
+    <div class="container">       
+        <div class="box box-profile">
+            <div class="title">
+                <ul class="bu-nav">
+                    <li class="active">
+                        <a href="<%=urlWithLang%>/account/profile" rel="nofollow">
+                            <span><%=__('textProfile')%></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=urlWithLang%>/account/password" rel="nofollow">
+                            <span><%=__('textChangePassword')%></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=urlWithLang%>/account/comment" rel="nofollow">
+                            <span><%=__('textComments')%></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-content">
+                <div class="bp-change-avatar">
+                    <div class="bpca-text"><%=__('textMyPicture')%></div>
+                    <img src="<%=avatarUrl%>" alt="My Picture" width="150" height="150">
+                    <input type="file" name="file" id="change-avatar-file" accept="image/png,image/jpeg">
+                    <button type="button" id="btn-change-avatar"><%=__('textChangePicture')%></button>
+                </div>
+                <div class="bp-form">
+                    <form class="box-form" data-reset="none" action="<%=frmAction%>" method="post">
+                        <div class="bf-line">
+                            <label><%=__('textUsername')%></label>
+                            <input type="text" name="account" value="<%=profileUser.username%>" readonly>
+                        </div>                        
+                        <div class="bf-line">
+                            <label><%=__('textNickname')%></label>
+                            <input type="text" name="nickname" id="nickname" placeholder="<%=__('textNickname')%>" value="<%=profileUser.nickname%>" required>
+                            <span class="error"></span>
+                        </div>
+                        <div class="bf-line">
+                            <label><%=__('textBirthday')%></label>
+                            <div class="bf-inline-items">
+                                <select class="item" name="bdd" id="bdd">
+                                    <option value="">-</option>
+                                    <%
+                                        for(let i=1; i<=31; i++){
+                                    %>
+                                        <option value="<%=i%>" <%if(profileUser.bdd==i){%>selected<%}%>><%=i%></option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                                <select class="item" name="bdm" id="bdm">
+                                    <option value="">-</option>
+                                    <%
+                                        for(let i=1; i<=12; i++){
+                                    %>
+                                        <option value="<%=i%>" <%if(profileUser.bdm==i){%>selected<%}%>><%=i%></option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                                <select class="item" name="bdy" id="bdy">
+                                    <option value="">-</option>
+                                    <%
+                                        var curYear = new Date().getFullYear();
+                                        curYear = curYear - 6;
+                                        for(let i=curYear; i>=(curYear - 50); i--){
+                                    %>
+                                        <option value="<%=i%>" <%if(profileUser.bdy==i){%>selected<%}%>><%=i%></option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                            </div>
+                            <span class="error"></span>
+                        </div>
+                        <div class="bf-line">
+                            <label><%=__('textGender')%></label>
+                            <div class="bf-inline-items">
+                                <div class="item">
+                                    <input type="radio" name="gender" value="MALE" <%if(profileUser.gender=="MALE"){%>checked<%}%>>
+                                    <span><%=__('textMale')%></span>
+                                </div>
+                                <div class="item">
+                                    <input type="radio" name="gender" value="FEMALE" <%if(profileUser.gender=="FEMALE"){%>checked<%}%>>
+                                    <span><%=__('textFemale')%></span>
+                                </div>
+                            </div>
+                            <span class="error"></span>
+                        </div>
+                        <div class="bf-line bfl-error"></div>
+                        <div class="bf-line">   
+                            <button class="btn-bff-submit" type="submit"><%=__('textSave')%></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>    
+</main>
+<%- include("includes/footer"); %>

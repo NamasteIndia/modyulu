@@ -1,0 +1,71 @@
+<%- include("./include/header") %>
+<!--Main content-->
+<div class="site-body">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0">
+            <li class="breadcrumb-item">
+                <a href="/<%=dashboard%>">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+            </li>                
+            <li class="breadcrumb-item active" aria-current="page">Apk choise</li>
+        </ol>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5>Chọn APK hiển thị ra trang chủ</h5>
+                        <div class="mb-3"></div>
+                        <div class="language-bar">
+                            <ul class="lang-controls">
+                                <%
+                                    var langs = (langs) ? langs : [];
+                                    var curlang = (curlang) ? curlang : "pt";
+                                    langs.forEach(lang => {
+                                        let className = (lang.id == curlang) ? 'btn-primary' : 'btn-outline-primary';
+                                %>
+                                        <li>
+                                            <a class="btn btn-sm <%=className%>" href="/<%=dashboard%>/apkchoice?langid=<%=lang.id%>">
+                                                <img src="/<%=dashboard%>/assets/img/flags/<%=lang.id%>.png" atl="<%=lang.name%>">
+                                                <span><%=lang.name%></span>
+                                            </a>
+                                        </li>
+                                <%
+                                    });
+                                %>                                
+                            </ul>
+                        </div>
+                        <div class="mb-3"></div>
+                        <div class="apkChoiceHolder">
+                            <form action="/<%=dashboard%>/apkchoice/save" id="frmApkChoice" method="POST">
+                                <div class="form-froup mb-3">
+                                    <select id="slApkChoice" name="ids" class="form-control form-select" multiple>
+                                        <%
+                                            var posts = (posts) ? posts : [];
+                                            posts.forEach(p => {
+                                        %>
+                                                <option value="<%=p.id%>" selected><%=p.title%></option>
+                                        <%
+                                            })
+                                        %>
+                                    </select>
+                                    <input type="hidden" name="langid" value="<%=curlang%>">
+                                </div>
+                                <div class="form-group text-center">
+                                    <button class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var langid = `<%=(curlang) ? curlang : "pt";%>`;
+</script>
+<script src="/<%=dashboard%>/assets/libs/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+<%- include("./include/footer") %>

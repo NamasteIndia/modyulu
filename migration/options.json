@@ -1,0 +1,57 @@
+[
+  {
+    "metakey": "app_title_template",
+    "metavalue": "Download [appTitle] Mod APK [appVersion] Latest Version For Free|",
+    "inputtype": "textarea",
+    "fieldlabel": "Apk title random",
+    "description": "Tải [appTitle] miễn phí"
+  },
+  {
+    "metakey": "app_description_template",
+    "metavalue": "Description Download [appTitle] Mod APK [appVersion] Latest Version For Free|",
+    "inputtype": "textarea",
+    "fieldlabel": "Apk description random",
+    "description": "Tải [appTitle] miễn phí"
+  },
+  {
+    "metakey": "app_content_template",
+    "metavalue": "<h1>Tải game [appTitle]</h1> <p>Nội dung game 1</p> [screenshot]<p>Nội dung game 2</p>|",
+    "inputtype": "textarea",
+    "fieldlabel": "Apk content random",
+    "description": "<h1>Tên game</h1>\r<p>Nội dung game 1</p>\r[screenshot]\r<p>Nội dung game 2</p>"
+  },
+  {
+    "metakey": "cate_title_template",
+    "metavalue": "Category title [appCategory]|",
+    "inputtype": "textarea",
+    "fieldlabel": "Category title random",
+    "description": "Category title [appCategory]"
+  },
+  {
+    "metakey": "cate_description_template",
+    "metavalue": "Category Description [appCategory]|",
+    "inputtype": "textarea",
+    "fieldlabel": "Category description random",
+    "description": "Category description [appTitle]"
+  },
+  {
+    "metakey": "dev_title_template",
+    "metavalue": "Developer title [appDeveloper]|",
+    "inputtype": "textarea",
+    "fieldlabel": "Developer title random",
+    "description": "Nhà phát triển [appTitle]"
+  },
+  {
+    "metakey": "dev_description_template",
+    "metavalue": "Developer description [appDeveloper]|",
+    "inputtype": "textarea",
+    "fieldlabel": "Developer description random",
+    "description": "Nhà phát triển [appTitle]"
+  },
+  {
+    "metakey": "off_optimze_image_upload",
+    "metavalue": "",
+    "fieldlabel": "Off optimize image upload",
+    "inputtype": "checkbox"
+  }
+]

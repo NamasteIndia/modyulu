@@ -1,0 +1,19 @@
+<%
+    var post = (post) ? post : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var thumb = (post.thumb) ? post.thumb : {};
+    var noimage = `${domain}/assets/image/no-image.jpg`;
+    var thumbnail = (thumb.url) ? thumb.url : noimage;
+    var permalink = `${homeUrl}/${post.slug}.html`;
+    var title = post.title;
+    var content = (post.content) ? post.content : "";
+    var description = post.description || "";
+%>
+<a class="blog" href="<%=permalink%>" title="<%=title%>">
+    <figure>
+        <img class="thumb img-lazy" data-src="<%=thumbnail%>" src="<%=noimage%>" alt="<%=title%>">
+    </figure>
+    <div class="info">
+        <div class="title"><%=title%></div>
+    </div>
+</a>

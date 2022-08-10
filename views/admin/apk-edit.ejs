@@ -1,0 +1,784 @@
+<%- include("./include/header") %>
+<!--Main content-->
+<div class="site-body">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0">
+            <li class="breadcrumb-item"><a href="/<%=dashboard%>"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/<%=dashboard%>/post/<%=type.id%>"><%=type.name%></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit <%=post.title%></li>
+        </ol>
+    </nav>
+    <div class="container-fluid">
+        <form id="post-form-edit" action="/<%=dashboard%>/post/<%=posttype%>/edit/<%=post.id%>" method="post">
+            <!-- Language -->
+            <div class="row">
+                <div class="col-12">
+                    <%- include("./templates/box-post-language")%>
+                </div>
+            </div>
+            <div class="row sortable-wrapper" id="ApkEditScreen">
+                <!-- Left Side -->
+                <div class="col-lg-9 col-md-12">                    
+                    <div id="ls-sortable" class="sortable">
+                        <div class="accordion accordion-ui ui-state-default mb-3" id="accordionMainPost">
+                            <div class="card">
+                                <div class="card-header" id="headingMainPost">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseMainPost" aria-expanded="false" aria-controls="collapseMainPost">
+                                            Content
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseMainPost" class="collapse show" aria-labelledby="headingMainPost" data-parent="#accordionMainPost">
+                                    <div class="card-body">
+                                        <div class="mb-3 input-group-wrap">
+                                            <label for="apk[playstore_url]" class="form-label">Playstore Url</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="apk[playstore_url]" placeholder="Playstore url" value="<%=post.apk.playstore_url%>">
+                                                <div class="input-group-append">
+                                                    <button id="btn-releech" class="btn btn-primary" type="button"><i class="fas fa-download"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title">Tittle</label>
+                                            <input type="hidden" class="form-control" name="id" placeholder="ID" value="<%=post.id%>">
+                                            <input type="text" class="form-control" name="title" placeholder="Tittle" value="<%=post.title%>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="slug">Slug</label>
+                                            <input type="text" class="form-control" name="slug" placeholder="Slug" value="<%=post.slug%>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <textarea class="form-control" name="description" placeholder="Description"><%=post.description%></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="content">Content</label>
+                                            <textarea class="form-control tinymce" name="content" placeholder="Content"><%=post.content%></textarea>
+                                        </div>
+                                        <div class="row mt-2 mb-3">
+                                            <div class="col">
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="islikemain" <%if(post.islikemain==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="islikemain">Dùng ngôn ngữ chính làm mặc định cho tất cả ngôn ngữ</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2 mb-3">
+                                            <div class="col">
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="notenglish" <%if(post.notenglish==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="notenglish">Không dùng ngôn ngữ TBN</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion accordion-ui ui-state-default mb-3" id="accordionApp">
+                            <div class="card">
+                                <div class="card-header" id="headingApp">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseApp" aria-expanded="false" aria-controls="collapseApp">
+                                            App
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseApp" class="collapse show" aria-labelledby="headingApp" data-parent="#accordionApp">
+                                    <div class="card-body">
+                                        <div class="row mt-2 mb-3">
+                                            <div class="col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="apk[package_name]">Package name</label>
+                                                    <input type="hidden" class="form-control" name="apk[id]" value="<%=post.apk.id%>">
+                                                    <input type="text" class="form-control" name="apk[package_name]" placeholder="Package name" value="<%=post.apk.package_name%>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="apk[developer_name]">Developer name</label>
+                                                    <input type="text" class="form-control" name="apk[developer_name]" placeholder="Developer name" value="<%=post.apk.developer_name%>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="apk[version]">Version</label>
+                                                    <input type="text" class="form-control" name="apk[version]" placeholder="Version" value="<%=post.apk.version%>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="apk[apk_size]">Size</label>
+                                                    <input type="text" class="form-control" name="apk[apk_size]" placeholder="Size" value="<%=post.apk.apk_size%>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="apk[price]">Price</label>
+                                                    <input type="text" class="form-control" name="apk[price]" placeholder="Price" value="<%=post.apk.price%>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="apk[os]">Os</label>
+                                                    <input type="text" class="form-control" name="apk[os]" placeholder="Os" value="<%=post.apk.os%>">
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                        <!-- <div class="form-group">
+                                            <label for="apk[recent_changed_text]">Recent changed</label>
+                                            <textarea class="form-control" name="apk[recent_changed_text]" placeholder="Recent changed content"><%=post.apk.recent_changed_text%></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="apk[header_image]">Image header</label>
+                                            <input type="text" class="form-control" name="apk[header_image]" placeholder="Image header url" value="<%=post.apk.header_image%>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="apk[video_review_url]">Video review</label>
+                                            <input type="text" class="form-control" name="apk[video_review_url]" placeholder="Video review url" value="<%=post.apk.video_review_url%>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="apk[url_android]">Url Android</label>
+                                            <input type="text" class="form-control" name="apk[url_android]" placeholder="Url Android" value="<%=post.apk.url_android%>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="apk[url_ios]">Url Ios</label>
+                                            <input type="text" class="form-control" name="apk[url_ios]" placeholder="Url Ios" value="<%=post.apk.url_ios%>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="apk[url_pc]">Url Pc</label>
+                                            <input type="text" class="form-control" name="apk[url_pc]" placeholder="Url Pc" value="<%=post.apk.url_pc%>">
+                                        </div> -->
+                                        <div class="mt-3">
+                                            <div>
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="apk[off_apk_text]" <%if(post.apk.off_apk_text==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="apk[off_apk_text]">Không hiển thị "APK" trong Title của trang single và download</label>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="apk[off_mod_text]" <%if(post.apk.off_mod_text==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="apk[off_mod_text]">Không hiển thị "Mod" trong Title của trang single và download</label>
+                                                </div>
+                                            </div>                                            
+                                            <div>
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="apk[show_slide]" <%if(post.apk.show_slide==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="apk[show_slide]">Hiển thị Slide trong trang single</label>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="off_update_version" <%if(post.off_update_version==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="off_update_version">Tắt Auto update version</label>
+                                                </div>
+                                            </div>                                              
+                                        </div>                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion accordion-ui ui-state-default mb-3" id="accordionSeoPost">
+                            <div class="card">
+                                <div class="card-header" id="headingSeoPost">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseSeoPost" aria-expanded="false" aria-controls="collapseSeoPost">
+                                            Seo
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseSeoPost" class="collapse show" aria-labelledby="headingSeoPost" data-parent="#accordionSeoPost">
+                                    <div class="card-body">
+                                        <div class="form-group seo-progress-bar">
+                                            <label for="seotitle">Seo Title</label>
+                                            <input type="text" class="form-control seo-progress-text" name="seotitle" placeholder="Seo Title" value="<%=post.seotitle%>">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuegood="40" aria-valuemin="0" aria-valuemax="65"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group seo-progress-bar">
+                                            <label for="seodescription">Seo Description</label>
+                                            <textarea class="form-control seo-progress-text" name="seodescription" placeholder="Seo Description"><%=post.seodescription%></textarea>
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuegood="125" aria-valuemin="0" aria-valuemax="155"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="seoschema">SEO Schema</label>
+                                            <textarea class="form-control" name="seoschema" placeholder="SEO Schema"><%=post.seoschema%></textarea>
+                                        </div>
+                                        <div class="row mt-2 mb-3">
+                                            <div class="col">
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="allowindex" <%if(post.allowindex==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="allowindex">Bật index</label>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="allowfollow" <%if(post.allowfollow==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="allowfollow">Bật follow</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion accordion-ui ui-state-default mb-3" id="accordionAdsPost">
+                            <div class="card">
+                                <div class="card-header" id="headingAdsPost">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseAdsPost" aria-expanded="false" aria-controls="collapseAdsPost">
+                                            Ads
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseAdsPost" class="collapse show" aria-labelledby="headingAdsPost" data-parent="#accordionAdsPost">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="ads">Ads code</label>
+                                            <select class="form-control" name="ads">
+                                                <option value="">None</option>
+                                                <% if(adss){%>                                    
+                                                    <% adss.forEach(item => { %>
+                                                        <option value="<%=item.id%>" <%if(item.id==post.adsid){%>selected<%}%>><%=item.name%></option>
+                                                    <% }) %>
+                                                <%}%>
+                                            </select>
+                                        </div>
+                                        <div class="mt-3 mb-3">
+                                            <div>
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="offadsall" <%if(post.offadsall==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="offadsall">Tắt Quảng cáo tất cả ngôn ngữ</label>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="offads" <%if(post.offads==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="offads">Tắt Quảng cáo trang ngôn ngữ TBN</label>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="offadscontent" <%if(post.offadscontent==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="offadscontent">Tắt Quảng cáo trong Bài viết</label>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="offadsdownload" <%if(post.offadsdownload==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="offadsdownload">Tắt Quảng cáo trang download</label>
+                                                </div>
+                                            </div>
+                                            <!--
+                                            <div>
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="apk[off_ads_redirect]" <%if(post.apk.off_ads_redirect==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="apk[off_ads_redirect]">Tắt Quảng cáo trang download chuyển hướng</label>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="apk[show_ads_pagedown2]" <%if(post.apk.show_ads_pagedown2==true){%>checked<%}%>>
+                                                    <label class="form-check-label" for="apk[show_ads_pagedown2]">Hiển thị Quảng cáo với mã pagedownlod#2 tại trang download</label>
+                                                </div>
+                                            </div>
+                                            -->
+                                        </div>
+                                        <!--
+                                        <div class="form-group">
+                                            <label for="adsslot1">Ads slot 1</label>
+                                            <textarea class="form-control" name="adsslot1" placeholder="Ads slot"><%=post.adsslot1%></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="adsslot2">Ads slot 2</label>
+                                            <textarea class="form-control" name="adsslot2" placeholder="Ads slot"><%=post.adsslot2%></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="adsslot3">Ads slot 3</label>
+                                            <textarea class="form-control" name="adsslot3" placeholder="Ads slot"><%=post.adsslot3%></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="adsslot4">Ads slot 4</label>
+                                            <textarea class="form-control" name="adsslot4" placeholder="Ads slot"><%=post.adsslot4%></textarea>
+                                        </div>
+                                        -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion accordion-ui ui-state-default mb-3" id="accordionMod">
+                            <div class="card">
+                                <div class="card-header" id="headingMod">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseMod" aria-expanded="true" aria-controls="collapseMod">
+                                            Mod
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseMod" class="collapse show" aria-labelledby="headingMod" data-parent="#accordionMod">                                    
+                                    <div class="card-body">                                        
+                                        <div class="mod-box" data-apk="<%=post.apk.id%>">                                            
+                                            <div class="text-right">                                                
+                                                <button class="btn btn-primary btn-sm btn-add-mod rounded-circle" title="Add mod">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label for="apk[mod_text]">Tính năng Mod</label>
+                                                <input type="text" class="form-control" name="apk[mod_text]" placeholder="Tính năng Mod" value="<%=post.apk.mod_text%>">
+                                            </div>
+                                            <div class="mb-body">
+                                                <%
+                                                    if(post.apk.mods){
+                                                %>
+                                                    <div id="modSortable">
+                                                <%
+                                                        post.apk.mods.forEach(function(mod, indx){
+                                                            //if(indx >= 5) return;
+
+                                                %>
+                                                    <div class="mod ui-state-default mb-3" id="mod-<%=mod.id%>" data-mod="<%=mod.id%>">
+                                                        <div class="mod-toolbar">
+                                                            <button class="btn btn-danger btn-sm btn-del-mod rounded-0" title="Remove this mod"><i class="fas fa-times"></i></button>
+                                                            <!-- 
+                                                            <button class="btn btn-warning btn-sm btn-edit-mod rounded-0" title="Edit this link"><i class="fas fa-edit"></i></button>
+                                                            -->
+                                                            <button class="btn btn-primary btn-sm btn-add-modlink rounded-0" title="Add link"><i class="fas fa-plus"></i></button>
+                                                            <span class="mod-name-title"><%=mod.title%></span>
+                                                            <div class="checkbox-right">
+                                                                <input class="showinsingle mod-change-item" type="checkbox" <%if(mod.showinsingle==true){%>checked<%}%>>
+                                                                <label for="showinsingle">Hiển thị Mod ra trang single</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mod-body card rounded-0">
+                                                            <div class="row">
+                                                                <div class="col-md-8">
+                                                                    <div class="form-group">
+                                                                        <label for="">Mod name</label>
+                                                                        <input class="form-control modnumsort" type="hidden" value="<%=mod.numsort%>">
+                                                                        <input class="form-control modtitle mod-input-item" type="text" placeholder="Mod name" value="<%=mod.title%>">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="checkbox  mt-4">
+                                                                        <input class="form-check-input modisoriginal mod-change-item" type="checkbox" <%if(mod.isoriginal==true){%>checked<%}%>>
+                                                                        <label class="form-check-label">Original</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="">Description</label>
+                                                                <textarea class="form-control modtinymce moddescription mod-change-item" placeholder="Description"><%=mod.description%></textarea>
+                                                            </div>
+                                                            <div class="modlinkSortable mod-link-holder">
+                                                                <%
+                                                                    if(mod.links){
+                                                                        mod.links.forEach(link => {
+                                                                %>
+                                                                    <div class="mod-link ui-state-default mb-3" id="modlink-<%=link.id%>" data-modlink="<%=link.id%>">
+                                                                        <div class="mod-link-toolbar text-right">
+                                                                            <button class="btn btn-danger btn-sm btn-del-modlink rounded-0" title="Remove this link"><i class="fas fa-times"></i></button>
+                                                                        </div>
+                                                                        <div class="mod-link-body card p-3 rounded-0">
+                                                                            <div class="row">
+                                                                                <div class="col">
+                                                                                    <div class="form-group">
+                                                                                        <label for="">Name</label>
+                                                                                        <input class="form-control linktitle" type="text" placeholder="Name" value="<%=link.title%>" required>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <div class="form-group">
+                                                                                        <label for="">Size</label>
+                                                                                        <input class="form-control linksize" type="text" placeholder="Size" value="<%=link.size%>">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="">Link</label>
+                                                                                <input class="form-control linklink" type="text" placeholder="Link" value="<%=link.link%>">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                <%
+                                                                        });
+                                                                    }
+                                                                %>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="mod-footer"></div>
+                                                    </div>
+                                                <%
+                                                        });
+                                                %>
+                                                    </div>
+                                                <%
+                                                    }
+                                                %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion accordion-ui ui-state-default mb-3 boxPopupAccordion" id="accordionFaq" data-popup="apkFaqModal">
+                            <div class="card">
+                                <div class="card-header" id="headingFaq">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseFaq" aria-expanded="true" aria-controls="collapseFaq">
+                                            FAQs
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseFaq" class="collapse show" aria-labelledby="headingFaq" data-parent="#accordionFaq">
+                                    <div class="card-body">
+                                        <div class="faq-box" data-post="pid">
+                                            <div class="text-right">
+                                                <button class="btn btn-primary btn-sm rounded-circle btn-show-popform" title="Add Faq">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            <div class="mb-body">
+                                                <div class="bpaSortable" data-link="/<%=dashboard%>/post/<%=post.posttype%>/faq/numsort">
+                                                    <%
+                                                        var faqs = (post.faq) ? post.faq : [];
+                                                        faqs.forEach(faq => {
+                                                    %>
+                                                            <div class="bpaItem ui-state-default mb-3" id="accordionFaq-<%=faq.id%>" data-id="<%=faq.id%>">
+                                                                <div class="bpa-toolbar">
+                                                                    <button class="btn btn-danger btn-sm rounded-0 btnDelBPA" title="Remove it"><i class="fas fa-times"></i></button>
+                                                                    <span class="bpa-title"><%=faq.title%></span>
+                                                                </div>
+                                                                <div class="bpa-body card rounded-0">
+                                                                    <div class="form-group">
+                                                                        <label for="">Hỏi</label>
+                                                                        <input class="form-control" type="hidden" name="faqid" value="<%=faq.id%>">
+                                                                        <input class="form-control" type="hidden" name="faqpid" value="<%=faq.postid%>">
+                                                                        <input class="form-control" type="hidden" name="faqlangid" value="<%=faq.langid%>">
+                                                                        <input class="form-control" type="hidden" name="faqnumsort" value="<%=faq.numsort%>">
+                                                                        <input class="form-control itemAutoSave bpai-title" type="text" name="faqtitle" placeholder="Hỏi" value="<%=faq.title%>">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="">Trả lời</label>
+                                                                        <textarea class="form-control bpatinymce itemAutoSave bpa-change-item bpai-content" name="faqcontent" placeholder="Trả lời"><%=faq.content%></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="bpa-footer"></div>
+                                                            </div>
+                                                    <%
+                                                        });
+                                                    %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion accordion-ui ui-state-default mb-3" id="accordionScreenshoot">
+                            <div class="card">
+                                <div class="card-header" id="headingScreenshoot">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseScreenshoot" aria-expanded="true" aria-controls="collapseScreenshoot">
+                                            Screenshoots
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseScreenshoot" class="collapse show" aria-labelledby="headingScreenshoot" data-parent="#accordionScreenshoot">
+                                    <div class="card-body">
+                                        <div class="mm-wrapper">
+                                            <div class="text-right mb-3">
+                                                <a href="javascript:void(0);" class="btn btn-primary btn-sm rounded-circle" title="Add screenshoots" onclick="mmInit(true, false, 'screenshoot', true, this);">
+                                                    <i class="fas fa-plus"></i>
+                                                </a>
+                                            </div>
+                                            <div class="mm-ss-holder">
+                                                <%
+                                                    if(post.screenshoots){
+                                                        post.screenshoots.forEach(ss => {
+                                                            %>
+                                                    <div class="screenshoot">
+                                                        <input type="hidden" name="screenshoot[]" value="<%=ss.id%>">
+                                                        <img src="<%=ss.urlicon%>">
+                                                        <button class="btn btn-sm btn-danger rounded-0 btn-remove-screenshoot">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                    <%
+                                                        });
+                                                    }
+                                                %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include("./templates/box-logging") %>
+                    </div>
+                </div>
+                <!-- Right Side -->
+                <div class="col-lg-3 col-md-12">
+                    <div id="rs-sortable" class="sortable stick-when-scroll">
+                        <div class="accordion accordion-ui ui-state-default mb-3" id="accordionPostPublished">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapsePostPublished" aria-expanded="true" aria-controls="collapsePostPublished">
+                                            Publish
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapsePostPublished" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionPostPublished">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <span>Status</span>
+                                            <select name="poststatus">
+                                            <option value="pendding" <%if(post.poststatus=='pendding'){ %>selected<%}%>>Private</option>
+                                            <option value="published" <%if(post.poststatus=='published'){ %>selected<%}%>>Public</option>
+                                            <option value="trash" <%if(post.poststatus=='trash'){ %>selected<%}%>>Trash</option>
+                                        </select>
+                                        </div>
+                                        <div class="form-group" id="timepublicform">
+                                            <div>                                                
+                                                <input class="maindatefield" type="hidden" name="publishedat" value="<%=post.publishedat%>">
+                                                <span id="timepublic">Public <strong>ngay</strong></span>
+                                                <a href="javascript:void(0);" id="btn-timepublic" class="btn btn-outline-primary btn-sm">Change</a>
+                                            </div>
+                                            <div id="timepublicwrap">
+                                                <input type="text" name="tpf-day" placeholder="dd">
+                                                <select name="tpf-month">
+                                                    <option value="1">01 - Jan</option>
+                                                    <option value="2">02 - Feb</option>
+                                                    <option value="3">03 - Mar</option>
+                                                    <option value="4">04 - Apr</option>
+                                                    <option value="5">05 - May</option>
+                                                    <option value="6">06 - Jun</option>
+                                                    <option value="7">07 - Jul</option>
+                                                    <option value="8">08 - Aug</option>
+                                                    <option value="9">09 - Sep</option>
+                                                    <option value="10">10 - Oct</option>
+                                                    <option value="11">11 - Nov</option>
+                                                    <option value="12">12 - Dec</option>
+                                                </select>
+                                                <input type="text" name="tpf-year" placeholder="yyyy">
+                                                <input type="text" name="tpf-hour" placeholder="HH">
+                                                <span>:</span>
+                                                <input type="text" name="tpf-minute" placeholder="mm">
+                                                <p>
+                                                    <a href="javascript:void(0);" id="btn-tpf-apply" class="btn btn-primary btn-sm">Ok</a>
+                                                    <a href="javascript:void(0);" id="btn-tpf-cancel" class="btn btn-outline-dark btn-sm">Cancel</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <%if(post.poststatus=='published'){%>
+                                                <a href="/<%=post.slug%>/" target="_blank" class="btn btn-sm btn-outline-primary">View post</a>
+                                            <%}else{%>
+                                                <a href="/?pid=<%=post.id%>&preview=1" target="_blank" class="btn btn-sm btn-outline-primary">Preview post</a>
+                                            <%}%>
+                                            <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger btn-reset-screenui float-right">Giao diện mặc định</a>
+                                        </div>
+                                        <div class="text-right">
+                                            <input type="hidden" name="modifiedat" id="modifiedat" value="<%=post.modifiedat%>">
+                                            <button class="btn btn-primary" id="btn-submit-editmodified">Update</button>
+                                            <button class="btn btn-primary">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include("./templates/box-post-categories") %>
+                        <div class="accordion accordion-ui ui-state-default mb-3" id="accordionPostThumbnail">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapsePostThumbnail" aria-expanded="true" aria-controls="collapsePostThumbnail">
+                                            Thumbnail (Chữ nhật)
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapsePostThumbnail" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionPostThumbnail">
+                                    <div class="card-body mm-wrapper">
+                                        <div class="mm-img-holder">
+                                            <%
+                                                if(post.thumb){
+                                            %>
+                                                <input type="hidden" name="thumb" value="<%=post.thumb.id%>">
+                                                <div class="thumb">
+                                                    <img src="<%=post.thumb.url%>">
+                                                </div>
+                                            <%
+                                                }else{
+                                            %>
+                                                    <input type="hidden" name="thumb" value="">
+                                                    <div class="thumb"></div>
+                                                    <%
+                                                }
+                                            %>
+                                        </div>
+                                        <a class="btn btn-outline-primary btn-sm mt-3" href="javascript:void(0);" onclick="mmInit(false, false,'thumbnail', true, this);">Choose thumbnail</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion accordion-ui ui-state-default mb-3" id="accordionPostIcon">
+                            <div class="card">
+                                <div class="card-header" id="headingPostIcon">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapsePostIcon" aria-expanded="true" aria-controls="collapsePostIcon">
+                                            Icon (Vuông)
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapsePostIcon" class="collapse show" aria-labelledby="headingPostIcon" data-parent="#accordionPostIcon">
+                                    <div class="card-body mm-wrapper">
+                                        <div class="mm-img-holder">
+                                            <%
+                                                if(post.icon){
+                                            %>
+                                                <input type="hidden" name="imgicon" value="<%=post.icon.id%>">
+                                                <div class="thumb">
+                                                    <img src="<%=post.icon.url%>">
+                                                </div>
+                                            <%
+                                                }else{
+                                            %>
+                                                    <input type="hidden" name="imgicon" value="">
+                                                    <div class="thumb"></div>
+                                            <%
+                                                }
+                                            %>
+                                        </div>
+                                        <a class="btn btn-outline-primary btn-sm mt-3" href="javascript:void(0);" onclick="mmInit(false, false,'icon', true, this);">Choose icon</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Modal Mod -->
+<div class="modal fade" id="modModal" tabindex="-1" aria-labelledby="modModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form action="/<%=dashboard%>/post/<%=posttype%>/mod/add" class="mod-form">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modModalLabel">Add Mod</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Mod name</label>
+                        <input class="form-control" type="hidden" name="id">
+                        <input class="form-control" type="hidden" name="apkid">
+                        <input class="form-control" type="hidden" name="numsort">
+                        <input class="form-control" type="text" name="title" placeholder="Mod name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Description</label>
+                        <textarea class="form-control tinymce" name="description" placeholder="Description"></textarea>
+                    </div>
+                    <div class="checkbox mr-5">
+                        <input class="form-check-input" name="showinsingle" type="checkbox" checked>
+                        <label class="form-check-label">Hiển thị Mod ra trang single</label>
+                    </div>
+                    <div class="checkbox">
+                        <input class="form-check-input" name="isoriginal" type="checkbox">
+                        <label class="form-check-label">Original</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btn-mod-apply" class="btn btn-primary">Apply</button>
+                    <button type="button" id="btn-mod-cancel" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal Link -->
+<div class="modal fade" id="modlinkModal" tabindex="-1" aria-labelledby="modlinkModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/<%=dashboard%>/post/<%=posttype%>/modlink/add" class="modlink-form">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modlinkModalLabel">Add Link</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Title</label>
+                        <input class="form-control" type="hidden" name="id">
+                        <input class="form-control" type="hidden" name="modid">
+                        <input class="form-control" type="hidden" name="numsort">
+                        <input class="form-control" type="text" name="title" placeholder="Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Link</label>
+                        <input class="form-control" type="text" name="link" placeholder="Link">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Size</label>
+                        <input class="form-control" type="text" name="size" placeholder="Size">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btn-modlink-apply" class="btn btn-primary">Apply</button>
+                    <button type="button" id="btn-modlink-cancel" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal FAQ -->
+<div class="modal fade bpaModal" id="apkFaqModal" tabindex="-1" aria-labelledby="faqModalLabel" aria-hidden="true" data-box="accordionFaq">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form action="/<%=dashboard%>/post/<%=posttype%>/faq/add" class="bpaForm">
+                <div class="modal-header">
+                    <h5 class="modal-title bpaModalLabel" id="faqModalLabel">Add FAQ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Hỏi</label>                        
+                        <input class="form-control" type="hidden" name="postid" value="<%=post.id%>">
+                        <input class="form-control" type="hidden" name="langid" value="pt">
+                        <input class="form-control" type="text" name="title" placeholder="Hỏi" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Trả lời</label>
+                        <textarea class="form-control tinymce bpa-change-item" name="content" placeholder="Trả lời"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary bpaSubmit">Lưu</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>var curPostType = "<%=posttype%>";</script>
+<script src="/<%=dashboard%>/assets/libs/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+<script src="/<%=dashboard%>/assets/libs/tinymce/tinymce.min.js"></script>
+<script src="/<%=dashboard%>/assets/js/userui.js"></script>
+<script src="/<%=dashboard%>/assets/js/tiny.js"></script>
+<script src="/<%=dashboard%>/assets/js/apk-edit.js"></script>
+<script src="/<%=dashboard%>/assets/js/boxFaqs.js"></script>
+<%- include("./include/footer") %>

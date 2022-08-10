@@ -1,0 +1,24 @@
+<%
+var listCategories = (cateRows) ? cateRows : [];
+var listIDsInclude = (listIDsInclude) ? listIDsInclude : [];
+var targetCatetype = (targetCatetype) ? targetCatetype : "";
+listCategories.forEach(item => {
+    if(targetCatetype == item.catetype){
+%>
+        <div class="cate-item">
+            <div class="form-group">
+                <div class="checkbox">
+                    <input type="checkbox" name="categories[]" value="<%=item.id%>" <%if(listIDsInclude.includes(item.id)){ %>checked<%}%>>
+                    <label for="categories[]"><%=item.title%></label>
+                </div>
+            </div>            
+            <%if(item.children){%>
+                <div class="sub-cate-item ml-3">
+                    <%-include("box-post-category-tree", {cateRows: item.children, listIDsInclude: listIDsInclude, targetCatetype: targetCatetype })%>
+                </div>
+            <%}%>
+        </div>
+<%
+    }
+})
+%>

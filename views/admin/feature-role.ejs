@@ -1,0 +1,281 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>/rolefeature">Role features</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Features of role</li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <!-- Action Bar -->
+                            <div class="datatable-search-header mb-3">
+                                <select id="slRole" name="slRole">
+                                <%
+                                    roles.forEach(r => {
+                                %>
+                                        <option value="<%=r.id%>" <%if(rid==r.id){%>selected<%}%>><%=r.rolename%></option>
+                                <%
+                                    })
+                                %>
+                                </select>
+                                <button class="btn btn-sm btn-outline-danger btn-clear-permission">Clear Permission</button>
+                            </div>
+                            <!-- Content Box -->
+                            <div class="box-dragable-wrap">
+                                <div id="box-dragable-left" class="box-dragable">
+                                <%
+                                    sitefeatures.forEach(sf => {
+                                %>
+                                        <div class="item" data-id="<%=sf.id%>"><%=sf.name%></div>
+                                <%
+                                    })
+                                %>
+                                </div>
+                                <div id="box-dragable-right" class="box-dragable">
+                                    <table class="table table-bordered datatable-style">
+                                        <thead>
+                                            <th>Chức năng</th>
+                                            <th class="text-center">Thêm (Xóa, sửa bài của mình)</th>
+                                            <th class="text-center">Sửa bài của người khác</th>
+                                            <th class="text-center">Xóa bài của người khác</th>
+                                        </thead>
+                                        <tbody>
+                                        <%
+                                            rolefeatures.forEach(rf => {
+                                                var rfsitefeaturename = (rf.sitefeature && rf.sitefeature.name)?rf.sitefeature.name:"";
+                                        %>
+                                            <tr data-id="<%=rf.roleid%>" data-name="<%=rfsitefeaturename%>" data-rfid="<%=rf.id%>">
+                                                <td><%=rfsitefeaturename%></td>
+                                                <td class="text-center">
+                                                    <a class="btn-role-change" data-act="actadd" href="javascript:void(0)" title="Cho phép thêm mới">
+                                                        <i class="fas <%=(rf.actadd==true)?'fa-toggle-on':'fa-toggle-off'%>"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a class="btn-role-change" data-act="actedit" href="javascript:void(0)" title="Cho phép thêm mới">
+                                                        <i class="fas <%=(rf.actedit==true)?'fa-toggle-on':'fa-toggle-off'%>"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a class="btn-role-change" data-act="actdel" href="javascript:void(0)" title="Cho phép thêm mới">
+                                                        <i class="fas <%=(rf.actdel==true)?'fa-toggle-on':'fa-toggle-off'%>"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <%
+                                            })
+                                        %>
+                                        </tbody>
+                                    </table>                                    
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/<%=dashboard%>/assets/libs/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $(function(){
+            var $boxLeft = $("#box-dragable-left"),
+                $boxRight = $("#box-dragable-right"),
+                dragOpt = {
+                    revert: "invalid",
+                    containment: "document",
+                    helper: "clone",
+                    cursor: "move"
+                };
+            $(".item", $boxLeft).draggable(dragOpt);
+            $( "table tbody tr", $boxRight).draggable(dragOpt);
+            $boxRight.droppable({
+                accept: "#box-dragable-left>.item",
+                classes: {
+                    "ui-droppable-active": "ui-state-highlight"
+                },
+                drop: function( event, ui ) {
+                    addPermission( ui.draggable );
+                }
+            });
+            $boxLeft.droppable({
+                accept: "#box-dragable-right>table>tbody>tr",
+                classes: {
+                    "ui-droppable-active": "ui-state-highlight"
+                },
+                drop: function( event, ui ) {
+                    removePermission(ui.draggable);
+                }
+            });
+            function addPermission($item) {
+                var id = $item.data("id"),
+                    title = $item.text(),
+                    rid = $("#slRole").val();                    
+                $.ajax({
+                    url: `/${dashboard}/rolefeature/add`,
+                    method: "POST",
+                    data: {
+                        rid: rid,
+                        sfid: id
+                    },
+                    success: function(rs){
+                        swal.fire({
+                            icon: (rs.code==1) ? "success" : "warning",
+                            text: rs.message,
+                            showConfirmButton: true,
+                            timer: 2000
+                        }).then(() => {
+                            if(rs.code==1){
+                                var html = `<tr data-id="${id}" data-name="${title}" data-rfid="${rs.data.id}">
+                                                <td>${title}</td>
+                                                <td class="text-center">
+                                                    <a class="btn-role-change" data-act="actadd" href="javascript:void(0)" title="Cho phép thêm mới">
+                                                        <i class="fas fa-toggle-off"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a class="btn-role-change" data-act="actedit" href="javascript:void(0)" title="Cho phép thêm mới">
+                                                        <i class="fas fa-toggle-off"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a class="btn-role-change" data-act="actdel" href="javascript:void(0)" title="Cho phép thêm mới">
+                                                        <i class="fas fa-toggle-off"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>`;
+                                $item.fadeOut(function() {
+                                    $boxRight.find("table tbody").append(html);
+                                    $("table tbody tr", $boxRight).draggable(dragOpt);
+                                    $item.remove();
+                                });
+                            }else{
+                                return false;
+                            }
+                        })
+                    },
+                    error: function(error){
+                        swal.fire({
+                            icon:"error",
+                            text: error.responseJSON.message,
+                            showConfirmButton: true
+                        })
+                    }
+                })                
+            }
+            function removePermission($item){
+                var id = $item.data("id"),
+                    title = $item.data("name"),
+                    rfid = $item.data("rfid"),
+                    html = `<div data-id="${id}" class="item">${title}</div>`;
+                $.ajax({
+                    url: `/${dashboard}/rolefeature/delete/${rfid}`,
+                    method: "DELETE",
+                    success: function(rs){
+                        swal.fire({
+                            icon: (rs.code==1) ? "success" : "warning",
+                            text: rs.message,
+                            showConfirmButton: true,
+                            timer: 2000
+                        }).then(() => {
+                            if(rs.code==1){
+                                $item.fadeOut(function() {
+                                    $boxLeft.prepend(html);
+                                    $(".item", $boxLeft).draggable(dragOpt);
+                                    $item.remove();
+                                });
+                            }else{
+                                return false;
+                            }
+                        })
+                    },
+                    error: function(error){
+                        swal.fire({
+                            icon:"error",
+                            text: error.responseJSON.message,
+                            showConfirmButton: true
+                        })
+                    }
+                })                
+            }
+            $(".btn-clear-permission").click(function(e){
+                e.preventDefault();
+                swal.fire({
+                    icon: "warning",
+                    text: "You really wanna clear permission of this role?",
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancel',
+                    confirmButtonText: 'Ok'
+                }).then(rs => {
+                    if(rs.value){
+                        var rid = $(this).closest(".datatable-search-header").find("#slRole").val() || "";
+                        if(rid !== ""){
+                            $.ajax({
+                                url: `/${dashboard}/rolefeature/clear/${rid}`,
+                                method: "POST",
+                                success: function(rs){
+                                    swal.fire({
+                                        icon: (rs.code==1) ? "success" : "warning",
+                                        text: rs.message,
+                                        showConfirmButton: true,
+                                        timer: 2000
+                                    }).then(() => {
+                                        if(rs.code==1){
+                                            window.location.href=`/${dashboard}/rolefeature/${rid}`;
+                                        }
+                                    })
+                                },
+                                error: function(error){
+                                    swal.fire({
+                                        icon:"error",
+                                        text: error.responseJSON.message,
+                                        showConfirmButton: true
+                                    })
+                                }
+                            })
+                        }
+                    }
+                })                
+            })
+            $("#slRole").change(function(e){
+                e.preventDefault();
+                var rid=$(this).val();
+                window.location.href=`/${dashboard}/rolefeature/${rid}`;
+            })
+
+            $("#box-dragable-right").on("click", ".btn-role-change", function(e){
+                e.preventDefault();
+                var $this = $(this),
+                act = $this.data("act"),
+                    rfid = $this.closest("tr").data("rfid"),
+                    val = ($this.find(".fa-toggle-off").length > 0) ? true : false;
+                    $.ajax({
+                        url: `/${dashboard}/rolefeature/edit`,
+                        method: "POST",
+                        data: {
+                            rfid: rfid,
+                            act : act,
+                            actval: val
+                        },
+                        success: function(rs){
+                            if(rs.code===1){
+                                $this.find("i").toggleClass("fa-toggle-off").toggleClass("fa-toggle-on");
+                            }
+                        },
+                        error: function(error){
+                            swal.fire({
+                                icon:"error",
+                                text: error.responseJSON.message,
+                                showConfirmButton: true
+                            })
+                        }
+                    })
+            })
+        })
+    </script>
+    <%- include("./include/footer") %>

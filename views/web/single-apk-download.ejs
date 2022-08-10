@@ -1,0 +1,166 @@
+<%
+    var page = (typeof page !== "undefined") ? page : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var apk = (page.apk) ? page.apk : {};
+    var apkMeta = (apk.apk) ? apk.apk : {};
+    var mods = (apk.apk.mods) ? apk.apk.mods : [];
+    var thumb = (apk.icon) ? apk.icon : {};
+    var thumbnail = (thumb.urlicon) ? thumb.urlicon : `${domain}/assets/image/no-image.jpg`;
+    var newestMod = {};
+    var originalApk = [];
+    var othersMod = [];
+    var hit = 0;
+    mods.map(m => {
+        if(m.isoriginal){
+            originalApk.push(m);
+        }else if(hit==0){
+            newestMod = m;
+            hit++;
+        }else{
+            othersMod.push(m);
+        }
+    });
+    var gplay = {
+        title:  `${apk.title} ${apkMeta.version} APK Original`,
+        description: '',
+        links: [
+            {title: `${apk.title} ${apkMeta.version} Original`, description: '', size: '', link: 'apk.apk'},
+            {title: `[OBB] - ${apk.title} ${apkMeta.version} APK Original`, description: '', size: '', link: 'apk.zip'}
+        ]
+    };
+    var postUrl = (apk.slug) ? `${homeUrl}/${apk.slug}/` : domain;
+    var appTitle = apk.title;
+    appTitle += ` ${apkMeta.version}`;
+    appTitle += (!apkMeta.off_mod_text) ? modText : "";
+    appTitle += (!apkMeta.off_apk_text) ? apkText : "";    
+%>
+<%- include("includes/header", {adspagename: "pagedownload"}); %>
+<main id="page-body">
+    <div class="container">
+        <div class="mb-30">
+            <%- page.breadcrumbs.html %>
+        </div>
+        <article class="page-single">
+            <div class="page-description">                
+                <div class="wrapcontent">
+                    <div class="entry-thumb mb-20">
+                        <figure>
+                            <img src="<%=thumbnail%>" alt="<%-apk.title%>">
+                        </figure>
+                        <h1 class="page-title text-center"><%=__('downloadText')%> <%-apk.title%></h1>
+                    </div>  
+                    <%-apk.description%>
+                </div>
+            </div>                      
+            <%- include("includes/ads-slot", {slot: 1, hasSpace: true}); %>
+            <%
+                if(newestMod.title){
+            %>
+                <div class="sbhTitle mb-20">
+                    <span class="bb-dark-2"><%=__('appInforLastVersionOf'); %> <%=apk.title%></span>
+                </div>
+                <%- include("includes/mod", {apk: apkMeta, mod: newestMod}); %>
+            <%
+                }
+            %>
+            <div class="entry-warning text-right">
+                <div id="sendFeedback" class="relatorio">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20.125" height="18.714" viewBox="0 0 20.125 18.714">
+                        <g transform="translate(0)">
+                        <path d="M33.716,46.983l-7.11-12.806a2.349,2.349,0,0,0-4.127,0l-7.1,12.794-.012.012a2.36,2.36,0,0,0,2.064,3.5h14.22a2.36,2.36,0,0,0,2.064-3.5Z" transform="translate(-14.48 -32.36)" fill="#fedb41"/>
+                        <path d="M265.138,49.329a2.346,2.346,0,0,1-2.028,1.156H256V32.95a2.33,2.33,0,0,1,2.064,1.226l7.11,12.806A2.35,2.35,0,0,1,265.138,49.329Z" transform="translate(-245.938 -32.36)" fill="#fcbf29"/>
+                        <g transform="translate(8.883 3.384)">
+                            <path d="M228.358,360.229a1.179,1.179,0,1,1-1.179-1.179A1.183,1.183,0,0,1,228.358,360.229Z" transform="translate(-226 -349.027)" fill="#57555c"/>
+                            <path d="M228.358,105.229v5.9a1.179,1.179,0,0,1-2.358,0v-5.9a1.179,1.179,0,0,1,2.358,0Z" transform="translate(-226 -104.05)" fill="#57555c"/>
+                        </g>
+                        <path d="M19.755,32.289l-7.11-12.818a2.953,2.953,0,0,0-5.165,0L.37,32.289a2.954,2.954,0,0,0,2.582,4.375h14.22a2.954,2.954,0,0,0,2.582-4.375Zm-1.061,2.323a1.762,1.762,0,0,1-1.521.873H2.953a1.778,1.778,0,0,1-1.769-1.769,1.738,1.738,0,0,1,.224-.861l7.11-12.806a1.757,1.757,0,0,1,3.09,0l7.11,12.806A1.764,1.764,0,0,1,18.694,34.612Z" transform="translate(0 -17.95)" fill="#fd4e26"/>
+                        <g transform="translate(10.062 3.384)">
+                            <path d="M257.179,360.229A1.183,1.183,0,0,1,256,361.408V359.05A1.183,1.183,0,0,1,257.179,360.229Z" transform="translate(-256 -349.027)" fill="#3c3a41"/>
+                            <path d="M257.179,105.229v5.9A1.183,1.183,0,0,1,256,112.3V104.05A1.183,1.183,0,0,1,257.179,105.229Z" transform="translate(-256 -104.05)" fill="#3c3a41"/>
+                        </g>
+                        <path d="M265.645,35.214a2.915,2.915,0,0,1-2.535,1.45H256V35.485h7.11a1.772,1.772,0,0,0,1.545-2.63l-7.11-12.806a1.744,1.744,0,0,0-1.545-.92V17.95a2.942,2.942,0,0,1,2.582,1.521l7.11,12.818A2.914,2.914,0,0,1,265.645,35.214Z" transform="translate(-245.938 -17.95)" fill="#fd3018"/>
+                        </g>
+                    </svg>                  
+                    <span><%=__("textRelatorio")%></span>
+                </div>
+            </div>
+            <%
+                if(othersMod.length > 0){
+            %>                
+                <div class="box-othermod mb-30">                    
+            <%
+                    othersMod.forEach(function(m, i){
+                        let classHidden = (i>=2) ? 'item-hide hidden' : '';
+            %>
+                        <%- include("includes/mod-accordion", {apk: apkMeta, mod: m, classHidden: classHidden}); %>
+            <%
+                    });
+                    if(othersMod.length>2){
+            %>
+                    <div class="mb-20">
+                        <a href="javascript:void(0)" rel="nofollow" class="link-showmore" data-text="<%=__('textShowLess')%>"><%=__('textSeeMore')%></a>
+                    </div>
+            <%
+                    }
+                    if(othersMod.length>=3){
+            %><%- include("includes/ads-slot", {slot: 2, hasSpace: true}); %><%
+                    }
+            %>
+                </div>
+            <%
+                }
+            %>
+            <div id="bh-original" class="sbhTitle mb-20">
+                <span class="bb-dark-2"><%=__('appInforOriginalVersionOf'); %> <%=apk.title%></span>
+            </div>            
+            <%
+                if(originalApk.length > 0){
+                    originalApk.forEach(function(o, i){
+                        if(i==0){
+            %>
+                            <%- include("includes/mod", {apk: apkMeta, mod: o, isOriginal: false, color: "green"}); %>
+            <%
+                        }else{
+            %>
+                            <%- include("includes/mod-accordion", {apk: apkMeta, mod: o, isOriginal: false, color: "green"}); %>
+            <%
+                        }
+                    });            
+                }else{
+            %>
+                <div id="ApkOriginal" data-id="<%=apk.id%>" data-name="<%=apkMeta.package_name%>">
+                    <%- include("includes/mod", {apk: apkMeta, mod: gplay, isOriginal: true, color: "green"}); %>
+                </div>
+            <%
+                }
+                if(mods.length<=3){
+            %><%- include("includes/ads-slot", {slot: 2, hasSpace: true}); %><%
+                }
+            %>
+
+            <div class="text-center mb-50"></div>
+            <div class="text-center mb-50">
+                <a href="<%=postUrl%>" class="btn br-50 btn-backtopost">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10.717" height="11.038" viewBox="0 0 10.717 11.038">
+                        <g transform="matrix(-0.999, -0.035, 0.035, -0.999, 105.305, 270.226)">
+                          <g transform="translate(103.949 255.717)">
+                            <g transform="translate(3.883)">
+                              <g transform="translate(0)">
+                                <path d="M200.408,5.048,194.584,0l-.509.587,5.486,4.754L194.075,10.1l.509.587,5.824-5.048a.389.389,0,0,0,0-.587Z" transform="translate(-194.075)"/>
+                              </g>
+                            </g>
+                            <g transform="translate(0)">
+                              <g transform="translate(0)">
+                                <path d="M14.307,5.048,8.483,0,7.974.587,13.46,5.341,7.974,10.1l.509.587,5.824-5.048a.389.389,0,0,0,0-.587Z" transform="translate(-7.974)"/>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                    </svg>
+                    <%=__("textGoToPost");%>
+                </a>
+            </div>
+        </article>
+    </div>
+</main>
+<%- include("includes/footer"); %>

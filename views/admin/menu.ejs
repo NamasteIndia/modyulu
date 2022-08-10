@@ -1,0 +1,352 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body" data-id="<%=cmenu.id%>">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>/menu">Menu</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit <%=cmenu.name%></li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <div class="datatable-search-header">
+                                <select id="slMenu">
+                                <%
+                                    var menus = (menus) ? menus : [];
+                                    menus.forEach(m => {
+                                %>
+                                    <option value="<%=m.id%>" <%if(m.id==cmenu.id){%>selected<%}%>><%=m.name%></option>
+                                <%
+                                    })
+                                %>
+                                </select>
+                                <input type="text" id="txtMenuName" placeholder="New menu name">
+                                <button type="button" id="btn-add-menu" class="btn btn-primary">Add New</button>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div id="accordionType" class="accordion-small">
+                                        <div class="card">
+                                            <div class="card-header" id="headingTypeHome">
+                                                <button class="btn btn-collapse-arrow" data-toggle="collapse" data-target="#collapseTypeHome" aria-expanded="true" aria-controls="collapseTypeHome">
+                                                    Home
+                                                </button>
+                                            </div>
+                                            <div id="collapseTypeHome" class="collapse" aria-labelledby="headingTypeHome" data-parent="#accordionType">
+                                                <div class="card-body text-right">
+                                                    <button id="btn-add2menu-home" class="btn btn-sm btn-outline-primary">Add to menu</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingTypeLanguage">
+                                                <button class="btn btn-collapse-arrow" data-toggle="collapse" data-target="#collapseTypeLanguage" aria-expanded="true" aria-controls="collapseTypeLanguage">
+                                                    Languages
+                                                </button>
+                                            </div>
+                                            <div id="collapseTypeLanguage" class="collapse" aria-labelledby="headingTypeLanguage" data-parent="#accordionType">
+                                                <div class="card-body text-right">
+                                                    <button id="btn-add2menu-language" class="btn btn-sm btn-outline-primary">Add to menu</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingTypePost">
+                                                <button class="btn btn-collapse-arrow" data-toggle="collapse" data-target="#collapseTypePost" aria-expanded="true" aria-controls="collapseTypePost">
+                                                    Post
+                                                </button>
+                                            </div>
+                                            <div id="collapseTypePost" class="collapse" aria-labelledby="headingTypePost" data-parent="#accordionType">                                                
+                                                <div class="card-body menu-select-group">
+                                                    <div class="form-group">
+                                                        <select id="menu-posts" class="form-control form-select"></select>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <button id="btn-add2menu-post" class="btn btn-sm btn-outline-primary">Add to menu</button>
+                                                    </div>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingTypeCategory">
+                                                <button class="btn btn-collapse-arrow" data-toggle="collapse" data-target="#collapseTypeCategory" aria-expanded="true" aria-controls="collapseTypeCategory">
+                                                    Category
+                                                </button>
+                                            </div>
+                                            <div id="collapseTypeCategory" class="collapse" aria-labelledby="headingTypeCategory" data-parent="#accordionType">                                                
+                                                <div class="card-body menu-select-group">
+                                                    <div class="form-group">
+                                                        <select id="menu-categories" class="form-control form-select"></select>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <button id="btn-add2menu-cate" class="btn btn-sm btn-outline-primary">Add to menu</button>
+                                                    </div>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <div id="menu-items-wrap" class="card rounded-0">
+                                        <div class="card-header">
+                                            <div class="form-inline justify-content-between">
+                                                <div class="form-group">
+                                                    <label for="name" class="mr-3">Menu name</label>
+                                                    <input type="hidden" id="curMenuId" value="<%=cmenu.id%>">
+                                                    <input type="text" class="form-control form-control-sm" id="curMenuName" placeholder="Menu name" value="<%=cmenu.name%>">
+                                                </div>
+                                                <button type="submit" class="btn btn-sm btn-primary btn-save-menu">Save menu</button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="dd" id="nestable3">
+                                                <%
+                                                    var miindex = 1;
+                                                %>
+                                                <%- include("./templates/menu-item-tree", {items: menujson, index: miindex}) %>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="form-inline justify-content-between">
+                                                <div class="form-group">
+                                                    <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger" data-id="<%=cmenu.id%>" id="btn-delete-menu">Delete menu</a>
+                                                </div>
+                                                <div class="text-right">
+                                                    <button type="submit" class="btn btn-sm btn-primary btn-save-menu">Save menu</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/<%=dashboard%>/assets/libs/nestable2/jquery.nestable.js"></script>
+    <script>
+        $(function() {
+            // Tạo sort menuitem
+            $('#nestable3').nestable({
+                maxDepth: 2
+            });
+            // Chuyển trang menu
+            $("#slMenu").change(function(e){
+                e.preventDefault();
+                var menuid=$(this).val();
+                window.location.href=`/${dashboard}/menu/${menuid}`;
+            })
+            // Thêm mới menu
+            $("#btn-add-menu").click(function(e){
+                e.preventDefault();
+                var menuName = $("#txtMenuName").val() || "";
+                if(menuName !== ""){
+                    $.ajax({
+                        url: `/${dashboard}/menu/add`,
+                        method: "POST",
+                        data: {name: menuName},
+                        success: function(rs){
+                            swal.fire({
+                                icon: (rs.code==1) ? "success" : "warning",
+                                text: rs.message,
+                                showConfirmButton: true
+                            }).then(() => {
+                                if(rs.code==1){
+                                    window.location.href=`/${dashboard}/menu/${rs.data.id}`;
+                                }
+                            })
+                        },
+                        error: function(error){
+                            swal.fire({
+                                icon:"error",
+                                text: error.responseJSON.message,
+                                showConfirmButton: true
+                            })
+                        }
+                    })
+                }
+            })
+            // Xóa menu
+            $("#btn-delete-menu").click(function(e){
+                e.preventDefault();
+                var menuid = $(this).data("id") || "";
+                swal.fire({
+                    icon: "warning",
+                    text: "You really wanna delete this menu?",
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancel',
+                    confirmButtonText: 'Ok'
+                }).then(rs => {
+                    if(rs.value){
+                        $.ajax({
+                            url: `/${dashboard}/menu/delete/${menuid}`,
+                            method: "DELETE",
+                            success: function(rs){
+                                swal.fire({
+                                    icon: (rs.code==1) ? "success" : "warning",
+                                    text: rs.message,
+                                    showConfirmButton: true
+                                }).then(() => {
+                                    if(rs.code==1){
+                                        window.location.href=`/${dashboard}/menu`;
+                                    }
+                                })
+                            },
+                            error: function(error){
+                                swal.fire({
+                                    icon:"error",
+                                    text: error.responseJSON.message,
+                                    showConfirmButton: true
+                                })
+                            }
+                        })
+                    }
+                })  
+            })  
+            // Remove menu item
+            $("#nestable3").on("click", ".btn-remove-menu-item", function(e){
+                e.preventDefault();
+                swal.fire({
+                    icon: "warning",
+                    text: "You really wanna remove this item?",
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancel',
+                    confirmButtonText: 'Ok'
+                }).then(rs => {
+                    if(rs.value){
+                        $(this).closest("li").remove();
+                    }
+                })
+            })
+            // Add category to menu
+            $("#btn-add2menu-cate").click(function(e){
+                e.preventDefault();
+                var id = $("#menu-categories").val() || "";
+                var size = $("#nestable3 .dd-item").length + 1;
+                ajaxAddMenuTemplate(id, size, "category");
+            })
+            // Add post to menu
+            $("#btn-add2menu-post").click(function(e){
+                e.preventDefault();
+                var id = $("#menu-posts").val() || "";
+                var size = $("#nestable3 .dd-item").length + 1;
+                ajaxAddMenuTemplate(id, size, "post");
+            })
+            // Add language to menu
+            $("#btn-add2menu-language").click(function(e){
+                e.preventDefault();
+                var id = 0;
+                var size = $("#nestable3 .dd-item").length + 1;
+                ajaxAddMenuTemplate(id, size, "language");
+            })
+            // Add home to menu
+            $("#btn-add2menu-home").click(function(e){
+                e.preventDefault();
+                var id = 0;
+                var size = $("#nestable3 .dd-item").length + 1;
+                ajaxAddMenuTemplate(id, size, "home");
+            })
+            // Save menu
+            $(".btn-save-menu").click(function(e){
+                e.preventDefault();
+                swal.fire({
+                    icon: "warning",
+                    text: "Bạn muốn lưu lại thay đổi của menu này?",
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancel',
+                    confirmButtonText: 'Ok'
+                }).then(rs => {
+                    if(rs.value){
+                        var $mwrap = $(this).closest("#menu-items-wrap");
+                        var mid = $mwrap.find("#curMenuId").val();
+                        var mname = $mwrap.find("#curMenuName").val();               
+                        var mitems = $("#nestable3").nestable('serialize');
+                        var rsmitems = freshArryHierarchy(mitems, $mwrap);                        
+                        $.ajax({
+                            url: `/${dashboard}/menu/edit`,
+                            method: "PUT",
+                            data: {id: mid, name: mname, items: rsmitems},
+                            success: function(rs){
+                                swal.fire({
+                                    icon: (rs.code==1) ? "success" : "error",
+                                    text: rs.message,
+                                    showConfirmButton: true
+                                }).then(() => {
+                                    if(rs.code==1){
+                                        location.reload();
+                                    }
+                                })
+                            },
+                            error: function(error){
+                                swal.fire({
+                                    icon:"error",
+                                    text: error.responseJSON.message,
+                                    showConfirmButton: true
+                                })
+                            }
+                        })
+                    }
+                })
+            })
+            // Duyet mang da cap
+            function freshArryHierarchy(mitems, $wrap){
+                var rs = [];
+                mitems.forEach(function(mi){
+                    var mitem = mi;                    
+                    var langs = getContentLanguageMenuItem(mi.index, $wrap);
+                    mitem.langs = langs;
+                    var children = (mi.children) ? mi.children : [];
+                    if(children.length > 0){
+                        freshArryHierarchy(children, $wrap);
+                    }                        
+                    rs.push(mitem);
+                })
+                return rs;
+            }
+            // Get content language of menu item from HTML
+            function getContentLanguageMenuItem(index, $wrap){
+                var $lids = $wrap.find(`.milid${index}`);
+                var $lvals = $wrap.find(`.milname${index}`);
+                var langs = [];                    
+                for(let i=0; i<$lids.length; i++){
+                    langs.push({id: $($lids[i]).val(), name: $($lvals[i]).val()});
+                }
+                return langs;
+            }
+            // Ajax get menu item template
+            function ajaxAddMenuTemplate(id, index, object){
+                $.ajax({
+                    url: `/${dashboard}/menu/add/template`,
+                    method: "POST",
+                    data: {id: id, index: index, object: object},
+                    success: function(rs){
+                        if(rs.code==1){
+                            $("#nestable3>.dd-list").append(rs.data);
+                        }else{
+                            swal.fire({
+                                icon: "warning",
+                                text: rs.message,
+                                showConfirmButton: true
+                            })
+                        }
+                    },
+                    error: function(error){
+                        swal.fire({
+                            icon:"error",
+                            text: error.responseJSON.message,
+                            showConfirmButton: true
+                        })
+                    }
+                })
+            }
+        })
+    </script>
+    <%- include("./include/footer") %>

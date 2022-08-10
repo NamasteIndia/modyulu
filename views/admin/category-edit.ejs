@@ -1,0 +1,243 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>"><i class="fas fa-home"></i> Dashboard</a></li>
+                <%
+                    if(type.posttype.length==1){
+                %>
+                    <li class="breadcrumb-item"><a href="/<%=dashboard%>/post/<%=type.posttype[0].id%>"><%=type.posttype[0].name%></a></li>
+                <%
+                    }
+                %>
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>/category/<%=type.id%>"><%=type.name%></a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit</li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="accordion accordion-edit-page" id="accordionCategory">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h4 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseMain" aria-expanded="true" aria-controls="collapseMain">
+                                        <img src="/<%=dashboard%>/assets/img/flags/es.png"> Español
+                                    </button>
+                                </h4>
+                            </div>
+                            <div id="collapseMain" class="collapse show" aria-labelledby="headingMain" data-parent="#accordionCategory">
+                                <div class="card-body">
+                                    <form class="mb-3 form-edit-page" action="/<%=dashboard%>/category/<%=catetype%>/edit" method="POST">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="catestatus">Status</label>
+                                                    <select class="form-control" name="catestatus">
+                                                        <option value="pending" <%if(category.catestatus=="pending"){%>selected<%}%>>Pending</option>                      
+                                                        <option value="published" <%if(category.catestatus=="published"){%>selected<%}%>>Publish</option>                           
+                                                        <option value="trash" <%if(category.catestatus=="trash"){%>selected<%}%>>Trash</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            <label for="title">Title</label>
+                                            <input type="hidden" class="form-control" name="id" value="<%=category.id%>">
+                                            <input type="text" class="form-control" name="title" value="<%=category.title%>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="slug">Slug</label>
+                                            <input type="text" class="form-control appear-slug" name="slug" value="<%=category.slug%>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <textarea class="form-control" name="description" placeholder="Description"><%=category.description%></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="icon" class="col-form-label">Icon</label>
+                                            <textarea class="form-control" name="icon" placeholder="Icon"><%=category.icon%></textarea>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="parent">Parent category</label>
+                                                    <select class="form-control" name="parent">
+                                                        <option value="">None parent</option>
+                                                        <% if(categories){%>                                    
+                                                            <% categories.forEach(item => { %>
+                                                                <option value="<%=item.id%>" <%if(item.id==category.parentid){%>selected<%}%>><%=item.title%></option>
+                                                            <% }) %>
+                                                        <%}%>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="ads">Ads code</label>
+                                                    <select class="form-control" name="ads">
+                                                        <option value="">None</option>
+                                                        <% if(adss){%>                                    
+                                                            <% adss.forEach(item => { %>
+                                                                <option value="<%=item.id%>" <%if(item.id==category.adsid){%>selected<%}%>><%=item.name%></option>
+                                                            <% }) %>
+                                                        <%}%>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="checkbox mr-3">
+                                                <input class="form-check-input" type="checkbox" name="islikemain" <%if(category.islikemain){ %>checked<%}%>>
+                                                <label class="form-check-label" for="islikemain">Dùng ngôn ngữ chính làm mặc định cho tất cả ngôn ngữ</label>
+                                            </div>
+                                            <div class="checkbox mr-3">
+                                                <input class="form-check-input" type="checkbox" name="offadsall" <%if(category.offadsall){ %>checked<%}%>>
+                                                <label class="form-check-label" for="offadsall">Tắt Quảng tất cả ngôn ngữ</label>
+                                            </div>
+                                            <div class="checkbox mr-3">
+                                                <input class="form-check-input" type="checkbox" name="offads" <%if(category.offads){ %>checked<%}%>>
+                                                <label class="form-check-label" for="offads">Tắt Quảng cáo trang ngôn ngữ TBN</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group seo-progress-bar">
+                                            <label for="seotitle">SEO Title</label>
+                                            <input type="text" class="form-control seo-progress-text" name="seotitle" placeholder="SEO Title" value="<%=category.seotitle%>">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuegood="40" aria-valuemin="0" aria-valuemax="65"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group seo-progress-bar">
+                                            <label for="seodescription">SEO Description</label>
+                                            <textarea class="form-control seo-progress-text" name="seodescription" placeholder="SEO Description"><%=category.seodescription%></textarea>
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuegood="125" aria-valuemin="0" aria-valuemax="155"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="checkbox mr-3">
+                                                <input class="form-check-input" type="checkbox" name="allowfollow" <%if(category.allowfollow){ %>checked<%}%>>
+                                                <label for="allowfollow">Bật follow</label>
+                                            </div>
+                                            <div class="checkbox mr-3">
+                                                <input class="form-check-input" type="checkbox" name="allowindex" <%if(category.allowindex){ %>checked<%}%>>
+                                                <label for="allowindex">Bật index</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group text-right">
+                                            <button type="submit" class="btn btn-primary">Apply</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <% 
+                            if(category.CateLang){
+                                category.CateLang.forEach(item => {
+                        %>
+                            <div class="card">
+                                <div class="card-header" id="heading<%=item.Lang.id%>">
+                                    <h4 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse<%=item.Lang.id%>" aria-expanded="true" aria-controls="collapse<%=item.Lang.langcode%>">
+                                        <img src="/<%=dashboard%>/assets/img/flags/<%=item.Lang.id%>.png" alt="<%=item.Lang.name%>"> <%=item.Lang.name%>
+                                      </button>
+                                    </h4>
+                                </div>
+                                <div id="collapse<%=item.Lang.id%>" class="collapse" aria-labelledby="heading<%=item.Lang.id%>" data-parent="#accordionCategory">
+                                    <div class="card-body">
+                                        <form class="mb-3 form-edit-page" action="/<%=dashboard%>/category/<%=catetype%>/lang/edit" method="POST">
+                                            <div class="form-group">
+                                                <label for="title">Title</label>
+                                                <input type="hidden" class="form-control" name="id" value="<%=item.id%>">
+                                                <input type="hidden" class="form-control" name="cateid" value="<%=item.cateid%>">
+                                                <input type="hidden" class="form-control" name="langid" value="<%=item.langid%>">
+                                                <input type="text" class="form-control" name="title" value="<%=item.title%>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <textarea class="form-control" name="description" placeholder="Description"><%=item.description%></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="seotitle">SEO Title</label>
+                                                <input type="text" class="form-control" name="seotitle" value="<%=item.seotitle%>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="seodescription">SEO Description</label>
+                                                <textarea class="form-control" name="seodescription"><%=item.seodescription%></textarea>
+                                            </div>
+                                            <div>
+                                                <div class="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="offadslang" <%if(item.offadslang){ %>checked<%}%>>
+                                                    <label for="offadslang">Tắt Quảng cáo trang <%=item.Lang.name%></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group text-right">
+                                                <button type="submit" class="btn btn-primary">Apply</button>
+                                                <a href="javascript:void(0);" data-id="<%=item.id%>" data-type="category/<%=catetype%>/lang/delete" class="btn btn-danger btn-delete">Destroy</a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <% 
+                                })
+                            }
+
+                            if(languages || category.islikemain){
+                                languages.forEach(item => {
+                            
+                        %>
+                                <div class="card">
+                                    <div class="card-header" id="heading<%=item.id%>">
+                                        <h4 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse<%=item.id%>" aria-expanded="true" aria-controls="collapse<%=item.id%>">
+                                    <img src="/<%=dashboard%>/assets/img/flags/<%=item.id%>.png" alt="<%=item.name%>"> <%=item.name%> <span class="badge badge-warning">en</span>
+                                    </button>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse<%=item.id%>" class="collapse" aria-labelledby="heading<%=item.id%>" data-parent="#accordionCategory">
+                                        <div class="card-body">
+                                            <form class="mb-3 form-add-lang" action="/<%=dashboard%>/category/<%=catetype%>/lang/add" method="POST">
+                                                <div class="form-group">
+                                                    <label for="title">Title</label>
+                                                    <input type="hidden" class="form-control" name="cateid" value="<%=category.id%>">
+                                                    <input type="hidden" class="form-control" name="langid" value="<%=item.id%>">
+                                                    <input type="text" class="form-control" name="title" value="<%=category.title%>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="description">Description</label>
+                                                    <textarea class="form-control" name="description" placeholder="Description"><%=category.description%></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="seotitle">SEO Title</label>
+                                                    <input type="text" class="form-control" name="seotitle" value="<%=category.seotitle%>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="seodescription">SEO Description</label>
+                                                    <textarea class="form-control" name="seodescription"><%=category.seodescription%></textarea>
+                                                </div>
+                                                <div>
+                                                    <div class="checkbox">
+                                                        <input class="form-check-input" type="checkbox" name="offadslang">
+                                                        <label for="offadslang">Tắt Quảng cáo trang <%=item.name%></label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group text-right">
+                                                    <button type="submit" class="btn btn-primary">Apply</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% 
+                            }) 
+                        } 
+                        %>
+                    </div>
+                    <%- include("./templates/box-logging") %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include("./include/footer") %>

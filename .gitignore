@@ -1,0 +1,8 @@
+config
+.yarn
+yarn.lock
+node_modules
+uploads
+package-lock.json
+.pnp.cjs
+.pnp.loader.mjs

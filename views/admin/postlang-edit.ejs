@@ -1,0 +1,170 @@
+<%- include("./include/header") %>
+    <!--Main content-->
+    <div class="site-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0">
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>/post/<%=type.id%>"><%=type.name%></a></li>
+                <li class="breadcrumb-item"><a href="/<%=dashboard%>/post/<%=type.id%>/edit/<%=post.id%>"><%=post.title%></a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%=language.name%></li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="accordion mb-3" id="accordionMainPost">
+                        <div class="card">
+                            <div class="card-header" id="headingMainPost">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseMainPost" aria-expanded="false" aria-controls="collapseMainPost">
+                                        <img src="/<%=dashboard%>/assets/img/flags/<%=language.id%>.png" alt="<%=language.name%>"> <%=language.name%>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseMainPost" class="collapse show" aria-labelledby="headingMainPost" data-parent="#accordionMainPost">
+                                <div class="card-body">
+                                    <form class="form-edit-page" action="/<%=dashboard%>/post/<%=type.id%>/lang/edit" method="POST">
+                                        <div class="form-group">
+                                            <%
+                                                var html = (post.posttype == "post-page") ? "" : ".html";
+                                            %>
+                                            <a target="_blank" href="<%=domain%>/<%=postlang.langid%>/<%=post.slug%><%=html%>">Xem bài viết</a>
+                                        </div>
+                                        <div class="form-group">                                            
+                                            <label for="title">Tittle</label>
+                                            <input type="hidden" name="id" value="<%=postlang.id%>">
+                                            <input type="hidden" name="pid" value="<%=postlang.postid%>">
+                                            <input type="text" class="form-control" name="title" placeholder="Tittle" value="<%=postlang.title%>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <textarea class="form-control" name="description" placeholder="Description"><%=postlang.description%></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="content">Content</label>
+                                            <textarea class="form-control tinymce" name="content" placeholder="Content"><%=postlang.content%></textarea>
+                                        </div>
+                                        <div class="form-group seo-progress-bar">
+                                            <label for="seotitle">SEO Title</label>
+                                            <input type="text" class="form-control seo-progress-text" name="seotitle" placeholder="SEO Title" value="<%=postlang.seotitle%>">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuegood="40" aria-valuemin="0" aria-valuemax="65"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group seo-progress-bar">
+                                            <label for="seodescription">SEO Description</label>
+                                            <textarea class="form-control seo-progress-text" name="seodescription" placeholder="SEO Description"><%=postlang.seodescription%></textarea>
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuegood="125" aria-valuemin="0" aria-valuemax="155"></div>
+                                            </div>
+                                        </div>
+                                        <div class="checkbox mr-5">
+                                            <input class="form-check-input" type="checkbox" name="offadslang" <%if(postlang.offadslang){%>checked<%}%>>
+                                            <label class="form-check-label" for="offadslang">Tắt Ads trang <%=language.name%></label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <input class="form-check-input" type="checkbox" name="offadsdownload" <%if(postlang.offadsdownload){%>checked<%}%>>
+                                            <label class="form-check-label" for="offadsdownload">Tắt Ads trang download <%=language.name%></label>
+                                        </div>
+                                        <div class="form-group text-right">
+                                            <button class="btn btn-primary" type="submit">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="accordion accordion-ui ui-state-default mb-3 boxPopupAccordion" id="accordionFaq" data-popup="apkFaqModal">
+                        <div class="card">
+                            <div class="card-header" id="headingFaq">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseFaq" aria-expanded="true" aria-controls="collapseFaq">
+                                        FAQs
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseFaq" class="collapse show" aria-labelledby="headingFaq" data-parent="#accordionFaq">
+                                <div class="card-body">
+                                    <div class="faq-box" data-post="pid">
+                                        <div class="text-right">
+                                            <button class="btn btn-primary btn-sm rounded-circle btn-show-popform" title="Add Faq">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <div class="mb-body">
+                                            <div class="bpaSortable" data-link="/<%=dashboard%>/post/<%=post.posttype%>/faq/numsort">
+                                                <%    
+                                                    var faqs = (post.faq) ? post.faq : [];
+                                                    faqs.forEach(faq => {
+                                                %>
+                                                        <div class="bpaItem ui-state-default mb-3" id="accordionFaq-<%=faq.id%>" data-id="<%=faq.id%>">
+                                                            <div class="bpa-toolbar">
+                                                                <button class="btn btn-danger btn-sm rounded-0 btnDelBPA" title="Remove it"><i class="fas fa-times"></i></button>
+                                                                <span class="bpa-title"><%=faq.title%></span>
+                                                            </div>
+                                                            <div class="bpa-body card rounded-0">
+                                                                <div class="form-group">
+                                                                    <label for="">Hỏi</label>
+                                                                    <input class="form-control" type="hidden" name="faqid" value="<%=faq.id%>">
+                                                                    <input class="form-control" type="hidden" name="faqpid" value="<%=faq.postid%>">
+                                                                    <input class="form-control" type="hidden" name="faqlangid" value="<%=faq.langid%>">
+                                                                    <input class="form-control" type="hidden" name="faqnumsort" value="<%=faq.numsort%>">
+                                                                    <input class="form-control itemAutoSave bpai-title" type="text" name="faqtitle" placeholder="Hỏi" value="<%=faq.title%>">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="">Trả lời</label>
+                                                                    <textarea class="form-control bpatinymce itemAutoSave bpa-change-item bpai-content" name="faqcontent" placeholder="Trả lời"><%=faq.content%></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bpa-footer"></div>
+                                                        </div>
+                                                <%
+                                                    })
+                                                %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal FAQ -->
+    <div class="modal fade bpaModal" id="apkFaqModal" tabindex="-1" aria-labelledby="faqModalLabel" aria-hidden="true" data-box="accordionFaq">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <form action="/<%=dashboard%>/post/<%=post.posttype%>/faq/add" class="bpaForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title bpaModalLabel" id="faqModalLabel">Add FAQ</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="">Hỏi</label>                        
+                            <input class="form-control" type="hidden" name="postid" value="<%=post.id%>">
+                            <input class="form-control" type="hidden" name="langid" value="<%=language.id%>">
+                            <input class="form-control" type="text" name="title" placeholder="Hỏi" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Trả lời</label>
+                            <textarea class="form-control tinymce bpa-change-item" name="content" placeholder="Trả lời"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary bpaSubmit">Lưu</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/<%=dashboard%>/assets/libs/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="/<%=dashboard%>/assets/libs/tinymce/tinymce.min.js"></script>
+    <script src="/<%=dashboard%>/assets/js/tiny.js"></script>
+    <script src="/<%=dashboard%>/assets/js/boxFaqs.js"></script>
+    <%- include("./include/footer") %>
