@@ -15,22 +15,22 @@ const numCommentInPage = 5;
 const errorController = require('./error.controller');
 
 // Hien thi page quan tri comment trong admin
-exports.showComment = async(req, res) => {
-    try{
-        if(!req.roleAction || !req.roleAction.actview){
+exports.showComment = async (req, res) => {
+    try {
+        if (!req.roleAction || !req.roleAction.actview) {
             return errorController.render403Ajax(req, res);
         }
         var postid = req.params.postid || "%";
         var status = req.params.status || "%";
         res.render("admin/comment", { postid, status });
-    }catch(err){
+    } catch (err) {
         return errorController.render500(req, res);
-    }    
+    }
 }
 // Tao relay trong admin
-exports.ReplyCommentAdmin = async(req, res) => {
+exports.ReplyCommentAdmin = async (req, res) => {
     try {
-        if(!req.roleAction || !req.roleAction.actadd){
+        if (!req.roleAction || !req.roleAction.actadd) {
             return errorController.render403Ajax(req, res);
         }
         var parentid = req.body.parentid || null,
@@ -41,7 +41,7 @@ exports.ReplyCommentAdmin = async(req, res) => {
             userid = req.session.userid || 0;
         ip = (ip == "::1") ? "127.0.0.1" : ip;
         ip = ip.split(":").pop();
-        var commentParent = await Comment.findOne({where: {id: parentid}, attributes:['langid']});        
+        var commentParent = await Comment.findOne({ where: { id: parentid }, attributes: ['langid'] });
         if (parentid !== null) {
             rootid = await this.getRootId(parentid);
         }
@@ -77,24 +77,24 @@ exports.ReplyCommentAdmin = async(req, res) => {
     }
 }
 // Lay thong tin cua 1 comment
-exports.getCommentById = async(req, res) => {
-    try{
-        if(!req.roleAction || !req.roleAction.actview){
+exports.getCommentById = async (req, res) => {
+    try {
+        if (!req.roleAction || !req.roleAction.actview) {
             return errorController.render403Ajax(req, res);
         }
         var id = req.body.id || req.params.id || "";
         const comment = await Comment.findOne({ where: { id: id } });
         if (comment == null) {
             return errorController.render404Ajax(req, res);
-                
+
         }
         return res.json({ code: 1, message: "Successfully", data: comment });
-    }catch(err){
+    } catch (err) {
         return errorController.render500Ajax(req, res);
-    }    
+    }
 }
 // Thuc hien update comment status trong admin
-exports.UpdateCommentStatus = async(req, res) => {
+exports.UpdateCommentStatus = async (req, res) => {
     try {
         var id = req.body.id || "",
             value = req.body.value || "";
@@ -104,12 +104,12 @@ exports.UpdateCommentStatus = async(req, res) => {
             }
         })
         // Comment khong ton tai
-        if(curComment == null){
+        if (curComment == null) {
             return errorController.render404Ajax(req, res);
         }
         // Check quyen Edit comment hoac Author
-        if(curComment.authorid !== req.session.userid){
-            if(!req.roleAction || !req.roleAction.actedit){
+        if (curComment.authorid !== req.session.userid) {
+            if (!req.roleAction || !req.roleAction.actedit) {
                 return errorController.render403Ajax(req, res);
             }
         }
@@ -122,7 +122,7 @@ exports.UpdateCommentStatus = async(req, res) => {
     }
 }
 // Thuc hien bulk action trong admin
-exports.Bulk = async(req, res) => {
+exports.Bulk = async (req, res) => {
     try {
         var ids = req.body.id;
         var action = req.body.action;
@@ -140,17 +140,17 @@ exports.Bulk = async(req, res) => {
     }
 }
 // implement delete
-exports.Delete = async(req, res) => {
-    try {        
+exports.Delete = async (req, res) => {
+    try {
         var id = req.params.id || req.body.id || "",
-            where = {id: id};
+            where = { id: id };
         // Neu khong co quyen del thi chi del nhung comment mine
-        if(!req.roleAction || !req.roleAction.actdel){
+        if (!req.roleAction || !req.roleAction.actdel) {
             where.authorid = req.session.userid || "";
         }
         var rsDestroy = await Comment.destroy({
-                where: where
-            });
+            where: where
+        });
         if (rsDestroy <= 0) {
             return res.json({ code: 0, message: "This comment can't delete" });
         }
@@ -160,17 +160,17 @@ exports.Delete = async(req, res) => {
     }
 }
 // implement update 
-exports.UpdateComment = async(req, res) => {
+exports.UpdateComment = async (req, res) => {
     try {
         var id = req.body.id || "";
-        const curComment = await Comment.findOne({where:{id:id}});
+        const curComment = await Comment.findOne({ where: { id: id } });
         // Comment khong ton tai
-        if(curComment==null){
+        if (curComment == null) {
             return errorController.render404Ajax(req, res);
         }
         // Check quyen Edit comment hoac Author
-        if(curComment.author !== req.session.userid){
-            if(!req.roleAction || !req.roleAction.actedit){
+        if (curComment.author !== req.session.userid) {
+            if (!req.roleAction || !req.roleAction.actedit) {
                 return errorController.render403Ajax(req, res);
             }
         }
@@ -186,7 +186,7 @@ exports.UpdateComment = async(req, res) => {
     }
 }
 // load data for datatable
-exports.Datatable = async(req, res) => {
+exports.Datatable = async (req, res) => {
     try {
         var where = {},
             search = req.query.columns[1].search.value,
@@ -203,31 +203,31 @@ exports.Datatable = async(req, res) => {
         if (search) {
             where = {
                 [Op.or]: [{
-                        name: {
-                            [Op.like]: `%${search}%`
-                        }
-                    }, {
-                        email: {
-                            [Op.like]: `%${search}%`
-                        }
-                    },
-                    {
-                        website: {
-                            [Op.like]: `%${search}%`
-                        }
-                    }, {
-                        content: {
-                            [Op.like]: `%${search}%`
-                        }
-                    },{
-                        '$post.title$':{
-                            [Op.like]: `%${search}%`
-                        }
-                    },{
-                        '$post.slug$':{
-                            [Op.like]: `%${search}%`
-                        }
+                    name: {
+                        [Op.like]: `%${search}%`
                     }
+                }, {
+                    email: {
+                        [Op.like]: `%${search}%`
+                    }
+                },
+                {
+                    website: {
+                        [Op.like]: `%${search}%`
+                    }
+                }, {
+                    content: {
+                        [Op.like]: `%${search}%`
+                    }
+                }, {
+                    '$post.title$': {
+                        [Op.like]: `%${search}%`
+                    }
+                }, {
+                    '$post.slug$': {
+                        [Op.like]: `%${search}%`
+                    }
+                }
                 ]
             }
         }
@@ -255,10 +255,10 @@ exports.Datatable = async(req, res) => {
                         sequelize.literal(`(select count(*) from ${tbCommentName} d where d.postid=${tbCommentName}.postid and d.commentstatus = 'pending' )`),
                         'pending'
                     ],
-                    [sequelize.literal(`${(roleAction.actview)?roleAction.actview:0}`), 'roleview'],
-                    [sequelize.literal(`${(roleAction.actadd)?roleAction.actadd:0}`), 'roleadd'],
-                    [sequelize.literal(`${(roleAction.actedit)?roleAction.actedit:0}`), 'roleedit'],
-                    [sequelize.literal(`${(roleAction.actdel)?roleAction.actdel:0}`), 'roledel'],
+                    [sequelize.literal(`${(roleAction.actview) ? roleAction.actview : 0}`), 'roleview'],
+                    [sequelize.literal(`${(roleAction.actadd) ? roleAction.actadd : 0}`), 'roleadd'],
+                    [sequelize.literal(`${(roleAction.actedit) ? roleAction.actedit : 0}`), 'roleedit'],
+                    [sequelize.literal(`${(roleAction.actdel) ? roleAction.actdel : 0}`), 'roledel'],
                     [sequelize.literal(`${req.session.userid}`), 'mine'],
                 ]
             },
@@ -285,7 +285,7 @@ exports.Datatable = async(req, res) => {
     }
 }
 // get rootId
-exports.getRootId = async(parentId) => {
+exports.getRootId = async (parentId) => {
     const query = `SELECT comment.id
                         FROM (
                             SELECT
@@ -303,17 +303,17 @@ exports.getRootId = async(parentId) => {
 }
 
 // get list comment of postid
-exports.getListCommentByPostid = async(langId, postId, page, sort, userid) => {
+exports.getListCommentByPostid = async (langId, postId, page, sort) => {
     try {
         var offset = (page * numCommentInPage) - numCommentInPage,
             comments = {},
             order = [];
-        switch(sort){
+        switch (sort) {
             case "best":
-                order.push(['numlike', 'DESC'],['id', 'DESC']);
+                order.push(['numlike', 'DESC'], ['id', 'DESC']);
                 break;
             case "top":
-                order.push(['rating', 'DESC'],['id', 'DESC']);
+                order.push(['rating', 'DESC'], ['id', 'DESC']);
                 break;
             default:
                 order.push(['id', 'DESC']);
@@ -330,18 +330,19 @@ exports.getListCommentByPostid = async(langId, postId, page, sort, userid) => {
                     'countchilds'
                 ]]
             },
-            include: [{
-                model: User,
-                as: "author",
-                attributes:['avatar', 'username', 'nickname', 'roleid']
-            }/* , {
-                model: CommentLike,
-                as: "likes",
-                attributes:['userid'],
-                where:{
-                    userid: userid
-                }
-            } */],
+            // include: [{
+            //     model: User,
+            //     as: "author",
+            //     attributes: ['avatar', 'username', 'nickname', 'roleid']
+            // }
+            // , {
+            //     model: CommentLike,
+            //     as: "likes",
+            //     attributes:['userid'],
+            //     where:{
+            //         userid: userid
+            //     }
+            // }],
             where: {
                 postid: postId,
                 parentid: null,
@@ -384,15 +385,15 @@ exports.getListCommentByPostid = async(langId, postId, page, sort, userid) => {
     }
 }
 
-exports.getLineRating = async(postId, langId) => {
-    try{
+exports.getLineRating = async (postId, langId) => {
+    try {
         var rs = {
             numComment: 0,
             numReview: 0,
             numReviewLang: 0,
             point: 0,
-            stars:[0, 0, 0, 0, 0],
-            percent:[]
+            stars: [0, 0, 0, 0, 0],
+            percent: []
         };
         const arr = await Comment.findAll({
             attributes: [
@@ -400,7 +401,7 @@ exports.getLineRating = async(postId, langId) => {
                 'rating',
                 [sequelize.fn('count', sequelize.col('rating')), 'count']
             ],
-            where:{
+            where: {
                 commentstatus: "published",
                 postid: postId,
                 parentid: null
@@ -410,13 +411,13 @@ exports.getLineRating = async(postId, langId) => {
             raw: true
         });
         arr.forEach(item => {
-            var inx = item.rating-1;
-            if(inx >= 0) rs.stars[inx] += item.count;            
-            if(item.langid==langId) rs.numReviewLang += item.count;
+            var inx = item.rating - 1;
+            if (inx >= 0) rs.stars[inx] += item.count;
+            if (item.langid == langId) rs.numReviewLang += item.count;
             rs.numReview += item.count;
             rs.point += (item.rating * item.count);
-        });        
-        rs.stars.forEach(star => {            
+        });
+        rs.stars.forEach(star => {
             rs.percent.push(Math.round(star * 100 / rs.numReview) || 0);
         });
         rs.point = parseFloat((rs.point / rs.numReview).toFixed(1)) || 0;
@@ -431,13 +432,13 @@ exports.getLineRating = async(postId, langId) => {
             raw: true
         });
         return rs;
-    }catch(err){        
+    } catch (err) {
         console.log(err)
         return {};
     }
 }
 // get list comment of postid
-exports.getListCommentByUserid = async(userId, page) => {
+exports.getListCommentByUserid = async (userId, page) => {
     try {
         var offset = (page * numCommentInPage) - numCommentInPage,
             comments = {};
@@ -466,14 +467,14 @@ exports.getListCommentByUserid = async(userId, page) => {
                 offset: 0,
                 limit: numCommentInPage,
                 separate: true
-            },{
+            }, {
                 model: Post,
                 as: "post",
-                attributes:['slug', 'title']
-            },{
+                attributes: ['slug', 'title']
+            }, {
                 model: User,
                 as: "author",
-                attributes:['avatar', 'nickname']
+                attributes: ['avatar', 'nickname']
             }],
             where: {
                 authorid: userId,
@@ -495,12 +496,12 @@ exports.getListCommentByUserid = async(userId, page) => {
     }
 }
 // get list comment of postid
-exports.getListCommentByRootId = async(langId, rootId, page, sort, userid) => {
+exports.getListCommentByRootId = async (langId, rootId, page, sort) => {
     try {
         var offset = (page * numCommentInPage) - numCommentInPage,
             comments = {},
             order = [];
-        switch(sort){
+        switch (sort) {
             case "best":
                 order.push(['numlike', 'DESC']);
                 break;
@@ -519,18 +520,18 @@ exports.getListCommentByRootId = async(langId, rootId, page, sort, userid) => {
                 commentstatus: "published",
                 langid: langId
             },
-            include:[{
-                model: User,
-                as: "author",
-                attributes:['avatar', 'nickname', 'username']
-            }/* , {
-                model: CommentLike,
-                as: "likes",
-                attributes:['userid'],
-                where:{
-                    userid: userid
-                }
-            } */],
+            // include: [{
+            //     model: User,
+            //     as: "author",
+            //     attributes: ['avatar', 'nickname', 'username']
+            // }, {
+            //     model: CommentLike,
+            //     as: "likes",
+            //     attributes:['userid'],
+            //     where:{
+            //         userid: userid
+            //     }
+            // }],
             order: order,
             offset: offset,
             limit: numCommentInPage,
@@ -542,7 +543,7 @@ exports.getListCommentByRootId = async(langId, rootId, page, sort, userid) => {
     }
 }
 // count all comment postid
-exports.getCountCommentOfPostid = async(langId, postId) => {
+exports.getCountCommentOfPostid = async (langId, postId) => {
     const count = await Comment.count({
         where: {
             commentstatus: "published",
@@ -555,10 +556,10 @@ exports.getCountCommentOfPostid = async(langId, postId) => {
     return count;
 }
 // ajax add comment in frontend
-exports.AddComment = async(req, res) => {
+exports.AddComment = async (req, res) => {
     try {
         var btnLoginHtml = `<div class="text-center"><a class="btn btnInLine" href="/login" rel="nofollow">${res.__("textLogin")}<a></div>`;
-        if(!req.session.userid){            
+        if (!req.session.userid) {
             return res.json({ code: 401, message: res.__("textRequireLogin"), button: btnLoginHtml });
         }
         var token = req.body.token || "token",
@@ -570,14 +571,14 @@ exports.AddComment = async(req, res) => {
             langid = (req.curLang && req.curLang.id) ? req.curLang.id : "",
             ip = req.ipAddr,
             agent = req.userAgent,
-            userid = req.session.userid || null,            
+            userid = req.session.userid || null,
             name = (req.body.name) ? xssFilters.inHTMLData(req.body.name) : "",
             email = (req.body.email) ? xssFilters.inHTMLData(req.body.email) : "",
             content = (req.body.content) ? xssFilters.inHTMLData(req.body.content) : null,
             rating = (req.body.rating) ? parseInt(xssFilters.inHTMLData(req.body.rating)) : 0;
         parentid = (parentid == "") ? null : parentid;
         req.session.ajaxpagetoken = newToken;
-        if(((rating <= 0 || rating > 5) && parentid == null) || content==""){
+        if (((rating <= 0 || rating > 5) && parentid == null) || content == "") {
             return res.json({ code: 0, message: res.__('textRequireFillComment') });
         }
         //if (token == token2) {
@@ -591,7 +592,7 @@ exports.AddComment = async(req, res) => {
                     attributes: ['id', 'nickname', 'username', 'email']
                 });
                 name = (user.nickname) ? user.nickname : "";
-                name = (name=="") ? user.username : name;
+                name = (name == "") ? user.username : name;
                 email = user.email || "";
             }
             await Comment.create({
@@ -611,15 +612,54 @@ exports.AddComment = async(req, res) => {
             }).catch(() => {
                 res.json({ code: 0, message: res.__('textCommentWarning') });
             });
-        }else{
+        } else {
             res.status(401).json({ code: 401, message: res.__("textRequireLogin"), button: btnLoginHtml });
         }
     } catch (err) {
         res.json({ code: 0, message: "Error" });
     }
 }
+
+// ajax add comment in frontend not login
+exports.AddCommentNotLogin = async (req, res) => {
+    try {
+        var parentid = req.body.parentid || null,
+            rootid = null,
+            langid = (req.curLang && req.curLang.id) ? req.curLang.id : "",
+            ip = req.ipAddr,
+            agent = req.userAgent,
+            userid = req.session.userid || null,
+            name = (req.body.name) ? xssFilters.inHTMLData(req.body.name) : "",
+            email = (req.body.email) ? xssFilters.inHTMLData(req.body.email) : "",
+            content = (req.body.content) ? xssFilters.inHTMLData(req.body.content) : null,
+            parentid = (parentid == "") ? null : parentid;
+        if (parentid !== null) {
+            rootid = await this.getRootId(parentid);
+        }
+
+        await Comment.create({
+            postid: req.body.postid,
+            parentid: parentid,
+            rootid: rootid,
+            name: name,
+            email: email,
+            content: content,
+            ipaddress: ip,
+            useragent: agent,
+            authorid: userid,
+            langid: langid
+        }).then(() => {
+            res.json({ code: 1, message: res.__('textCommentThanks') });
+        }).catch(() => {
+            res.json({ code: 0, message: res.__('textCommentWarning') });
+        });
+    } catch (err) {
+        res.json({ code: 0, message: "Error" });
+    }
+}
+
 // ajax add comment in frontend
-exports.AddCommentLike = async(req, res) => {
+exports.AddCommentLike = async (req, res) => {
     try {
         var btnLoginHtml = `<div class="text-center"><a class="btn btnInLine" href="/login" rel="nofollow">${res.__("textLogin")}<a></div>`;
         var token = req.body.token || "token",
@@ -628,34 +668,34 @@ exports.AddCommentLike = async(req, res) => {
             userid = req.session.userid || null,
             id = req.body.id,
             isLike = true;
-        if(userid==null){
+        if (userid == null) {
             return res.json({ code: 401, message: res.__("textRequireLogin"), button: btnLoginHtml });
         }
         req.session.ajaxpagetoken = newToken;
         //if (token == token2) {
-        if (token == token) {            
+        if (token == token) {
             var comment = await Comment.findOne({
-                where:{
+                where: {
                     id: id
                 }
             });
-            if(comment!=null){
+            if (comment != null) {
                 var exist = await CommentLike.count({
-                    where:{
-                        cmtid:id,
+                    where: {
+                        cmtid: id,
                         userid: userid
                     }
                 });
-                if(exist <= 0){
+                if (exist <= 0) {
                     CommentLike.create({
                         userid: userid,
                         cmtid: id
                     });
                     isLike = false;
                     comment.numlike = comment.numlike + 1;
-                }else{
+                } else {
                     CommentLike.destroy({
-                        where:{
+                        where: {
                             userid: userid,
                             cmtid: id
                         }
@@ -664,10 +704,10 @@ exports.AddCommentLike = async(req, res) => {
                 }
                 comment.save();
                 return res.json({ code: 1, message: "Success", isLike: isLike, numLike: comment.numlike });
-            }else{
+            } else {
                 return res.json({ code: 0, message: res.__("textDataWrong") });
             }
-        }else{
+        } else {
             res.status(401).json({ code: 401, message: res.__("textRequireLogin"), button: btnLoginHtml });
         }
     } catch (err) {
@@ -676,15 +716,14 @@ exports.AddCommentLike = async(req, res) => {
     }
 }
 // ajax load more commnet pagination Fontend
-exports.ajaxCommentPagination = async(req, res) => {
+exports.ajaxCommentPagination = async (req, res) => {
     try {
-        var userid = req.session.userid,
-            postId = req.body.pid,
+        var postId = req.body.pid,
             langId = req.body.lid || "",
-            sort = req.body.sort || "best",
-            offset = req.body.offset || 0,            
+            sort = req.body.sort || "",
+            offset = req.body.offset || 0,
             curPage = Math.floor(offset / numCommentInPage) + 1;
-        const comments = await this.getListCommentByPostid(langId, postId, curPage, sort, userid);
+        const comments = await this.getListCommentByPostid(langId, postId, curPage, sort);
         var html = [];
         fileCommentRender = "views/web/includes/comment-loop.ejs";
         html = await ejs.renderFile(fileCommentRender, { comments: comments.rows });
@@ -695,7 +734,7 @@ exports.ajaxCommentPagination = async(req, res) => {
     }
 }
 // ajax load more reply pagination Fontend
-exports.ajaxReplyPagination = async(req, res) => {
+exports.ajaxReplyPagination = async (req, res) => {
     try {
         var parentId = req.body.parentid,
             offset = req.body.offset || 0,
@@ -705,7 +744,7 @@ exports.ajaxReplyPagination = async(req, res) => {
         const comments = await this.getListCommentByRootId(langId, parentId, curPage, sort);
         var html = [],
             fileCommentRender = "views/web/includes/comment-item.ejs";
-        await Promise.all(comments.rows.map(async(c) => {
+        await Promise.all(comments.rows.map(async (c) => {
             html.push(await ejs.renderFile(fileCommentRender, { comment: c }));
         }));
         return res.json({ code: 1, message: "Successfully", data: html.join("").trim() });
@@ -714,18 +753,18 @@ exports.ajaxReplyPagination = async(req, res) => {
     }
 }
 // ajax load more commnet pagination profile
-exports.ajaxProfileCommentPagination = async(req, res) => {
+exports.ajaxProfileCommentPagination = async (req, res) => {
     try {
         var userId = req.session.userid || "",
             offset = req.body.showed || 0,
             curPage = Math.floor(offset / numCommentInPage) + 1;
-        if(userId==""){
+        if (userId == "") {
             return errorController.render403Ajax(req, res);
         }
         const comments = await this.getListCommentByUserid(userId, curPage);
         var html = "";
         fileCommentRender = "views/web/includes/comment-profile.ejs";
-        html = await ejs.renderFile(fileCommentRender, { rows: comments.rows, page: {curLang: req.curLang} });
+        html = await ejs.renderFile(fileCommentRender, { rows: comments.rows, page: { curLang: req.curLang } });
         html = html.trim();
         html = html.replace(/^<ul class="profile-comments">/g, "");
         html = html.replace(/<\/ul>$/g, "");
@@ -737,7 +776,7 @@ exports.ajaxProfileCommentPagination = async(req, res) => {
 }
 // update trang thai comment da doc
 exports.offNotificationComment = async (userid, postid) => {
-    try{
+    try {
         var query = `update ${tbCommentName} set viewed = true where id in(
                         select d.id
                         from ${tbCommentName} d, ${tbCommentName} p
@@ -751,14 +790,14 @@ exports.offNotificationComment = async (userid, postid) => {
                         and p.authorid = ${userid}
                         and d.postid = ${postid}
                     )`;
-        return Sequelize.query(query, {type: Sequelize.QueryTypes.UPDATE})
-    }catch(err){
+        return Sequelize.query(query, { type: Sequelize.QueryTypes.UPDATE })
+    } catch (err) {
         return false;
     }
 }
 // lay comment user chua doc -> thong nao
 exports.countNotificationComment = async (userid) => {
-    try{
+    try {
         var query = `select count(d.id) numComments
                         from ${tbCommentName} d, ${tbCommentName} p
                         where d.commentstatus='published' 
@@ -769,9 +808,9 @@ exports.countNotificationComment = async (userid) => {
                         and p.commentstatus='published' 
                         and p.parentid is null
                         and p.authorid = ${userid}`;
-        const rs = await Sequelize.query(query, {type: Sequelize.QueryTypes.SELECT})
+        const rs = await Sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
         return rs[0].numComments;
-    }catch(err){
+    } catch (err) {
         return 0;
     }
 }

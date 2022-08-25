@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <header class="bg-header bg-white ">
+    <header class="bg-header bg-white fixed-top">
         <div class="container header-flex">
             <button class="btn-nav-menu" type="button">
                 <svg class="svg-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -34,14 +34,14 @@
                     </button>
                 </div>
                 <ul class="nav-menu">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Apps</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="category.html">Apps</a></li>
                     <li><a href="#">Games</a></li>
                 </ul>
             </nav>
             <div class="site-overlay"></div>
             <div style="width: 300px">
-                <form class="form-search" method="GET" action="https://modyolo.com/">
+                <form class="form-search" method="GET" action="#">
                     <div class="input-group">
                         <input class="form-control form-control-sm" type="text" name="s" placeholder="Search">
                         <div class="input-group-append">
@@ -58,7 +58,7 @@
             </div>
         </div>
     </header>
-    <main>
+    <main class="main-mr-top">
         <div class="py-2">
             <div class="container">
                 <ul id="breadcrumb" class="breadcrumb" itemscope="" itemtype="#" itemid="#">
@@ -301,7 +301,7 @@
                     <p><em>Make gold and cash, upgrade your mine, and level up in this idle miner simulation clicker
                             game.</em></p>
                 </div>
-                <h2 id="download" class="h5 font-weight-semibold mb-3">Idle Miner Tycoon v3.97.0 MOD APK (Unlimited
+                <h2  class="h5 font-weight-semibold mb-3">Idle Miner Tycoon v3.97.0 MOD APK (Unlimited
                     Coins) Download</h2>
                 <a class="btn btn-primary btn-block mb-3" href="#">
                     <svg class="svg-5 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -311,7 +311,7 @@
                     </svg>
                     <span class="align-middle">Download (147M)</span>
                 </a>
-                <div class="small mb-3">
+                <div class="small mb-3 list-style">
                     <p><em>You are now ready to download <strong>Idle Miner Tycoon&nbsp;</strong>for free. Here are some
                             notes:</em></p>
                     <ul>
@@ -331,10 +331,8 @@
                         </svg>
                         Join @MODYOLO.COM on Telegram channel </a>
                 </div>
-                <div
-                    class="text-center border-top border-bottom d-flex align-items-center justify-content-center py-3 mb-3">
-                    <div class="rating jq-ry-container" data-post_id="16781" data-rateyo-rating="5"
-                        style="width: 100px;">
+                <div class="text-center border-top border-bottom d-flex align-items-center justify-content-center py-3 mb-3">
+                    <div class="rating jq-ry-container" style="width: 100px;">
                         <div class="jq-ry-group-wrapper">
                             <div class="jq-ry-normal-group jq-ry-group">
                                 <svg version="1.1"
@@ -490,7 +488,7 @@
                 </header>
                 <div class="row">
                     <div class="col-12 col-md-6 col-xl-4 mb-3">
-                        <a class="text-body border rounded d-block" href="https://modyolo.com/frolomuse-mp3-player.html"
+                        <a class="text-body border rounded d-block" href="#"
                             title="Frolomuse MP3 Player">
                             <div class="d-flex" style="padding: 0.5rem;">
                                 <div class="flex-shrink-0 mr-2" style="width: 3.75rem;">
@@ -980,22 +978,22 @@
             </section>
             <section class="bg-white border rounded shadow-sm pt-3 px-2 px-md-3 mb-3 mx-auto" style="max-width: 880px;">
                 <form class="form-comment" method="POST" action="">
-                    <h2 class="h5 font-weight-semibold mb-3">Leave a Comment</h2>
+                    <h2 class="h5 font-weight-semibold mb-3 mr-top">Leave a Comment</h2>
                     <input type="hidden" name="action" value="k_comment">
                     <input type="hidden" name="post_id" value="16781">
                     <div class="form-group">
                         <textarea class="form-control" rows="3" name="comment" placeholder="Comment"></textarea>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-sm-6 form-group">
+                        <div class="mr-right col-sm-6 form-group">
                             <input class="form-control" type="text" name="name" placeholder="Name">
                         </div>
-                        <div class="col-12 col-sm-6 form-group">
+                        <div class="col-sm-6 form-group">
                             <input class="form-control" type="text" name="email" placeholder="Email">
                         </div>
                     </div>
                     <div class="form-group text-right">
-                        <button class="btn btn-primary" type="submit">Send Comment</button>
+                        <button class="btn btn-primary font-btn-primary" type="submit">Send Comment</button>
                     </div>
                 </form>
             </section>
@@ -1122,7 +1120,15 @@
             isActive = !isActive;
         }
     </script>
-
+<script>
+    $(function() {
+            var pgurl = window.location.href.substr(window.location.href.lastIndexOf("/")+1);
+            $("nav ul a").each(function(){
+                if($(this).attr("href") == pgurl || $(this).attr("href") == '' )
+                $(this).addClass("active");
+            })
+        });
+</script>
 </body>
 
 </html>

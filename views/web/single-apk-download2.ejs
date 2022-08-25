@@ -11,7 +11,7 @@
     var thumb = (apk.icon) ? apk.icon : {};
     var thumbnail = (thumb.urlicon) ? thumb.urlicon : `${domain}/assets/image/no-image.jpg`;
     var file = (linkdownload.link) ? linkdownload.link : "";
-    var postUrl = (apk.slug) ? `${homeUrl}/${apk.slug}/` : domain;
+    var postUrl = (apk.slug) ? `${homeUrl}/${apk.slug}.html` : domain;
 %>
 <%- include("includes/header", {adspagename: "pagedownload"}); %>
 <main id="page-body">

@@ -1,12 +1,14 @@
 <%
     var categories = (categories) ? categories : [];
 %>
-<ul class="bsc-list">
-    <%
+<%
         categories.forEach(c => {
     %>
+        <div class="col-6 mb-3">
+            
             <%- include("category", {category: c}); %>
-    <%
+            
+        </div>
+<%
         })
     %>
-</ul>

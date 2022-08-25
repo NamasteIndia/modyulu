@@ -28,7 +28,7 @@
             {title: `[OBB] - ${apk.title} ${apkMeta.version} APK Original`, description: '', size: '', link: 'apk.zip'}
         ]
     };
-    var postUrl = (apk.slug) ? `${homeUrl}/${apk.slug}/` : domain;
+    var postUrl = (apk.slug) ? `${homeUrl}/${apk.slug}.html` : domain;
     var appTitle = apk.title;
     appTitle += ` ${apkMeta.version}`;
     appTitle += (!apkMeta.off_mod_text) ? modText : "";

@@ -465,6 +465,13 @@ async function execHomePage(req, res) {
       pageContent.id,
       ''
     );
+    var menuFooterRight = await menuController.getMenuFontEnd(
+      curLang,
+      'menu-footer-right',
+      'home',
+      pageContent.id,
+      ''
+    );
     // Show posts to home
     var cateGameIds = await Category.findAllChildIds(appConf.gameId || 0);
     cateGameIds.push(appConf.gameId || 0);
@@ -473,7 +480,7 @@ async function execHomePage(req, res) {
       cateGameIds,
       curLang,
       1,
-      15
+      12
     );
     var cateAppIds = await Category.findAllChildIds(appConf.appId || 0);
     cateAppIds.push(appConf.appId || 0);
@@ -482,9 +489,9 @@ async function execHomePage(req, res) {
       cateAppIds,
       curLang,
       1,
-      15
+      12
     );
-    var homeApkChoices = await postController.getApkChoices('updated', curLang, 1, 9);
+    var homeApkChoices = await postController.getApkChoices('updated', curLang, 1, 8);
     var homeLastestBlogs3 = await postController.getPostByLangHasSort(
       'updated',
       'post-blog',
@@ -528,17 +535,26 @@ async function execHomePage(req, res) {
         if (breadcrumbs && breadcrumbs.schema) {
             arrSchema.push(breadcrumbs.schema);
         } */
+    var catesSidebar = [];
+    var appsSidebar = [];
+    var rootCateSlug = 'games';
+    var rootAppSlug = 'apps';
+    catesSidebar = await cateController.getCategoryByLangParentSlug(rootCateSlug, curLang);
+    appsSidebar = await cateController.getCategoryByLangParentSlug(rootAppSlug, curLang);
     var page = {
       curLang: curLang,
       seoMeta: metaHome.join(''),
       seoSchema: arrSchema.join(','),
       menuHeader: menuHeader,
       menuFooter: menuFooter,
+      menuFooterRight: menuFooterRight,
       pageContent: pageContent,
       homeBestGames: homeBestGames,
       homeBestApps: homeBestApps,
       homeApkChoices: homeApkChoices,
       homeLastestBlogs: homeLastestBlogs,
+      catesSidebar: catesSidebar,
+      appsSidebar: appsSidebar,
     };
     res.render('web/index', { page: page });
   } catch (err) {
@@ -579,6 +595,13 @@ async function execSearchPage(req, res) {
       pageContent.id,
       ''
     );
+    var menuFooterRight = await menuController.getMenuFontEnd(
+      curLang,
+      'menu-footer-right',
+      'home',
+      pageContent.id,
+      ''
+    );
     var postSearch = await postController.getPostSearch(query, curLang, 1, maxNumPostsCate);
     // SEO Meta tags
     var arrLangsExists = await Post.findPostLangAvailable(curLang.id, pageContent.id);
@@ -603,6 +626,7 @@ async function execSearchPage(req, res) {
       seoSchema: arrSchema.join(','),
       menuHeader: menuHeader,
       menuFooter: menuFooter,
+      menuFooterRight: menuFooterRight,
       pageContent: pageContent,
       postSearch: postSearch,
       pagination: '',
@@ -734,6 +758,13 @@ exports.execDownloadApkPage = async (req, res) => {
       pageContent.id,
       req.url
     );
+    var menuFooterRight = await menuController.getMenuFontEnd(
+      curLang,
+      'menu-footer-right',
+      'home',
+      pageContent.id,
+      ''
+    );
     // SEO Meta tags
     var arrLangsExists = await Post.findPostLangAvailable(curLang.id, pageContent.id);
     var seoTitle = pageContent.seotitle == '' ? pageContent.title : pageContent.seotitle;
@@ -777,6 +808,7 @@ exports.execDownloadApkPage = async (req, res) => {
       seoMeta: metaHome.join(''),
       menuHeader: menuHeader,
       menuFooter: menuFooter,
+      menuFooterRight: menuFooterRight,
       pageContent: pageContent,
       apk: apk,
       apkYouLike: [],
@@ -874,10 +906,7 @@ exports.execDownloadApkPage2 = async (req, res) => {
         if (oid == 2) {
           let arrAppLink = appLink.split('?'),
             replaceLink = 'https://file2.techbigs.download/direct/download.php';
-          appLink =
-            arrAppLink.length > 1
-              ? replaceLink.concat('?', arrAppLink[1], '&name=', appName)
-              : appLink;
+          appLink = arrAppLink.length > 1 ? replaceLink.concat('?', arrAppLink[1], '&name=', appName) : appLink;
         }
         // Không chứa link tải thì cho thành 404
         if (appLink == '') {
@@ -911,6 +940,13 @@ exports.execDownloadApkPage2 = async (req, res) => {
       'post',
       pageContent.id,
       req.url
+    );
+    var menuFooterRight = await menuController.getMenuFontEnd(
+      curLang,
+      'menu-footer-right',
+      'home',
+      pageContent.id,
+      ''
     );
     // SEO Meta tags
     var arrLangsExists = await Post.findPostLangAvailable(curLang.id, pageContent.id);
@@ -955,6 +991,7 @@ exports.execDownloadApkPage2 = async (req, res) => {
       seoMeta: metaHome.join(''),
       menuHeader: menuHeader,
       menuFooter: menuFooter,
+      menuFooterRight: menuFooterRight,
       pageContent: pageContent,
       apk: apk,
       apkYouLike: [],
@@ -995,6 +1032,13 @@ exports.execPostPage = async (req, res) => {
       'post',
       pageContent.id,
       curUrlNoneLang
+    );
+    var menuFooterRight = await menuController.getMenuFontEnd(
+      curLang,
+      'menu-footer-right',
+      'home',
+      pageContent.id,
+      ''
     );
     // SEO Meta tags
     var arrLangsExists = await Post.findPostLangAvailable(curLang.id, pageContent.id);
@@ -1045,6 +1089,7 @@ exports.execPostPage = async (req, res) => {
       breadcrumbs: breadcrumbs,
       menuHeader: menuHeader,
       menuFooter: menuFooter,
+      menuFooterRight: menuFooterRight
     };
     var renderText = `web/${pageContent.slug}`;
     res.render(renderText, { page: page });
@@ -1085,6 +1130,13 @@ async function execPostPage(req, res) {
       postId,
       curUrl
     );
+    var menuFooterRight = await menuController.getMenuFontEnd(
+      curLang,
+      'menu-footer-right',
+      'home',
+      pageContent.id,
+      ''
+    );
     var breadcrumbs = await breadcumbController.createBreadcumb(
       4,
       curLang,
@@ -1094,8 +1146,7 @@ async function execPostPage(req, res) {
     // SEO Meta tags
     var arrLangsExists = await Post.findPostLangAvailable(curLang.id, pageContent.id);
     var seoTitle = pageContent.seotitle == '' ? pageContent.title : pageContent.seotitle;
-    var seoDescription =
-      pageContent.seodescription == '' ? pageContent.description : pageContent.seodescription;
+    var seoDescription = pageContent.seodescription == '' ? pageContent.description : pageContent.seodescription;
     var homePage = await postController.getPostByLangAndSlugAttr('home', curLang);
     homePage = !curLang.ismain ? functions.postMaping(homePage) : homePage;
     var imgRectangle = pageContent.thumb || {};
@@ -1172,8 +1223,7 @@ async function execPostPage(req, res) {
         curLang.id,
         pageContent.id,
         1,
-        'best',
-        userid
+        ''
       );
       ratingLines = await commentController.getLineRating(pageContent.id, curLang.id);
       var dataCreativeWorkSeries = {
@@ -1200,7 +1250,7 @@ async function execPostPage(req, res) {
           pageContent.dcateid,
           curLang,
           1,
-          maxNumPostsHome
+          10
         );
         apkMeta = await Apkmeta.findOne({ where: { postid: pageContent.id } });
         var screenshoots = [];
@@ -1334,6 +1384,7 @@ async function execPostPage(req, res) {
       breadcrumbs: breadcrumbs,
       menuHeader: menuHeader,
       menuFooter: menuFooter,
+      menuFooterRight: menuFooterRight,
       catesSidebar: catesSidebar,
       apkSidebar: apkSidebar,
       apkYouLike: apkYouLike,
@@ -1370,9 +1421,7 @@ async function execCategoryPage(req, res) {
       },
     });
     type = type ? type : {};
-    var checkUrl = `/${curLang.ismain ? '' : curLang.id + '/'}${
-      type.roottext.length > 0 ? type.roottext + '/' : ''
-    }${pageContent.fullslug}${type.exttext}`;
+    var checkUrl = `/${curLang.ismain ? '' : curLang.id + '/'}${type.roottext.length > 0 ? type.roottext + '/' : ''}${pageContent.fullslug}${type.exttext}`;
     var acceptUrl = req.url;
     var arr = acceptUrl.split('?');
     acceptUrl = arr.length >= 1 ? arr[0] : acceptUrl;
@@ -1407,12 +1456,20 @@ async function execCategoryPage(req, res) {
       pageContent.id,
       curUrl
     );
+    var menuFooterRight = await menuController.getMenuFontEnd(
+      curLang,
+      'menu-footer-right',
+      'home',
+      pageContent.id,
+      ''
+    );
     // Get Data Apk
     var cateSelectionIds = await Category.findAllChildIds(pageContent.id);
     cateSelectionIds = cateSelectionIds.map((id) => parseInt(id));
     cateSelectionIds.push(pageContent.id);
     var apkNewUpdate = [];
     var catesSidebar = [];
+    var appsSidebar = [];
     var apkSidebarLast = [];
     var apkSidebarPop = [];
     var apkSidebar = [];
@@ -1426,13 +1483,16 @@ async function execCategoryPage(req, res) {
         cateSelectionIds,
         curLang,
         numPage,
-        24
+        maxNumPostsCate
       );
-      var rootCateSlug = pageContent.fullslug ? pageContent.fullslug : pageContent.slug;
+      var rootCateSlug = 'games';
+      var rootAppSlug = 'apps';
       var arrRCS = rootCateSlug.split('/');
       rootCateSlug = arrRCS[0] ? arrRCS[0] : rootCateSlug;
       rootCateSlug = cateType == 'category-apk' ? [rootCateSlug] : [gameSlug, appSlug];
       catesSidebar = await cateController.getCategoryByLangParentSlug(rootCateSlug, curLang);
+      appsSidebar = await cateController.getCategoryByLangParentSlug(rootAppSlug, curLang);
+
     } else if (cateType == 'tags') {
       renderText = 'web/archive-tag';
       apkNewUpdate = await postController.getAllPostByCateIdsLangHasSort(
@@ -1440,7 +1500,7 @@ async function execCategoryPage(req, res) {
         cateSelectionIds,
         curLang,
         numPage,
-        24
+        maxNumPostsCate
       );
     } else {
       apkNewUpdate = await postController.getPostByCateIdsLangHasSort(
@@ -1507,11 +1567,13 @@ async function execCategoryPage(req, res) {
       pageContent: pageContent,
       menuHeader: menuHeader,
       menuFooter: menuFooter,
+      menuFooterRight: menuFooterRight,
       apkNewUpdate: apkNewUpdate,
       apkSidebar: apkSidebar,
       apkSidebarLast: apkSidebarLast,
       apkSidebarPop: apkSidebarPop,
       catesSidebar: catesSidebar,
+      appsSidebar: appsSidebar,
       pagination: pagination,
       breadcrumbs: breadcrumbs,
       sort: sort,

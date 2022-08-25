@@ -6,43 +6,63 @@
     var apks = (page.apkNewUpdate && page.apkNewUpdate.rows) ? page.apkNewUpdate.rows : [];
     var sort = (page.sort) ? page.sort : "updated";
     var categories = (page.catesSidebar) ? page.catesSidebar : [];
+    var cateApp = (page.appsSidebar) ? page.appsSidebar : [];
 %>
 <%- include("includes/header"); %>
-<main id="page-body">
-    <div class="container">
-        <%- page.breadcrumbs.html %>
-        <div class="page-description mb-30">
-            <h1 class="page-title sbhTitle"><span><%- pageContent.title %></span></h1>
-            <div class="wrapcontent">
-                <%- pageContent.description %>
-            </div>
+<main class="main-mr-top">
+    <div class="py-2">
+        <div class="container">
+            <%- page.breadcrumbs.html %>
         </div>
-        <div class="list-holder">
-            <ul class="sort-controls">
-                <li>
-                    <a id="btn-sc-category" href="javascript:void(0)" rel="nofollow"><%= __("sbCateTitle"); %></a>
-                </li>
-                <li class="<%= (sort=='updated') ? 'active' : '' %>">
-                    <a href="<%=curUrl%>/" rel="nofollow"><%=__("textRecentlyUpdated");%></a>
-                </li>
-                <li class="<%= (sort=='new') ? 'active' : '' %>">
-                    <a href="<%=curUrl%>/?sort=new" rel="nofollow"><%=__("textNewReleases");%></a>
-                </li>
-                <li class="<%= (sort=='popular') ? 'active' : '' %>">
-                    <a href="<%=curUrl%>/?sort=popular" rel="nofollow"><%=__("textPopular");%></a>
-                </li>                
-            </ul>
-            <div class="box-categories box-space">
-                <%- include("includes/list-category", {categories: categories}); %>
-            </div>
-            <ul class="apks w3 apkincategories box-space">
-                <%- include("includes/list-apk2", {posts: apks}); %>
-            </ul>
-            <div class="pagination box-space"><ul><%-page.pagination%></ul></div>
-            <div class="mb-50">
-                <%- include("includes/ads-slot", {slot: 1}); %>
-            </div>
-        </div>        
+    </div>
+    <div class="container mr-top-3">
+        <div class="row">
+            <main class="col-12 col-lg-9 content-area">
+                <section class="bg-white border shadow-sm pt-3 mb-3">
+                    <h2 class="h5 font-weight-semibold mb-0">
+                        <%-pageContent.title%>
+                    </h2>
+                    <div class="row">
+                        <%- include("includes/list-apk2", {posts: apks}); %>
+                    </div>
+                    <div>
+                        <ul class="pagination">
+                            <%-page.pagination%>
+                        </ul>
+                    </div>
+                </section>
+            </main>
+            <aside class="col-12 col-lg-3 widget-area">
+                <section class="bg-white border rounded shadow-sm pt-3 px-2 px-md-3 mb-3">
+                   
+                    <header class="d-flex align-items-end mb-3">
+                        <h2 class="h5 font-weight-semibold mb-0">
+                            <a class="text-body" href="<%=homeUrl%>/games/">
+                                Games
+                            </a>
+                        </h2>
+                        <a class="btn btn-primary btn-sm ml-auto" href="<%=homeUrl%>/games/">View More</a>
+                    </header>
+                    <div class="row">
+                        <%- include("includes/list-category", {categories: categories}); %>
+                    </div>
+                   
+                </section>
+                <section class="bg-white border rounded shadow-sm pt-3 px-2 px-md-3 mb-3">
+                    <header class="d-flex align-items-end mb-3">
+                        <h2 class="h5 font-weight-semibold mb-0">
+                            <a class="text-body" href="<%=homeUrl%>/apps/">
+                                Apps
+                            </a>
+                        </h2>
+                        <a class="btn btn-primary btn-sm ml-auto" href="<%=homeUrl%>/apps/">View More</a>
+                    </header>
+                    <div class="row">
+                        <%- include("includes/list-category", {categories: cateApp}); %>
+                    </div>
+                </section>
+            </aside>
+        </div>
     </div>
 </main>
 <%- include("includes/footer"); %>

@@ -71,13 +71,13 @@ app.locals.apkText = apkText;
 
 /* app.all('*', (req, res, next) => {
     var ip = req.headers.host || "";
-	//console.log(req.headers.host);
+  //console.log(req.headers.host);
     // Nếu là IP thì chuyển đi, ko thì ko làm gì cả
     // Thay IP sv vào
     if(ip=="45.33.111.52:8080"){ //45.33.111.52
         return res.redirect('https://techbigs.com' + req.url);
     }
-	next();
+  next();
 }); */
 
 // Auto create table with its data into the database
@@ -112,7 +112,7 @@ app.use(async function (req, res, next) {
     mainLang = {},
     curLang = {};
   // Check URL ko có / sau cùng
-  //var fullUrl = 'https://' + req.get('host') + req.originalUrl;
+  // var fullUrl = 'https://' + req.get('host') + req.originalUrl;
   var fullUrl = 'http://' + req.get('host') + req.originalUrl;
   if (req.method == 'GET' && !functions.checkUrlValid(fullUrl)) {
     res.set('location', fullUrl + '/');
@@ -156,7 +156,7 @@ app.use(async function (req, res, next) {
       } else {
         url = curLang.ismain
           ? `${domain}/${red.newslug}`
-          : `${domain}/${curLang.id}/${red.newslug}/`;
+          : `${domain}/${curLang.id}/${red.newslug}`;
         url = red.objtype == 'post' ? url.concat('/') : url;
       }
       res.set('location', url);

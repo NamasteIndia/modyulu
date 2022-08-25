@@ -3,6 +3,7 @@
     var comments = (comments) ? comments : [];
     if (comments.length) {
 %>
+    <h2 class="h5 font-weight-semibold mb-3">Comments</h2>
         <ul class="<%=className%>">
             <% comments.forEach(comment => { %>
                 <%- include("comment-item", { comment: comment }) %>

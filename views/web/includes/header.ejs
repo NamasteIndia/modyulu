@@ -29,10 +29,10 @@
             console.log("Error parse JSON")
         }
     %>
-    <link rel="icon" href="/assets/image/favicon.png" data-spai-eager="1" sizes="32x32">
-    <link rel="icon" href="/assets/image/favicon.png" data-spai-eager="1" sizes="192x192">
+    <link rel="icon" href="/assets/image/modyolo-1-150x150.png" data-spai-eager="1" sizes="32x32">
+    <link rel="icon" href="/assets/image/modyolo-1-150x150.png" data-spai-eager="1" sizes="192x192">
     <link rel="stylesheet" href="/assets/js/owl/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
     <script>
         var domain = "<%=domain%>",
             token = "<%=(session.ajaxpagetoken)?session.ajaxpagetoken:''%>",
@@ -223,113 +223,48 @@
 %>
 <body class="<%=className%>">
     <div id="adminBar" data-pid="<%=dpid%>" data-ptype="<%=dptype%>"></div>
-    <header id="page-header">
-        <div class="container">
-            <div class="ph-left">
-                <a class="nm-icon nmi-menu-toggle" href="javascript:void(0);" onclick="document.getElementById('menu-holder').classList.toggle('open');">
-                    <svg version="1.1"
-                         xmlns="http://www.w3.org/2000/svg" 
-                         xmlns:xlink="http://www.w3.org/1999/xlink" 
-                         x="0px" y="0px"
-                         width="20" height="20"
-	                     viewBox="0 0 384.97 384.97" 
-                         style="enable-background:new 0 0 384.97 384.97;" 
-                         xml:space="preserve">
-                        <g>
-                            <path d="M12.03,84.212h360.909c6.641,0,12.03-5.39,12.03-12.03c0-6.641-5.39-12.03-12.03-12.03H12.03
-                                C5.39,60.152,0,65.541,0,72.182C0,78.823,5.39,84.212,12.03,84.212z"/>
-                            <path d="M372.939,180.455H12.03c-6.641,0-12.03,5.39-12.03,12.03s5.39,12.03,12.03,12.03h360.909c6.641,0,12.03-5.39,12.03-12.03
-                                S379.58,180.455,372.939,180.455z"/>
-                            <path d="M372.939,300.758H12.03c-6.641,0-12.03,5.39-12.03,12.03c0,6.641,5.39,12.03,12.03,12.03h360.909
-                                c6.641,0,12.03-5.39,12.03-12.03C384.97,306.147,379.58,300.758,372.939,300.758z"/>
-                        </g>
-                    </svg>
-                </a>
-                <a class="logo" href="<%=homeUrl%>">
-                    <img src="/assets/image/logo.png" alt="Logo <%=sitename%>"/>
-                    <span>HappyMod</span>
-                </a>
-                <a class="nm-icon nmi-search-toggle" 
-                    href="javascript:void(0);" 
-                    onclick="document.getElementById('search-holder').classList.toggle('open'); this.classList.toggle('open');"
-                >
-                    <svg class="icon-search" 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        width="20" 
-                        height="20" 
-                        viewBox="0 0 19.262 19.262">
-                        <path d="M19.026,17.895l-5.477-5.478a7.639,7.639,0,1,0-1.135,1.135l5.477,5.478a.8.8,0,1,0,1.135-1.135Zm-11.4-4.248a6.019,6.019,0,1,1,6.019-6.019A6.026,6.026,0,0,1,7.624,13.647Z" transform="translate(0 -0.003)"/>
-                    </svg>
-                    <svg class="icon-close"
-                         version="1.1" 
-                         xmlns="http://www.w3.org/2000/svg" 
-                         xmlns:xlink="http://www.w3.org/1999/xlink" 
-                         x="0px" y="0px"
-                         width="20" height="20" 
-                         viewBox="0 0 47.971 47.971" 
-                         xml:space="preserve">
-                        <g>
-                            <path d="M28.228,23.986L47.092,5.122c1.172-1.171,1.172-3.071,0-4.242c-1.172-1.172-3.07-1.172-4.242,0L23.986,19.744L5.121,0.88
-                                c-1.172-1.172-3.07-1.172-4.242,0c-1.172,1.171-1.172,3.071,0,4.242l18.865,18.864L0.879,42.85c-1.172,1.171-1.172,3.071,0,4.242
-                                C1.465,47.677,2.233,47.97,3,47.97s1.535-0.293,2.121-0.879l18.865-18.864L42.85,47.091c0.586,0.586,1.354,0.879,2.121,0.879
-                                s1.535-0.293,2.121-0.879c1.172-1.171,1.172-3.071,0-4.242L28.228,23.986z"/>
-                        </g>
-                    </svg>
-                </a>
+    <header class="bg-header bg-white fixed-top">
+        <div class="container header-flex">
+            <button class="btn-nav-menu" type="button">
+                <svg class="svg-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path
+                        d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z">
+                    </path>
+                </svg>
+            </button>
+            <div>
+                <a id="text-logo" href="<%=homeUrl%>" rel="home">MODYOLO.COM </a>
             </div>
-            <div class="ph-right">
-                <div id="menu-holder" class="">
-                    <div class="menu-bg-toggle">
-                        <a class="nmi-menu-toggle" href="javascript:void(0)" onclick="document.getElementById('menu-holder').classList.toggle('open');">
-                            <svg version="1.1" 
-                                xmlns="http://www.w3.org/2000/svg" 
-                                xmlns:xlink="http://www.w3.org/1999/xlink" 
-                                x="0px" y="0px"
-                                width="15" height="15" 
-                                viewBox="0 0 47.971 47.971" 
-                                xml:space="preserve">
-                                <g>
-                                    <path d="M28.228,23.986L47.092,5.122c1.172-1.171,1.172-3.071,0-4.242c-1.172-1.172-3.07-1.172-4.242,0L23.986,19.744L5.121,0.88
-                                        c-1.172-1.172-3.07-1.172-4.242,0c-1.172,1.171-1.172,3.071,0,4.242l18.865,18.864L0.879,42.85c-1.172,1.171-1.172,3.071,0,4.242
-                                        C1.465,47.677,2.233,47.97,3,47.97s1.535-0.293,2.121-0.879l18.865-18.864L42.85,47.091c0.586,0.586,1.354,0.879,2.121,0.879
-                                        s1.535-0.293,2.121-0.879c1.172-1.171,1.172-3.071,0-4.242L28.228,23.986z"/>
-                                </g>
-                            </svg>
-                        </a>
-                        <a class="logo-in-nav">
-                            <img src="assets/image/logo.png" alt="logo"/>
-                        </a>
-                        <%
-                            var mainNav = (page.menuHeader) ? page.menuHeader : {};
-                            var htmlMainNav = (mainNav.language) ? mainNav.menu : mainNav;
-                            var htmlLanguage = mainNav.language || "";
-                        %>
-                        <ul class="menu"><%- htmlMainNav %></ul>
-                        <!-- <div class="login box-dropdown">
-                            <a href="javascript:void(0)" class="dd-toggle" rel="nofollow">
-                                <svg class="avatar" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 20 20">
-                                    <path d="M10,0A10,10,0,1,0,20,10,10.029,10.029,0,0,0,10,0Zm0,3a2.946,2.946,0,0,1,3,3,2.946,2.946,0,0,1-3,3A2.946,2.946,0,0,1,7,6,2.946,2.946,0,0,1,10,3Zm0,14.2A7.3,7.3,0,0,1,4,14c0-2,4-3.1,6-3.1S16,12,16,14A7.3,7.3,0,0,1,10,17.2Z" fill="#fff"/>
-                                </svg>
-                            </a>
-                            <div class="dd-content">
-                                <a href="<%=homeUrl%>/login"><%=__("textLogin")%></a>
-                                <a href="<%=homeUrl%>/register"><%=__("textSignUp")%></a>
-                            </div>
-                        </div> -->
-                    </div>
+            <nav class="site-nav">
+                <div class="btn-close-hidden">
+                    <button class="bg-transparent" type="button">
+                        <svg class="svg-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                            <path
+                                d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z">
+                            </path>
+                        </svg>
+                    </button>
                 </div>
+                <ul class="nav-menu">
+                    <%-page.menuHeader%>
+                </ul>
+            </nav>
+            <div class="site-overlay"></div>
+            <div style="width: 300px">
+                <form class="form-search" method="GET" action="<%=homeUrl%>/?s=/">
+                    <div class="input-group">
+                        <input class="form-control form-control-sm" type="text" name="s" placeholder="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-light btn-sm" type="submit">
+                                <svg class="svg-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path
+                                        d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </div>
-        <div id="search-holder" class="">            
-            <form action="/" class="form-search" autocomplete='off'>
-                <input type="text" name="s" placeholder="<%=__('textSearchPlaceholder')%>..." autocomplete="off"/>
-                <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 19.262 19.262">
-                        <path d="M19.026,17.895l-5.477-5.478a7.639,7.639,0,1,0-1.135,1.135l5.477,5.478a.8.8,0,1,0,1.135-1.135Zm-11.4-4.248a6.019,6.019,0,1,1,6.019-6.019A6.026,6.026,0,0,1,7.624,13.647Z" transform="translate(0 -0.003)"/>
-                    </svg>
-                </button>
-                <pre id="suggest-text"></pre>
-                <div id="suggestions"></div>
-            </form>
         </div>
     </header>

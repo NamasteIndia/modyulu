@@ -7,20 +7,32 @@
 <%- include("includes/header"); %>
 <main id="page-body">
     <div class="container">
-        <div id="breadcrumb" class="breadcumb">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><span><%=pageContent.title%></span></li>
-            </ul>
+        <div class="py-2">
+            <div id="breadcrumb" class="breadcumb">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><span><%=pageContent.title%></span></li>
+                </ul>
+            </div>
         </div>
+    </div>
+    <div class="container mr-top-3">
+        
+        <section class="bg-white border shadow-sm pt-3 mb-3">
         <h1 class="page-title text-center mb-20"><%=pageContent.title%></h1>
         <%
             if(apks.length > 0){
         %>
-                <ul class="blogs w3">
+        
+                <div class="row">
                     <%- include("includes/list-search", {posts: apks}); %>
-                </ul>
-                <div class="pagination mb-50"><ul><%-page.pagination%></ul></div>
+                </div>
+                <div>
+                    <ul class="pagination">
+                        <%-page.pagination%>
+                    </ul>
+                </div>
+        
         <%
             }else{
         %>
@@ -28,6 +40,7 @@
         <%
             }
         %>
+        </section>
     </div>
 </main>
 <%- include("includes/footer"); %>

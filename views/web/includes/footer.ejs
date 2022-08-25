@@ -2,171 +2,84 @@
         var page = (typeof page !== "undefined") ? page : {};
         var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
     %>
-    <footer id="page-footer">
-        <div class="pf-Top">
-            <div class="container">
-                <div class="pf-logo">
-                    <a href="<%=homeUrl%>" class="logo">
-                        <img src="/assets/image/logo.png" alt="Logo <%=sitename%>">
-                    </a>
-                    <p class="sitename">Seguir TechGara.com</p>
-                    <ul class="socials">
-                        <li>
-                            <a href="https://www.facebook.com/hapmod" rel="nofollow" target="_blank">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16.986" height="16.986" viewBox="0 0 16.986 16.986">
-                                    <g id="facebook" transform="translate(10)">
-                                      <path d="M14.7,0H2.291A2.289,2.289,0,0,0,0,2.289V14.7a2.289,2.289,0,0,0,2.289,2.289h6.12l.01-6.07H6.844a.372.372,0,0,1-.372-.371L6.465,8.589a.372.372,0,0,1,.372-.374H8.411V6.325a3.089,3.089,0,0,1,3.3-3.389h1.606a.372.372,0,0,1,.372.372v1.65a.372.372,0,0,1-.372.372h-.986c-1.064,0-1.27.506-1.27,1.248V8.216H13.4a.372.372,0,0,1,.369.416l-.232,1.957a.372.372,0,0,1-.369.328h-2.1l-.01,6.07H14.7A2.289,2.289,0,0,0,16.988,14.7V2.289A2.289,2.289,0,0,0,14.7,0Z" transform="translate(-10.002)" fill="#334eff"/>
-                                    </g>
-                                </svg>                                  
-                            </a>
-                        </li>                        
-                        <li>
-                            <a class="darkPath" href="https://www.pinterest.es/Coimobile1" rel="nofollow" target="_blank">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16.988" height="16.988" viewBox="0 0 16.988 16.988">
-                                    <path d="M15.289,0H1.7A1.7,1.7,0,0,0,0,1.7v13.59a1.7,1.7,0,0,0,1.7,1.7h13.59a1.7,1.7,0,0,0,1.7-1.7V1.7A1.7,1.7,0,0,0,15.289,0ZM9.343,12.061A2.313,2.313,0,0,1,7.559,11.3L6.71,14.015l-.085.17h0a.892.892,0,0,1-.764.425.943.943,0,0,1-.934-.934V13.59h0l.085-.17L6.54,8.664A4.413,4.413,0,0,1,6.37,7.39c0-1.444.764-1.869,1.444-1.869A1.045,1.045,0,0,1,9,6.625c0,1.1-.764,1.7-.764,2.548a1.124,1.124,0,0,0,1.1,1.1A2.662,2.662,0,0,0,12.061,7.39a3.5,3.5,0,0,0-3.567-3.4,3.5,3.5,0,0,0-3.567,3.4A3.513,3.513,0,0,0,5.351,9a.766.766,0,0,1,.085.425.8.8,0,0,1-.849.849.892.892,0,0,1-.764-.425A5.189,5.189,0,0,1,3.143,7.3a5.2,5.2,0,0,1,5.266-5.1,5.2,5.2,0,0,1,5.266,5.1C13.76,9.683,12.4,12.061,9.343,12.061Z" fill="#d90000"/>
-                                </svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://twitter.com/HapMod" rel="nofollow" target="_blank">
-                                <svg id="twitter" xmlns="http://www.w3.org/2000/svg" width="19.429" height="15.786" viewBox="0 0 19.429 15.786">
-                                    <g>
-                                        <path d="M19.429,49.869a8.3,8.3,0,0,1-2.3.629,3.961,3.961,0,0,0,1.752-2.2,7.96,7.96,0,0,1-2.526.964,3.983,3.983,0,0,0-6.89,2.724,4.1,4.1,0,0,0,.092.908,11.274,11.274,0,0,1-8.21-4.166A3.984,3.984,0,0,0,2.577,54.05a3.934,3.934,0,0,1-1.8-.491V53.6a4,4,0,0,0,3.191,3.914,3.975,3.975,0,0,1-1.044.131,3.522,3.522,0,0,1-.754-.068,4.021,4.021,0,0,0,3.722,2.775,8,8,0,0,1-4.939,1.7A7.46,7.46,0,0,1,0,62a11.213,11.213,0,0,0,6.11,1.787A11.259,11.259,0,0,0,17.447,52.452c0-.176-.006-.346-.015-.515A7.946,7.946,0,0,0,19.429,49.869Z" transform="translate(0 -48)" fill="#059ed8"/>
-                                    </g>
-                                </svg>                                  
-                            </a>
-                        </li>
-                        <li>
-                            <a class="darkPath" href="https://t.me/s/hapmod" rel="nofollow" target="_blank">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16.99" height="16.99" viewBox="0 0 16.99 16.99">
-                                    <g transform="translate(-1102 -4028)">
-                                        <path d="M2,0H14.99a2,2,0,0,1,2,2V14.99a2,2,0,0,1-2,2H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0Z" transform="translate(1102 4028)" fill="#059ed8"/>
-                                        <g transform="translate(1099.116 4023.776)">
-                                            <path d="M5.491,11.74l11.57-4.461c.537-.194,1.006.131.832.943h0L15.924,17.5c-.146.658-.537.818-1.084.508l-3-2.211-1.447,1.394a.757.757,0,0,1-.6.3L10,14.435l5.56-5.023c.242-.213-.054-.333-.373-.121L8.317,13.617l-2.962-.924c-.643-.2-.657-.643.136-.953Z" fill="#fff"/>
-                                        </g>
-                                    </g>
-                                </svg>                                  
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.youtube.com/channel/UCJ_UCXSRvm8i8-7x88IEpoA" rel="nofollow" target="_blank">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23.683" height="16.582" viewBox="0 0 23.683 16.582">
-                                    <path d="M23.2-3.487a2.967,2.967,0,0,0-2.087-2.088c-1.853-.507-9.266-.507-9.266-.507s-7.413,0-9.266.488A3.027,3.027,0,0,0,.488-3.487,31.263,31.263,0,0,0,0,2.209a31.148,31.148,0,0,0,.488,5.7A2.967,2.967,0,0,0,2.576,9.993c1.873.507,9.266.507,9.266.507s7.413,0,9.266-.488A2.967,2.967,0,0,0,23.2,7.925a31.273,31.273,0,0,0,.488-5.7A29.677,29.677,0,0,0,23.2-3.487ZM9.482,5.759v-7.1l6.164,3.55Zm0,0" transform="translate(-0.001 6.082)" fill="#d90000"/>
-                                </svg>                                  
-                            </a>
-                        </li>
-                    </ul>
+    <footer class="bg-white border-top mr-top-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <section class="mb-4">
+                        <h4 class="h5 font-weight-semibold mb-3">
+                            <svg class="mr-1 svg-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path
+                                    d="M67.508 468.467c-58.005-58.013-58.016-151.92 0-209.943l225.011-225.04c44.643-44.645 117.279-44.645 161.92 0 44.743 44.749 44.753 117.186 0 161.944l-189.465 189.49c-31.41 31.413-82.518 31.412-113.926.001-31.479-31.482-31.49-82.453 0-113.944L311.51 110.491c4.687-4.687 12.286-4.687 16.972 0l16.967 16.971c4.685 4.686 4.685 12.283 0 16.969L184.983 304.917c-12.724 12.724-12.73 33.328 0 46.058 12.696 12.697 33.356 12.699 46.054-.001l189.465-189.489c25.987-25.989 25.994-68.06.001-94.056-25.931-25.934-68.119-25.932-94.049 0l-225.01 225.039c-39.249 39.252-39.258 102.795-.001 142.057 39.285 39.29 102.885 39.287 142.162-.028A739446.174 739446.174 0 0 1 439.497 238.49c4.686-4.687 12.282-4.684 16.969.004l16.967 16.971c4.685 4.686 4.689 12.279.004 16.965a755654.128 755654.128 0 0 0-195.881 195.996c-58.034 58.092-152.004 58.093-210.048.041z">
+                                </path>
+                            </svg>
+                            <span class="align-middle">
+                                Useful Sections </span>
+                        </h4>
+                        <ul class="nav menu">
+                            <%-page.menuFooter%>
+                        </ul>
+                    </section>
                 </div>
-                <ul class="pf-menu">
-                    <%-page.menuFooter%>
-                </ul>
+                <div class="col-12 col-md-6">
+                    <section class="mb-4">
+                        <h4 class="h5 font-weight-semibold mb-3">
+                            <svg class="mr-1 svg-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path
+                                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 448c-110.532 0-200-89.431-200-200 0-110.495 89.472-200 200-200 110.491 0 200 89.471 200 200 0 110.53-89.431 200-200 200zm0-338c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z">
+                                </path>
+                            </svg>
+                            <span class="align-middle">
+                                About Us </span>
+                        </h4>
+                        <ul class="nav menu">
+                            <%-page.menuFooterRight%>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <div class="d-flex align-items-center socials">
+                <span class="border-top flex-grow-1 mr-3"></span>
+                <a href="#" target="_blank" rel="nofollow">
+                    <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path
+                            d="M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9 190.9-172.5c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 16.2 252.2c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z">
+                        </path>
+                    </svg> </a>
+                <a href="#" target="_blank" rel="nofollow">
+                    <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                        <path
+                            d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z">
+                        </path>
+                    </svg> </a>
+                <a href="#" target="_blank" rel="nofollow">
+                    <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                        <path
+                            d="M204 6.5C101.4 6.5 0 74.9 0 185.6 0 256 39.6 296 63.6 296c9.9 0 15.6-27.6 15.6-35.4 0-9.3-23.7-29.1-23.7-67.8 0-80.4 61.2-137.4 140.4-137.4 68.1 0 118.5 38.7 118.5 109.8 0 53.1-21.3 152.7-90.3 152.7-24.9 0-46.2-18-46.2-43.8 0-37.8 26.4-74.4 26.4-113.4 0-66.2-93.9-54.2-93.9 25.8 0 16.8 2.1 35.4 9.6 50.7-13.8 59.4-42 147.9-42 209.1 0 18.9 2.7 37.5 4.5 56.4 3.4 3.8 1.7 3.4 6.9 1.5 50.4-69 48.6-82.5 71.4-172.8 12.3 23.4 44.1 36 69.3 36 106.2 0 153.9-103.5 153.9-196.8C384 71.3 298.2 6.5 204 6.5z">
+                        </path>
+                    </svg> </a>
+                <a href="#" target="_blank" rel="nofollow">
+                    <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path
+                            d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z">
+                        </path>
+                    </svg> </a>
+                <a href="#" target="_blank" rel="nofollow">
+                    <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                        <path
+                            d="M309.8 480.3c-13.6 14.5-50 31.7-97.4 31.7-120.8 0-147-88.8-147-140.6v-144H17.9c-5.5 0-10-4.5-10-10v-68c0-7.2 4.5-13.6 11.3-16 62-21.8 81.5-76 84.3-117.1.8-11 6.5-16.3 16.1-16.3h70.9c5.5 0 10 4.5 10 10v115.2h83c5.5 0 10 4.4 10 9.9v81.7c0 5.5-4.5 10-10 10h-83.4V360c0 34.2 23.7 53.6 68 35.8 4.8-1.9 9-3.2 12.7-2.2 3.5.9 5.8 3.4 7.4 7.9l22 64.3c1.8 5 3.3 10.6-.4 14.5z">
+                        </path>
+                    </svg> </a>
+                <span class="border-top flex-grow-1 ml-3"></span>
             </div>
         </div>
-        <div class="pf-Bot">
-            <p class="copyright">Copyright © 2019 - <%- new Date().getFullYear(); %>. <%= __("copyright").prefix%> <span class="siteName"><%=sitename%></span>. <%= __("copyright").end%>.</p>
+        <div class="copy-text">
+            <div class="container">
+                <p><strong><em>© Copyright 2017 - <%- new Date().getFullYear(); %>. <%= __("copyright").prefix%> <span class="siteName"><%=sitename%></span>. <%= __("copyright").end%>.</p></em></strong></p>
+            </div>
         </div>
     </footer>
-    <div id="btn-page-scroll">
-        <svg xmlns="http://www.w3.org/2000/svg" width="15.474" height="15.476" viewBox="0 0 15.474 15.476">
-            <path id="arrow" d="M15.094,6.853,8.657.416A1.3,1.3,0,0,0,6.818,2.254l5.517,5.517L6.818,13.289a1.3,1.3,0,0,0,1.839,1.839l6.437-6.437A1.3,1.3,0,0,0,15.094,6.853Zm-7.74-.39L2.243,1.077a1.268,1.268,0,0,0-1.859,0,1.438,1.438,0,0,0,0,1.959L4.566,7.443.384,11.85a1.438,1.438,0,0,0,0,1.959,1.268,1.268,0,0,0,1.859,0L7.354,8.422A1.438,1.438,0,0,0,7.354,6.463Z" transform="translate(-0.035 15.475) rotate(-90)"/>
-        </svg>
-    </div>
-    <div id="cookie-notice-bar">
-        <span><%=__("cookieNoticeSite")%></span>
-        <a id="btn-accept-cookie" href="javascript:void(0)" rel="nofollow">Ok</a>
-    </div>
-    <div id="pagePopup" class="pagePopup overlay">
-        <div class="popup">
-            <a class="close" href="javascript:void(0)" rel="nofollow">&times;</a>
-            <div class="bigText" data-text="<%= __('textBigTitlePagePopup'); %>"></div>
-            <div class="subText"></div>
-        </div>
-    </div>
-    <div id="pageFeedback" class="pagePopup overlay">
-        <form id="feedback" action="<%=homeUrl%>/feedback/send" enctype="multipart/form-data">
-            <a href="javascript:void(0)" class="close">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14.305" height="14.304" viewBox="0 0 14.305 14.304">
-                    <path d="M9.513,7.153l4.425-4.425a1.251,1.251,0,0,0,0-1.77l-.59-.59a1.251,1.251,0,0,0-1.77,0L7.153,4.793,2.728.367a1.251,1.251,0,0,0-1.77,0L.367.957a1.251,1.251,0,0,0,0,1.77L4.793,7.153.368,11.578a1.251,1.251,0,0,0,0,1.77l.59.59a1.251,1.251,0,0,0,1.77,0L7.153,9.512l4.425,4.425a1.251,1.251,0,0,0,1.77,0l.59-.59a1.251,1.251,0,0,0,0-1.77Zm0,0"/>
-                </svg>
-            </a>
-            <div class="title"><%=__("frmFeedbackTitle")%></div>
-            <div class="line line-msg">
-                <p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18.421" height="16.389" viewBox="0 0 18.421 16.389">
-                        <path d="M16.96,1.6A4.953,4.953,0,0,0,13.275,0a4.634,4.634,0,0,0-2.894,1,5.922,5.922,0,0,0-1.17,1.222A5.918,5.918,0,0,0,8.041,1,4.633,4.633,0,0,0,5.146,0,4.954,4.954,0,0,0,1.462,1.6,5.758,5.758,0,0,0,0,5.536a6.856,6.856,0,0,0,1.827,4.488A38.959,38.959,0,0,0,6.4,14.317c.634.54,1.352,1.152,2.1,1.8a1.081,1.081,0,0,0,1.424,0c.746-.652,1.465-1.265,2.1-1.805a38.937,38.937,0,0,0,4.573-4.292,6.856,6.856,0,0,0,1.827-4.488A5.757,5.757,0,0,0,16.96,1.6Zm0,0" transform="translate(0)" fill="#f56f6f"/>
-                    </svg>
-                    <span><%=__("frmFeedbackObrigado")%></span>
-                </p>
-                <p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18.219" height="18.219" viewBox="0 0 18.219 18.219">
-                        <path d="M18.219,2.088A2.089,2.089,0,0,0,16.132,0H2.088A2.089,2.089,0,0,0,0,2.088V16.132a2.089,2.089,0,0,0,2.088,2.088H16.132a2.089,2.089,0,0,0,2.088-2.088Zm0,0" fill="#4caf50"/>
-                        <path d="M150.026,165.551a.758.758,0,0,1,0,1.073l-4.934,4.934a.758.758,0,0,1-1.073,0l-2.467-2.467a.759.759,0,1,1,1.073-1.073l1.93,1.93,4.4-4.4A.758.758,0,0,1,150.026,165.551Zm0,0" transform="translate(-136.299 -159.445)" fill="#fafafa"/>
-                    </svg>
-                    <span><%=__("frmFeedbackEnviar")%></span>
-                </p>
-                <p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18.219" height="18.219" viewBox="0 0 18.219 18.219">
-                        <path d="M18.219,2.088A2.089,2.089,0,0,0,16.132,0H2.088A2.089,2.089,0,0,0,0,2.088V16.132a2.089,2.089,0,0,0,2.088,2.088H16.132a2.089,2.089,0,0,0,2.088-2.088Zm0,0" fill="#4caf50"/>
-                        <path d="M150.026,165.551a.758.758,0,0,1,0,1.073l-4.934,4.934a.758.758,0,0,1-1.073,0l-2.467-2.467a.759.759,0,1,1,1.073-1.073l1.93,1.93,4.4-4.4A.758.758,0,0,1,150.026,165.551Zm0,0" transform="translate(-136.299 -159.445)" fill="#fafafa"/>
-                    </svg>
-                    <span><%=__("frmFeedbackIncluir")%></span>
-                </p>
-            </div>
-            <div class="line line-input">                
-                <label for="email">E-mail</label>
-                <input class="input" type="email" name="email" required>
-            </div>
-            <div class="line line-input">
-                <%
-                    var feedbackTitle = (page.apk && page.apk.title) ? page.apk.title : "";
-                    feedbackTitle = (feedbackTitle == "" && page.pageContent && page.pageContent.title) ? page.pageContent.title : feedbackTitle;
-                %>
-                <label for="title"><%=__("frmFeedbackJogoAplicativo")%></label>
-                <input class="input" type="text" name="title" required value="<%=feedbackTitle%>">
-            </div>
-            <div class="line line-input line-type">
-                <label for="type"><%=__("frmFeedbackDescreva")%></label>
-                <div class="radio-holder">
-                    <div class="group">
-                        <input type="radio" name="type" value="<%=__('frmFeedbackFalha')%>" checked>
-                        <span><%=__("frmFeedbackFalha")%></span>
-                    </div>
-                    <div class="group">
-                        <input type="radio" name="type" value="<%=__('frmFeedbackNaoconsegui')%>">
-                        <span><%=__("frmFeedbackNaoconsegui")%></span>
-                    </div>
-                    <div class="group">
-                        <input type="radio" name="type" value="<%=__('frmFeedbackAppJogo')%>">
-                        <span><%=__('frmFeedbackAppJogo')%></span>
-                    </div>
-                    <div class="group">
-                        <input type="radio" name="type" value="<%=__('frmFeedbackArquivo')%>">
-                        <span><%=__('frmFeedbackArquivo')%></span>
-                    </div>
-                    <div class="group">
-                        <input type="radio" name="type" value="<%=__('frmFeedbackSolicitacao')%>">
-                        <span><%=__('frmFeedbackSolicitacao')%></span>
-                    </div>
-                    <div class="group">
-                        <input type="radio" name="type" value="0">
-                        <span><%=__('frmFeedbackOutros')%></span>
-                    </div>
-                </div>
-                <textarea class="input" name="other" placeholder="Sua mensagem"></textarea>
-            </div>
-            <div class="line line-input line-file">
-                <input class="file" type="file" name="file">
-                <div class="group">
-                    <button class="chooseimg"><%=__('frmFeedbackEscolher')%></button>
-                    <span><b><%=__('frmFeedbackUpload')%></b> (<%=__('frmFeedbackDocumento')%>)</span>
-                </div>
-            </div>
-            <div class="line">
-                <div class="rs-msg"></div>
-                <button class="submit"><%=__('frmFeedbackRELATORIO')%></button>
-            </div>
-        </form>
-    </div>
+
     <script>
         var token = "<%=(session.ajaxpagetoken)?session.ajaxpagetoken:''%>",
             domain = "<%=(domain)?domain:''%>",
@@ -218,5 +131,36 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/assets/js/owl/owl.carousel.min.js"></script>
     <script src="/assets/js/main.js"></script>
+    <script>
+        $('.btn-nav-menu, .bg-transparent, .site-overlay').click(function(){
+            openMenu();
+        });
+
+        var isActive = false;
+
+        function openMenu(){
+            if (isActive){
+                    $('.site-nav').removeClass('menu-open');
+                    $('.site-overlay').removeClass('overlay-open');
+            } else{
+                $('.site-nav').addClass('menu-open');
+                $('.site-overlay').addClass('overlay-open');
+                
+            }
+
+            isActive = !isActive;
+        }
+        
+    </script>
+    <script>
+        const currentLocation = location.href;
+        const menuItem = document.querySelectorAll('ul li a');
+        const menuLength = menuItem.length;
+        for (let i = 0; i < menuLength; i++){
+            if(menuItem[i].href === currentLocation) {
+                menuItem[i].className = "active"
+            }
+        }
+    </script>
     </body>
 </html>

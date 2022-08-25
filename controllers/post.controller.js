@@ -29,15 +29,7 @@ const Apkfaq = db.apkfaq;
 const gameSlug = appConf.gameSlug || 'games';
 const appSlug = appConf.appSlug || 'apps';
 const numThumb2Get = 9;
-const appOptions = [
-  'app_title_template',
-  'app_description_template',
-  'app_content_template',
-  'cate_title_template',
-  'cate_description_template',
-  'dev_title_template',
-  'dev_description_template',
-];
+const appOptions = ['app_title_template', 'app_description_template', 'app_content_template', 'cate_title_template', 'cate_description_template', 'dev_title_template', 'dev_description_template',];
 
 // Lấy List Apk choices cho HOME
 exports.getApkChoices = async (sortType, curLang, numPage, numSize) => {
@@ -90,7 +82,7 @@ exports.getApkChoices = async (sortType, curLang, numPage, numSize) => {
           {
             model: Apkmeta,
             as: 'apk',
-            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text'],
+            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text', 'apk_size'],
             required: false,
           },
         ],
@@ -132,7 +124,7 @@ exports.getApkChoices = async (sortType, curLang, numPage, numSize) => {
           {
             model: Apkmeta,
             as: 'apk',
-            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text'],
+            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text', 'apk_size'],
           },
           /* {
                     model: Category,
@@ -1654,12 +1646,8 @@ exports.ApkLeech = async (req, res) => {
           optsRs.forEach((opt) => {
             optsObj[`${opt.metakey}`] = opt.metavalue;
           });
-          var postTittle = optsObj.app_title_template
-            ? functions.random_app_template(optsObj.app_title_template, rs)
-            : rs.title;
-          var postDescription = optsObj.app_description_template
-            ? functions.random_app_template(optsObj.app_description_template, rs)
-            : '';
+          var postTittle = optsObj.app_title_template ? functions.random_app_template(optsObj.app_title_template, rs) : rs.title;
+          var postDescription = optsObj.app_description_template ? functions.random_app_template(optsObj.app_description_template, rs) : '';
           var slug = functions.convert_slug(rs.title);
           var catslug = functions.convert_slug(rs.genre);
           var catetype = 'category-apk';
@@ -1695,12 +1683,8 @@ exports.ApkLeech = async (req, res) => {
             attributes: ['allowindex', 'allowfollow'],
           });
           if (cateBySlug == null) {
-            let seoCateTitle = optsObj.cate_title_template
-              ? functions.random_app_template(optsObj.cate_title_template, rs)
-              : rs.genre;
-            let seoCateDesc = optsObj.cate_description_template
-              ? functions.random_app_template(optsObj.cate_description_template, rs)
-              : '';
+            let seoCateTitle = optsObj.cate_title_template ? functions.random_app_template(optsObj.cate_title_template, rs) : rs.genre;
+            let seoCateDesc = optsObj.cate_description_template ? functions.random_app_template(optsObj.cate_description_template, rs) : '';
             cateBySlug = await Category.create({
               slug: catslug,
               fullslug: fullslug,
@@ -1720,15 +1704,7 @@ exports.ApkLeech = async (req, res) => {
               allowfollow: typeCateApk ? typeCateApk.allowfollow : false,
               allowindex: typeCateApk ? typeCateApk.allowindex : false,
             });
-            await tracerController.addTracking(
-              req.ipAddr,
-              req.userAgent,
-              req.session.userid,
-              'category',
-              cateBySlug.id,
-              'add',
-              `Add ${rs.genre}`
-            );
+            await tracerController.addTracking(req.ipAddr, req.userAgent, req.session.userid, 'category', cateBySlug.id, 'add', `Add ${rs.genre}`);
           }
           // Developer
           var dcatslug = functions.convert_slug(rs.developer.devId);
@@ -1744,12 +1720,8 @@ exports.ApkLeech = async (req, res) => {
           });
           //var devSeoTitle = `Navegue por apps e jogos do ${rs.developer.devId}`;
           //var devSeoDesc = `Você gosta de apps e jogos do ${rs.developer.devId}? Fique à vontade para navegar por outros apps e jogos criados por ele nesta seção. Desfrute de inúmeros aplicativos com uma vibe similar.`;
-          let devSeoTitle = optsObj.dev_title_template
-            ? functions.random_app_template(optsObj.dev_title_template, rs)
-            : rs.developer.devId;
-          let devSeoDesc = optsObj.dev_description_template
-            ? functions.random_app_template(optsObj.dev_description_template, rs)
-            : rs.developer.devId;
+          let devSeoTitle = optsObj.dev_title_template ? functions.random_app_template(optsObj.dev_title_template, rs) : rs.developer.devId;
+          let devSeoDesc = optsObj.dev_description_template ? functions.random_app_template(optsObj.dev_description_template, rs) : rs.developer.devId;
           if (devBySlug == null) {
             devBySlug = await Category.create({
               slug: dcatslug,
@@ -2238,7 +2210,7 @@ exports.getApkByCateIdsLangHasSort = async (sortType, CateIds, curLang, numPage,
           {
             model: Apkmeta,
             as: 'apk',
-            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text'],
+            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text', 'apk_size'],
             required: false,
           },
         ],
@@ -2278,7 +2250,7 @@ exports.getApkByCateIdsLangHasSort = async (sortType, CateIds, curLang, numPage,
           {
             model: Apkmeta,
             as: 'apk',
-            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text'],
+            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text', 'apk_size'],
           },
           {
             model: Category,
@@ -2870,7 +2842,7 @@ exports.getRelatedApk = async (sortType, postId, cateId, curLang, numPage, numSi
           {
             model: Apkmeta,
             as: 'apk',
-            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text'],
+            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text', 'apk_size'],
             required: false,
           } /* , {
                     model: Category,
@@ -2935,7 +2907,7 @@ exports.getRelatedApk = async (sortType, postId, cateId, curLang, numPage, numSi
           {
             model: Apkmeta,
             as: 'apk',
-            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text'],
+            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text', 'apk_size'],
             required: false,
           } /* , {
                     model: Category,
@@ -3258,7 +3230,7 @@ exports.getPostSearch = async (postTitle, curLang, numPage, numSize) => {
           {
             model: Apkmeta,
             as: 'apk',
-            attributes: ['version', 'off_mod_text', 'off_apk_text'],
+            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text', 'apk_size'],
             required: false,
           },
         ],
@@ -3309,7 +3281,7 @@ exports.getPostSearch = async (postTitle, curLang, numPage, numSize) => {
           {
             model: Apkmeta,
             as: 'apk',
-            attributes: ['version', 'off_mod_text', 'off_apk_text'],
+            attributes: ['version', 'off_mod_text', 'off_apk_text', 'mod_text', 'apk_size'],
             required: false,
           },
         ],
@@ -3509,8 +3481,8 @@ exports.getPostByLangAndSlugExtension = async (slug, curLang, extention) => {
   var arrExt = [];
   types
     ? types.map((t) => {
-        arrExt.push(t.id);
-      })
+      arrExt.push(t.id);
+    })
     : [];
   if (curLang.ismain == true) {
     post = await Post.findOne({
@@ -4541,7 +4513,7 @@ exports.Autoicon = async (req, res) => {
               });
             }
           })
-          .catch((err) => {});
+          .catch((err) => { });
       }
     });
     return res.json(rs);

@@ -186,5 +186,7 @@
 	"textInfoApkTitle": "textInfoApkTitle",
 	"textFree": "textFree",
 	"textGoToPost": "textGoToPost",
-	"textDownloadFAQ": "textDownloadFAQ"
+	"textDownloadFAQ": "textDownloadFAQ",
+	"textUnknow": "textUnknow",
+	"GoToPost": "GoToPost"
 }

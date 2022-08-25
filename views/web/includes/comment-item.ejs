@@ -4,62 +4,29 @@
     var pageContent = (page.pageContent) ? page.pageContent : {};
     var curLang = (page.curLang) ? page.curLang : {};
     var comment = (comment) ? comment : {};
-    var author = (comment.author) ? comment.author : {};
-    var authorName = (author.nickname && author.nickname!="") ? author.nickname : author.username;
-    var avatar = (author.avatar) ? author.avatar : "/assets/image/none-avatar.png";
-    var adminicon = (author.roleid) ? `<svg xmlns="http://www.w3.org/2000/svg" width="9.725" height="10.892" viewBox="0 0 9.725 10.892"><path d="M21.889,1.525a.356.356,0,0,0-.257-.294L17.254.014a.356.356,0,0,0-.191,0L12.686,1.231a.356.356,0,0,0-.257.294c-.025.183-.6,4.5.881,6.643a6.989,6.989,0,0,0,3.766,2.715.357.357,0,0,0,.167,0,6.989,6.989,0,0,0,3.766-2.715C22.494,6.022,21.915,1.708,21.889,1.525ZM19.982,4.043,17,7.03a.356.356,0,0,1-.5,0L14.646,5.183a.356.356,0,0,1,0-.5l.367-.367a.356.356,0,0,1,.5,0l1.228,1.228,2.368-2.368a.356.356,0,0,1,.5,0l.367.367A.356.356,0,0,1,19.982,4.043Z" transform="translate(-12.296 0)" fill="#1653fc"/></svg>` : "";
+    var avatar = "/assets/image/none.png";
     var createdAt = functions.formart_timestamp_text(comment.createdAt);
     var textReplyTo = "Reply to";
     var textReply = "Reply";
-    var textLike = "Like";
     var textSeeMoreReply = "See more replies";
-    var rating = (comment.rating) ? comment.rating : 0;
-    var stars = "";
-    for(let i=1; i<=rating; i++) stars += '★ ';
-    stars = stars.trim();
     var parentId = (comment.id) ? comment.id : pageContent.id;
-    var numlike = (comment.numlike > 0) ? `(${comment.numlike})` : '';
 %>
-<li class="comment" data-id="<%=comment.id%>" data-text="<%=textReplyTo%> <%-authorName%>">
+<li class="comment mb-3" data-id="<%=comment.id%>" data-text="<%=textReplyTo%>">
     <img class="avatar" src="<%=avatar%>" alt="<%=comment.name%>">
     <div class="info">
         <div class="user">
-            <div class="name">
-                <%-authorName%>
-                <%-adminicon%>
+            <div class="name mb-1">
+                <%=comment.name%>
             </div>
-            <%
-                if(rating > 0){
-            %>
-                <div class="stars">
-                    <span class="score"><%=stars%></span>
-                </div>
-            <%
-                }
-            %>
         </div>
-        <div class="content"><%=comment.content%></div>
+        <div class="content small mb-1"><%=comment.content%></div>
         <ul class="links">
-            <li><span class="time"><%=createdAt%></span></li>
             <li>
                 <a href="javascript:void(0)" class="btn-icon reply">
-                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="11.551" height="10.17" viewBox="0 0 11.551 10.17">
-                    <path d="M1.682,40.718H.863l.579-.579A1.958,1.958,0,0,0,2,38.981,4.128,4.128,0,0,1,0,35.5c0-2.457,2.258-4.954,5.795-4.954,3.747,0,5.756,2.3,5.756,4.739,0,2.457-2.03,4.753-5.756,4.753a7.807,7.807,0,0,1-1.942-.247,3.033,3.033,0,0,1-2.172.925Z" transform="translate(0 -30.548)" fill="#8a8888"/>
-                    </svg>                                          
                     <span><%=textReply%></span>
                 </a>
             </li>
-            <li>
-                <a href="javascript:void(0)" class="btn-icon like">
-                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="11.082" height="10.62" viewBox="0 0 11.082 10.62">
-                    <g transform="translate(3.694 0)">
-                        <path d="M1.154,224A1.156,1.156,0,0,0,0,225.154v3.694A1.156,1.156,0,0,0,1.154,230H2.54a1.146,1.146,0,0,0,.693-.234V224Z" transform="translate(-3.694 -219.383)" fill="#8a8888"/>
-                        <path d="M178.055,17.016a1.024,1.024,0,0,0-.3-.727,1.146,1.146,0,0,0,.3-.881,1.193,1.193,0,0,0-1.2-1.047h-2.852a6.639,6.639,0,0,0,.368-1.847,1.887,1.887,0,0,0-1.385-1.847,1.452,1.452,0,0,0-.837.281.232.232,0,0,0-.086.181v1.566l-1.33,2.881-.055.028v4.949a3.025,3.025,0,0,0,1.154.273h4.238a1.062,1.062,0,0,0,1.046-.807,1.039,1.039,0,0,0-.084-.694,1.034,1.034,0,0,0,.462-1.386A1.034,1.034,0,0,0,178.055,17.016Z" transform="translate(-170.667 -10.667)" fill="#8a8888"/>
-                    </g>
-                    </svg>
-                    <span><%=textLike%> <small><%=numlike%></small></span>
-                </a>
-            </li>
+            <li><span class="time">- <%=createdAt%></span></li>
         </ul>
         <%- //include("comment-loop", {comments: comment.allchildren, className: "list-replies"}) %>
         <%
