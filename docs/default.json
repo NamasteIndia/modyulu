@@ -1,7 +1,7 @@
 {
   "app": {
-    "siteName": "Happymod.com",
-    "siteSlug": "happymod",
+    "siteName": "modotest.tk",
+    "siteSlug": "modyolo",
     "apkText": " Apk",
     "modText": " Mod",
     "gameSlug": "games",
@@ -12,16 +12,16 @@
     "langLeechDescription": "Khac en langLeech = ?lang=pt"
   },
   "server": {
-    "port": 80,
-    "domain": "http://localhost",
+    "port": 8989,
+    "domain": "https://modotest.tk",
     "dashboard": "admin",
     "secret": "hm-secret-keyznfe"
   },
   "database": {
-    "host": "localhost",
-    "database": "testdb",
+    "host": "127.0.0.1",
+    "database": "modyolodb",
     "username": "root",
-    "password": "123",
+    "password": "Yopy@159753",
     "dialect": "mysql",
     "logging": false,
     "force": false,

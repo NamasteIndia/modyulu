@@ -1,10 +1,10 @@
 const md5 = require('md5');
-const domainName = 'happymod.com';
-const siteName = 'HappyMod';
-const siteAlterName = 'Happy Mod';
+const domainName = 'modotest.tk';
+const siteName = 'modotest';
+const siteAlterName = 'Modo test';
 const emailSupport = `support@${domainName}`;
 const listSocials = `[
-    "https://www.facebook.com/happymod"
+    "https://www.facebook.com/modotest"
 ]`;
 
 async function Organization(curLang, Languages, homeContent) {
@@ -222,9 +222,8 @@ async function MobileApplication(curLang, curUrl, app) {
         "url": "${url}",
         "headline": "${app.seotitle}",
         "description": "${app.seodescription}",
-        "softwareVersion": "${app.version}",${
-    app.imgSquare ? `"thumbnailUrl": "${app.imgSquare}",` : ''
-  }${app.imgRectangle ? `"image": "${app.imgRectangle}",` : ''}${categoriesText}
+        "softwareVersion": "${app.version}",${app.imgSquare ? `"thumbnailUrl": "${app.imgSquare}",` : ''
+    }${app.imgRectangle ? `"image": "${app.imgRectangle}",` : ''}${categoriesText}
         "fileSize": "${app.fileSize}",
         "operatingSystem": "Android",
         "softwareRequirements": "${app.os}",
@@ -376,8 +375,7 @@ async function createTocSchema(arr, url) {
       let slug = functions.convert_slug(item);
       let id = `${url}#${slug}`;
       rs.push(
-        `{"@type":"ListItem", "item":{"@type":"Thing", "url":"${id}", "@id":"${id}", "name":"${item}"}, "position": ${
-          i + 1
+        `{"@type":"ListItem", "item":{"@type":"Thing", "url":"${id}", "@id":"${id}", "name":"${item}"}, "position": ${i + 1
         }}`
       );
     });
