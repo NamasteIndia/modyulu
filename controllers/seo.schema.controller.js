@@ -362,7 +362,8 @@ function fortmat_text(html) {
   //html = xssFilters.inHTMLData(html);
   html = html.replace(/<\/*\w+>/g, '');
   html = html.replace(/\r\n|\n|\r/g, ' ');
-  html = html.replace(/\"'/g, '&quot;');
+  html = html.replace(/\"/g, '&quot;');
+  html = html.replace(/\'/g, '&apos;');
   return html;
 }
 
