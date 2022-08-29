@@ -1,19 +1,60 @@
 <%
     var page = (typeof page !== "undefined") ? page : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
     var pageContent = (page.pageContent) ? page.pageContent : {};
+    var categories = (page.catesSidebar) ? page.catesSidebar : [];
+    var cateApp = (page.appsSidebar) ? page.appsSidebar : [];
 %>
 <%- include("includes/header"); %>
 <main id="page-body">
-    <div class="container">
-        <%- page.breadcrumbs.html %>
-        <article class="page-single mb-50">
-            <div class="page-description">
-                <h1 class="page-title sbhTitle"><span><%=pageContent.title%></span></h1>
-            </div>
-            <div id="contentMakeToc" class="wrapcontent box-space">
-                <%-pageContent.content%>
-            </div>            
-        </article>
+    <div class="py-2">
+        <div class="container">
+            <%- page.breadcrumbs.html %>
+        </div>
+    </div>
+    <div class="container mr-top-3">
+        <div class="row">
+            <main class="col-12 col-lg-9 content-area">
+                <section class="bg-white border shadow-sm pt-3 mb-3">
+                    <article class="page-single page-single-text mb-50">
+                        <div class="page-description">
+                            <h1 class="page-title sbhTitle"><span><%=pageContent.title%></span></h1>
+                        </div>
+                        <div id="contentMakeToc" class="wrapcontent box-space">
+                            <%-pageContent.content%>
+                        </div>            
+                    </article>
+                </section>
+            </main>
+            <aside class="col-12 col-lg-3 widget-area">
+                <section class="bg-white border rounded shadow-sm pt-3 px-2 px-md-3 mb-3">
+                    <header class="d-flex align-items-end mb-3">
+                        <h2 class="h5 font-weight-semibold mb-0">
+                            <a class="text-body" href="<%=homeUrl%>/games/">
+                                Games
+                            </a>
+                        </h2>
+                        <a class="btn btn-primary btn-sm ml-auto" href="<%=homeUrl%>/games/">View More</a>
+                    </header>
+                    <div class="row">
+                        <%- include("includes/list-category", {categories: categories}); %>
+                    </div>
+                </section>
+                <section class="bg-white border rounded shadow-sm pt-3 px-2 px-md-3 mb-3">
+                    <header class="d-flex align-items-end mb-3">
+                        <h2 class="h5 font-weight-semibold mb-0">
+                            <a class="text-body" href="<%=homeUrl%>/apps/">
+                                Apps
+                            </a>
+                        </h2>
+                        <a class="btn btn-primary btn-sm ml-auto" href="<%=homeUrl%>/apps/">View More</a>
+                    </header>
+                    <div class="row">
+                        <%- include("includes/list-category", {categories: cateApp}); %>
+                    </div>
+                </section>
+            </aside>
+        </div>
     </div>
 </main>
 <%- include("includes/footer"); %>

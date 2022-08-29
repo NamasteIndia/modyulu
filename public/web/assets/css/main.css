@@ -181,6 +181,10 @@ svg {
     fill: #999;
 }
 
+.page-single-text {
+    text-align: left !important;
+}
+
 button {
     cursor: pointer;
 }

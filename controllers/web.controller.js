@@ -1201,6 +1201,12 @@ async function execPostPage(req, res) {
     var apkMod = {};
     var faqs = [];
     var imgs = [];
+    var appsSidebar = [];
+    var rootCateSlug = 'games';
+    var rootAppSlug = 'apps';
+    catesSidebar = await cateController.getCategoryByLangParentSlug(rootCateSlug, curLang);
+    appsSidebar = await cateController.getCategoryByLangParentSlug(rootAppSlug, curLang);
+
     var $ = cheerio.load(pageContent.content, null, false);
     $('.sm-single-content-image').each(function (i, el) {
       let src = $(el).find('>img').attr('src') || '';
@@ -1386,6 +1392,7 @@ async function execPostPage(req, res) {
       menuFooter: menuFooter,
       menuFooterRight: menuFooterRight,
       catesSidebar: catesSidebar,
+      appsSidebar: appsSidebar,
       apkSidebar: apkSidebar,
       apkYouLike: apkYouLike,
       comments: comments,
