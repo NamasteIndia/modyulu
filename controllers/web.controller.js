@@ -761,9 +761,9 @@ exports.execDownloadApkPage = async (req, res) => {
     var menuFooterRight = await menuController.getMenuFontEnd(
       curLang,
       'menu-footer-right',
-      'home',
+      'post',
       pageContent.id,
-      ''
+      req.url
     );
     // SEO Meta tags
     var arrLangsExists = await Post.findPostLangAvailable(curLang.id, pageContent.id);
@@ -944,9 +944,9 @@ exports.execDownloadApkPage2 = async (req, res) => {
     var menuFooterRight = await menuController.getMenuFontEnd(
       curLang,
       'menu-footer-right',
-      'home',
+      'post',
       pageContent.id,
-      ''
+      req.url
     );
     // SEO Meta tags
     var arrLangsExists = await Post.findPostLangAvailable(curLang.id, pageContent.id);
@@ -1036,9 +1036,9 @@ exports.execPostPage = async (req, res) => {
     var menuFooterRight = await menuController.getMenuFontEnd(
       curLang,
       'menu-footer-right',
-      'home',
+      'post',
       pageContent.id,
-      ''
+      curUrlNoneLang
     );
     // SEO Meta tags
     var arrLangsExists = await Post.findPostLangAvailable(curLang.id, pageContent.id);
@@ -1133,9 +1133,9 @@ async function execPostPage(req, res) {
     var menuFooterRight = await menuController.getMenuFontEnd(
       curLang,
       'menu-footer-right',
-      'home',
-      pageContent.id,
-      ''
+      'post',
+      postId,
+      curUrl
     );
     var breadcrumbs = await breadcumbController.createBreadcumb(
       4,
@@ -1459,9 +1459,9 @@ async function execCategoryPage(req, res) {
     var menuFooterRight = await menuController.getMenuFontEnd(
       curLang,
       'menu-footer-right',
-      'home',
+      'cate',
       pageContent.id,
-      ''
+      curUrl
     );
     // Get Data Apk
     var cateSelectionIds = await Category.findAllChildIds(pageContent.id);
