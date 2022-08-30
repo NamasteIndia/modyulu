@@ -112,8 +112,8 @@ app.use(async function (req, res, next) {
     mainLang = {},
     curLang = {};
   // Check URL ko có / sau cùng
-  // var fullUrl = 'https://' + req.get('host') + req.originalUrl;
-  var fullUrl = 'http://' + req.get('host') + req.originalUrl;
+  var fullUrl = 'https://' + req.get('host') + req.originalUrl;
+  // var fullUrl = 'http://' + req.get('host') + req.originalUrl;
   if (req.method == 'GET' && !functions.checkUrlValid(fullUrl)) {
     res.set('location', fullUrl + '/');
     return res.status(301).send();
