@@ -620,6 +620,12 @@ async function execSearchPage(req, res) {
     var metaHome = await seometa.homeMeta(curLang, req.url, homeSeoObject, arrLangsExists);
     // SEO schema structure
     var arrSchema = [];
+    var catesSidebar = [];
+    var appsSidebar = [];
+    var rootCateSlug = 'games';
+    var rootAppSlug = 'apps';
+    catesSidebar = await cateController.getCategoryByLangParentSlug(rootCateSlug, curLang);
+    appsSidebar = await cateController.getCategoryByLangParentSlug(rootAppSlug, curLang);
     var page = {
       curLang: curLang,
       seoMeta: metaHome.join(''),
@@ -630,6 +636,8 @@ async function execSearchPage(req, res) {
       pageContent: pageContent,
       postSearch: postSearch,
       pagination: '',
+      catesSidebar: catesSidebar,
+      appsSidebar: appsSidebar
     };
     res.render('web/search', { page: page });
   } catch (err) {

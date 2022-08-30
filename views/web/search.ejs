@@ -1,46 +1,83 @@
-<%
-    var page = (typeof page !== "undefined") ? page : {};
-    var pageContent = (page.pageContent) ? page.pageContent : {};
-    var apks = page.postSearch.rows || [];
-    var maxPage = page.postSearch.maxPage;
+<% 
+    var page=(typeof page !=="undefined" ) ? page : {}; 
+    var pageContent=(page.pageContent) ? page.pageContent : {};
+    var homeUrl = (page.curLang.ismain) ? domain : `${domain}/${page.curLang.id}`;
+    var apks=page.postSearch.rows || []; 
+    var maxPage=page.postSearch.maxPage;
+    var categories = (page.catesSidebar) ? page.catesSidebar : [];
+    var cateApp = (page.appsSidebar) ? page.appsSidebar : [];
 %>
-<%- include("includes/header"); %>
-<main id="page-body">
-    <div class="container">
-        <div class="py-2">
-            <div id="breadcrumb" class="breadcumb">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><span><%=pageContent.title%></span></li>
-                </ul>
+    <%- include("includes/header"); %>
+        <main id="page-body">
+            <div class="container">
+                <div class="py-2">
+                    <div id="breadcrumb" class="breadcumb">
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><span>
+                                    <%=pageContent.title%>
+                                </span></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="container mr-top-3">
-        
-        <section class="bg-white border shadow-sm pt-3 mb-3">
-        <h1 class="page-title text-center mb-20"><%=pageContent.title%></h1>
-        <%
-            if(apks.length > 0){
-        %>
-        
+            <div class="container mr-top-3">
                 <div class="row">
-                    <%- include("includes/list-search", {posts: apks}); %>
+                    <main class="col-12 col-lg-9 content-area">
+                        <section class="bg-white border shadow-sm pt-3 mb-3">
+                            <h1 class="page-title text-center mb-20">
+                                <%=pageContent.title%>
+                            </h1>
+                            <% if(apks.length> 0){
+                                %>
+
+                                <div class="row">
+                                    <%- include("includes/list-search", {posts: apks}); %>
+                                </div>
+                                <div>
+                                    <ul class="pagination">
+                                        <%-page.pagination%>
+                                    </ul>
+                                </div>
+
+                                <% }else{ %>
+                                    <p class="mb-50">
+                                        <%=__('msgEmptySearch')%>
+                                    </p>
+                                    <% } %>
+                        </section>
+                    </main>
+                    <aside class="col-12 col-lg-3 widget-area">
+                        <section class="bg-white border rounded shadow-sm pt-3 px-2 px-md-3 mb-3">
+                           
+                            <header class="d-flex align-items-end mb-3">
+                                <h2 class="h5 font-weight-semibold mb-0">
+                                    <a class="text-body" href="<%=homeUrl%>/games/">
+                                        Games
+                                    </a>
+                                </h2>
+                                <a class="btn btn-primary btn-sm ml-auto" href="<%=homeUrl%>/games/">View More</a>
+                            </header>
+                            <div class="row">
+                                <%- include("includes/list-category", {categories: categories}); %>
+                            </div>
+                           
+                        </section>
+                        <section class="bg-white border rounded shadow-sm pt-3 px-2 px-md-3 mb-3">
+                            <header class="d-flex align-items-end mb-3">
+                                <h2 class="h5 font-weight-semibold mb-0">
+                                    <a class="text-body" href="<%=homeUrl%>/apps/">
+                                        Apps
+                                    </a>
+                                </h2>
+                                <a class="btn btn-primary btn-sm ml-auto" href="<%=homeUrl%>/apps/">View More</a>
+                            </header>
+                            <div class="row">
+                                <%- include("includes/list-category", {categories: cateApp}); %>
+                            </div>
+                        </section>
+                    </aside>
                 </div>
-                <div>
-                    <ul class="pagination">
-                        <%-page.pagination%>
-                    </ul>
-                </div>
-        
-        <%
-            }else{
-        %>
-                <p class="mb-50"><%=__('msgEmptySearch')%></p>
-        <%
-            }
-        %>
-        </section>
-    </div>
-</main>
-<%- include("includes/footer"); %>
+            </div>
+        </main>
+        <%- include("includes/footer"); %>
