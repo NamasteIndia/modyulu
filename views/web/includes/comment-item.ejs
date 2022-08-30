@@ -1,45 +1,56 @@
 
 <%
-    var page = (typeof page !== "undefined") ? page : {};
-    var pageContent = (page.pageContent) ? page.pageContent : {};
-    var curLang = (page.curLang) ? page.curLang : {};
-    var comment = (comment) ? comment : {};
-    var avatar = "/assets/image/none.png";
-    var createdAt = functions.formart_timestamp_text(comment.createdAt);
-    var textReplyTo = "Reply to";
-    var textReply = "Reply";
-    var textSeeMoreReply = "See more replies";
-    var parentId = (comment.id) ? comment.id : pageContent.id;
+var page = (typeof page !== "undefined") ? page : {};
+var pageContent = (page.pageContent) ? page.pageContent : {};
+var curLang = (page.curLang) ? page.curLang : {};
+var comment = (comment) ? comment : {};
+var author = (comment.author) ? comment.author : {};
+var authorName = (author.nickname && author.nickname!="") ? author.nickname : author.username;
+var avatar = (author.avatar) ? author.avatar : "/assets/image/none.png";
+var adminicon = (author.roleid) ? `<svg xmlns="http://www.w3.org/2000/svg" width="9.725" height="10.892" viewBox="0 0 9.725 10.892"><path d="M21.889,1.525a.356.356,0,0,0-.257-.294L17.254.014a.356.356,0,0,0-.191,0L12.686,1.231a.356.356,0,0,0-.257.294c-.025.183-.6,4.5.881,6.643a6.989,6.989,0,0,0,3.766,2.715.357.357,0,0,0,.167,0,6.989,6.989,0,0,0,3.766-2.715C22.494,6.022,21.915,1.708,21.889,1.525ZM19.982,4.043,17,7.03a.356.356,0,0,1-.5,0L14.646,5.183a.356.356,0,0,1,0-.5l.367-.367a.356.356,0,0,1,.5,0l1.228,1.228,2.368-2.368a.356.356,0,0,1,.5,0l.367.367A.356.356,0,0,1,19.982,4.043Z" transform="translate(-12.296 0)" fill="#1653fc"/></svg>` : "";
+var createdAt = functions.formart_timestamp_text(comment.createdAt);
+var textReplyTo = "Reply to";
+var textReply = "Reply";
+var textLike = "Like";
+var textSeeMoreReply = "See more replies";
+var rating = (comment.rating) ? comment.rating : 0;
+var stars = "";
+for(let i=1; i<=rating; i++) stars += '★ ';
+stars = stars.trim();
+var parentId = (comment.id) ? comment.id : pageContent.id;
+var numlike = (comment.numlike > 0) ? `(${comment.numlike})` : '';
 %>
-<li class="comment mb-3" data-id="<%=comment.id%>" data-text="<%=textReplyTo%>">
-    <img class="avatar" src="<%=avatar%>" alt="<%=comment.name%>">
-    <div class="info">
-        <div class="user">
-            <div class="name mb-1">
-                <%=comment.name%>
-            </div>
+<li class="comment mb-3" data-id="<%=comment.id%>" data-text="<%=textReplyTo%> <%=comment.name%>">
+<img class="avatar" src="<%=avatar%>" alt="<%=comment.name%>">
+<div class="info">
+    <div class="user">
+        <div class="name mb-1">
+            <%=comment.name%>
         </div>
-        <div class="content small mb-1"><%=comment.content%></div>
-        <ul class="links">
-            <li>
-                <a href="javascript:void(0)" class="btn-icon reply">
-                    <span><%=textReply%></span>
-                </a>
-            </li>
-            <li><span class="time">- <%=createdAt%></span></li>
-        </ul>
-        <%- //include("comment-loop", {comments: comment.allchildren, className: "list-replies"}) %>
-        <%
-            if(comment.countchilds > 0){
-        %>
-                <ul class="list-replies"></ul>
-                <div class="wraploadmore">
-                    <a href="javascript:void(0)" class="btn-seemore btn-seemore-reply" rel="nofollow" data-pid="<%=parentId%>" data-total="<%=comment.countchilds%>">
-                        <%=textSeeMoreReply%> (<span><%=comment.countchilds%></span>)
-                    </a>
-                </div>
-        <%
-            }
-        %>
     </div>
+    <div class="content small mb-1"><%=comment.content%></div>
+    <ul class="links">
+        
+        <li>
+            <a href="javascript:void(0)" class="btn-icon reply">
+                                                         
+                <span><%=textReply%></span>
+            </a>
+        </li>
+        <li><span class="time">- <%=createdAt%></span></li>
+    </ul>
+    <%- //include("comment-loop", {comments: comment.allchildren, className: "list-replies"}) %>
+    <%
+        if(comment.countchilds > 0){
+    %>
+            <ul class="list-replies"></ul>
+            <div class="wraploadmore">
+                <a href="javascript:void(0)" class="btn-seemore btn-seemore-reply" rel="nofollow" data-pid="<%=parentId%>" data-total="<%=comment.countchilds%>">
+                    <%=textSeeMoreReply%> (<span><%=comment.countchilds%></span>)
+                </a>
+            </div>
+    <%
+        }
+    %>
+</div>
 </li>

@@ -977,6 +977,10 @@ button, .btn {
     margin-left: 185px;
 } */
 
+.list-replies {
+    margin-top: 20px;
+}
+
 .checkbox {
     margin-top: 17px;
 }

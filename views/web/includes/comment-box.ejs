@@ -3,35 +3,64 @@
     var pageContent = (page.pageContent) ? page.pageContent : {};
     var curLang = (page.curLang) ? page.curLang : {};    
     var comments = (page.comments && page.comments.rows) ? page.comments.rows : [];
+    var ratingLines = (page.ratingLines) ? page.ratingLines : {};
+    var stars = (ratingLines.stars) ? ratingLines.stars : [0,0,0,0,0];
+    var percentStars = (ratingLines.percent) ? ratingLines.percent : [0,0,0,0,0];
+    var maxPercent = Math.max(...percentStars);
+    percentStars = percentStars.map(p => {
+        if(p>0) return parseInt(((p * 100) / maxPercent).toFixed(0));
+        return 0;
+    });
+    var numComment = ratingLines.numComment || 0;
+    var numReview = ratingLines.numReview || 0;
+    var numReviewLang = ratingLines.numReviewLang || 0;
+    var numRLHide = numReviewLang - 5;
     var commentPermalink = (curLang.ismain) ? `${domain}/comment/add` : `${domain}/${curLang.id}/comment/add`;
 %>
 <div id="comments" data-pid="<%=pageContent.id%>" data-lid="<%=curLang.id%>">
-
+    <div class="holder-comments">
+        <div class="lch-body">
+            <div class="lc-wrap">
+                <%- include("comment-loop", {comments: comments}) %>
+            </div>
+            <%
+                if(numComment > 5){
+            %>
+                    <div class="wraploadmore">
+                        <a href="javascript:void(0)" class="btn-seemore btn-seemore-comment" rel="nofollow" data-pid="<%=pageContent.id%>" data-total="<%=numReviewLang%>" data-lid="<%=curLang.id%>" data-numhide="<%=numRLHide%>">
+                            <%= __('textSeeMoreReview'); %> (<span><%=numRLHide%></span>)
+                        </a>
+                    </div>
+            <%
+                }
+            %>
+        </div>
+    </div>
     <div class="form-comment">
-        <form class="form-comment" method="POST" action="<%=commentPermalink%>">
+        <form action="<%=commentPermalink%>" method="POST">
             <div class="frm-row box-space">
-                <input type="hidden" name="parentid" value="">
-                <input type="hidden" name="postid" value="<%=page.pageContent.id%>">
-                <input type="hidden" name="token" value="<%=(session.ajaxpagetoken)?session.ajaxpagetoken:'';%>">
                 <h2 class="h5 font-weight-semibold mb-3 mr-top">Leave a Comment</h2>
                 <div class="msg-reply-holder"></div>
                 <div class="form-group">
-                    <textarea class="form-control bor-radius" name="content" id="content" cols="30" rows="3" required placeholder="Comment"></textarea>
+                    <textarea class="form-control bor-radius" name="content" id="content" cols="30" rows="3" required></textarea>
                 </div>
-                <div class="row">
+                <input type="hidden" name="postid" value="<%=page.pageContent.id%>">
+                <input type="hidden" name="parentid" value="">
+                <input type="hidden" name="token" value="<%=(session.ajaxpagetoken)?session.ajaxpagetoken:'';%>">
+            </div>
+            <div class="row">
                     
-                    <div class="mr-right col-sm-6 form-group">
-                        <input class="form-control bor-radius" type="text" name="name" placeholder="Name">
-                    </div>
-                    <div class="col-sm-6 form-group">
-                        <input class="form-control bor-radius" type="text" name="email" placeholder="Email">
-                    </div>
+                <div class="mr-right col-sm-6 form-group">
+                    <input class="form-control bor-radius" type="text" name="name" placeholder="Name">
                 </div>
-                <div class="form-group text-right">
-                    <button class="btn btn-primary font-btn-primary" type="submit">Send Comment</button>
+                <div class="col-sm-6 form-group">
+                    <input class="form-control bor-radius" type="text" name="email" placeholder="Email">
                 </div>
             </div>
+            <div class="frm-row form-group text-right">
+                <button class="btn btn-submit br-50 btn-primary font-btn-primary">Send Comment</button>
+            </div>
         </form>
-
     </div>
-</div>
+    
+  </div>
