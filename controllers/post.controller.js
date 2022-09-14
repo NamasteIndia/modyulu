@@ -29,7 +29,7 @@ const Apkfaq = db.apkfaq;
 const gameSlug = appConf.gameSlug || 'games';
 const appSlug = appConf.appSlug || 'apps';
 const numThumb2Get = 9;
-const appOptions = ['app_title_template', 'app_description_template', 'app_content_template', 'cate_title_template', 'cate_description_template', 'dev_title_template', 'dev_description_template',];
+const appOptions = ['app_title_template', 'app_description_template', 'app_content_template', 'cate_title_template', 'cate_description_template', 'apps_title_template', 'apps_description_template', 'apps_content_template', 'games_title_template', 'games_description_template', 'games_content_template', 'dev_title_template', 'dev_description_template',];
 
 // Lấy List Apk choices cho HOME
 exports.getApkChoices = async (sortType, curLang, numPage, numSize) => {
@@ -1683,8 +1683,20 @@ exports.ApkLeech = async (req, res) => {
             attributes: ['allowindex', 'allowfollow'],
           });
           if (cateBySlug == null) {
-            let seoCateTitle = optsObj.cate_title_template ? functions.random_app_template(optsObj.cate_title_template, rs) : rs.genre;
-            let seoCateDesc = optsObj.cate_description_template ? functions.random_app_template(optsObj.cate_description_template, rs) : '';
+            const seoTitleTemplate = `${parentcateslug.toLowerCase()}_title_template`;
+            const seoDescriptionTemplate = `${parentcateslug.toLowerCase()}_description_template`;
+            const optisRs = await Option.findAll({
+              where: {
+                metakey: [seoTitleTemplate, seoDescriptionTemplate],
+              },
+            });
+            var optionsObj = [];
+            optisRs.forEach((opt) => {
+              optionsObj[`${opt.metakey}`] = opt.metavalue;
+            });
+
+            let seoCateTitle = optionsObj[seoTitleTemplate] ? functions.random_app_template(optionsObj[seoTitleTemplate], rs) : rs.genre;
+            let seoCateDesc = optionsObj[seoDescriptionTemplate] ? functions.random_app_template(optionsObj[seoDescriptionTemplate], rs) : "";
             cateBySlug = await Category.create({
               slug: catslug,
               fullslug: fullslug,
@@ -1766,6 +1778,19 @@ exports.ApkLeech = async (req, res) => {
               },
               attributes: ['allowindex', 'allowfollow'],
             });
+            const seoTitleTemplate = `${parentcateslug.toLowerCase()}_title_template`;
+            const seoDescriptionTemplate = `${parentcateslug.toLowerCase()}_description_template`;
+            const optisRs = await Option.findAll({
+              where: {
+                metakey: [seoTitleTemplate, seoDescriptionTemplate],
+              },
+            });
+            var optionsObj = [];
+            optisRs.forEach((opt) => {
+              optionsObj[`${opt.metakey}`] = opt.metavalue;
+            });
+            postTittle = optionsObj[seoTitleTemplate] ? functions.random_app_template(optionsObj[seoTitleTemplate], rs) : rs.genre;
+            postDescription = optionsObj[seoDescriptionTemplate] ? functions.random_app_template(optionsObj[seoDescriptionTemplate], rs) : "";
             let postCreated = await Post.create({
               slug: slug,
               title: rs.title,
@@ -1859,14 +1884,23 @@ exports.ApkLeech = async (req, res) => {
                 return [...arr, screenshoot.data];
               }
             }, []);
-            let newPostContent = optsObj.app_content_template
-              ? functions.random_app_template(optsObj.app_content_template, rs, ssFull)
-              : postCreated.content;
-            postCreated.content = newPostContent;
-            postCreated.setCategories([cateBySlug.id, devBySlug.id]);
-            postCreated.setDefaultcate(cateBySlug.id);
-            postCreated.save();
-            return res.json({ code: 1, message: 'Leech successfully', data: postCreated });
+            if (parentcateslug == gameSlug) {
+              let newPostContent = optsObj.games_content_template ? functions.random_app_template(optsObj.games_content_template, rs, ssFull) : postCreated.content;
+              postCreated.content = newPostContent;
+              postCreated.setCategories([cateBySlug.id, devBySlug.id]);
+              postCreated.setDefaultcate(cateBySlug.id);
+              postCreated.save();
+              return res.json({ code: 1, message: "Leech successfully", data: postCreated });
+            };
+            if (parentcateslug == appSlug) {
+              let newPostContent = optsObj.apps_content_template ? functions.random_app_template(optsObj.apps_content_template, rs, ssFull) : postCreated.content;
+              postCreated.content = newPostContent;
+              postCreated.setCategories([cateBySlug.id, devBySlug.id]);
+              postCreated.setDefaultcate(cateBySlug.id);
+              postCreated.save();
+              return res.json({ code: 1, message: "Leech successfully", data: postCreated });
+            };
+
           } else {
             return res.json({ code: 0, message: 'This app is exists' });
           }

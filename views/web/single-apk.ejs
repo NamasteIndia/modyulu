@@ -23,6 +23,8 @@
     var breadcrumbs = (page.breadcrumbs.html) ? page.breadcrumbs.html : '';
     var curLang = (page.curLang) ? page.curLang : {};
     var comments = (page.comments && page.comments.rows) ? page.comments.rows : [];
+    var role = (page.role) ? page.role : {};
+    var userRole = (page.userRole) ? page.userRole : {};
 %>
 <%- include("includes/header"); %>
 <main class="main-mr-top">
@@ -157,7 +159,8 @@
                             <td>
                                 <a href="<%=apkMeta.playstore_url%>"
                                     rel="nofollow" target="_blank">
-                                    <%=apkMeta.package_name%>
+                                    <!-- <%=apkMeta.package_name%> -->
+                                    <img src="/assets/image/google-play.png" alt="">
                                 </a>
                             </td>
                         </tr>
@@ -165,7 +168,7 @@
                     </tbody>
                 </table>
             </div>
-            <a class="btn btn-primary btn-block mb-3" href="<%=permalinkDownload%>">
+            <a class="btn btn-primary btn-block mb-3" href="#">
                 <svg class="svg-5 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                     <path
                         d="M528 288h-92.1l46.1-46.1c30.1-30.1 8.8-81.9-33.9-81.9h-64V48c0-26.5-21.5-48-48-48h-96c-26.5 0-48 21.5-48 48v112h-64c-42.6 0-64.2 51.7-33.9 81.9l46.1 46.1H48c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V336c0-26.5-21.5-48-48-48zm-400-80h112V48h96v160h112L288 368 128 208zm400 256H48V336h140.1l65.9 65.9c18.8 18.8 49.1 18.7 67.9 0l65.9-65.9H528v128zm-88-64c0-13.3 10.7-24 24-24s24 10.7 24 24-10.7 24-24 24-24-10.7-24-24z">
@@ -188,13 +191,44 @@
                         </div>
                     </div>
                 </details>
+            </div>
+            <div class="mb-3">
+                <h2 class="h5 font-weight-semibold mb-0">Description of Pictures</h2>
+            </div>
+            <div class="display-slide">
+                <% if(page.screenshoots && page.screenshoots.length> 0){
+                    %>
+                    <div class="display-posi">
+                        <% page.screenshoots.forEach(function(ss, index){ %>
+                            <div class="mySlides" style="display: block;text-align: center;">
+                                <img src="<%=ss.url%>" alt="<%=appTitle%> <%=(index+1)%>" data-filename=""><span
+                                    class="Apple-converted-space">
+                                    <br>
+                                </span>
+                            </div>
 
+                            <% }) %>
+
+                                <div class="btn-prev-next">
+                                    <button class="btn-display-left" onclick="plusDivs(-1)"><img class="width-next"
+                                            src="/assets/image/slider_back.png" alt=""></button>
+                                    <button class="btn-display-right" onclick="plusDivs(1)"><img class="width-next"
+                                            src="/assets/image/slider_back.png" alt=""></button>
+                                </div>
+                    </div>
+                    <ul class="custom-scrollbar">
+                        <% page.screenshoots.forEach(function(ss, index){ %>
+                            <li class="scrollbar-bot active"></li>
+                            <% }) %>
+
+                    </ul>
+                    <% } %>
             </div>
             <div class="mb-3 entry-content">
                 <p><%-apk.content%></p>
             </div>
             <h2  class="h5 font-weight-semibold mb-3"><%=appTitle%> <%=page.apkMeta.version%> <%=_modText%> Download</h2>
-            <a id="btn-download" class="btn btn-primary btn-block mb-3" href="<%=permalinkDownload%>">
+            <a id="btn-download" class="btn btn-primary btn-block mb-3" href="#">
                 <svg class="svg-5 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                     <path
                         d="M528 288h-92.1l46.1-46.1c30.1-30.1 8.8-81.9-33.9-81.9h-64V48c0-26.5-21.5-48-48-48h-96c-26.5 0-48 21.5-48 48v112h-64c-42.6 0-64.2 51.7-33.9 81.9l46.1 46.1H48c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V336c0-26.5-21.5-48-48-48zm-400-80h112V48h96v160h112L288 368 128 208zm400 256H48V336h140.1l65.9 65.9c18.8 18.8 49.1 18.7 67.9 0l65.9-65.9H528v128zm-88-64c0-13.3 10.7-24 24-24s24 10.7 24 24-10.7 24-24 24-24-10.7-24-24z">
@@ -398,5 +432,53 @@
             <%- include("includes/comment-box"); %>
         </section>
     </div>
+
+    <%
+        if(userRole.rolename == role.rolename && userRole.ismaster == role.ismaster){
+    %>
+        <div class="sidebar-add">
+            <button class="add-new">
+                <a href="/<%=dashboard%>/post/post-apk/add">
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="512.000000pt"
+                    height="512.000000pt" viewBox="0 0 512.000000 512.000000"
+                    preserveAspectRatio="xMidYMid meet">
+                    <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#ffffff"
+                        stroke="none">
+                        <path d="M2492 5109 c-45 -13 -108 -80 -121 -126 -7 -26 -11 -392 -11 -1130
+                            l0 -1093 -1113 -2 -1113 -3 -41 -27 c-63 -41 -88 -90 -88 -169 0 -54 5 -72 27
+                            -106 15 -22 44 -51 65 -64 l38 -24 1112 -3 1113 -2 2 -1113 3 -1112 24 -38
+                            c13 -21 42 -50 64 -65 34 -23 52 -27 107 -27 55 0 73 4 107 27 22 15 51 44 64
+                            65 l24 38 3 1112 2 1113 1113 2 1112 3 38 24 c21 13 50 42 65 64 23 34 27 52
+                            27 107 0 55 -4 73 -27 107 -15 22 -44 51 -65 64 l-38 24 -1112 3 -1113 2 -2
+                            1113 -3 1112 -24 38 c-47 76 -151 113 -239 86z" />
+                    </g>
+                </svg>
+                </a>
+            </button>
+            <button class="eidt">
+                <a href="/<%=dashboard%>/post/post-apk">
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="512.000000pt"
+                    height="512.000000pt" viewBox="0 0 512.000000 512.000000"
+                    preserveAspectRatio="xMidYMid meet">
+
+                    <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#ffffff"
+                        stroke="none">
+                        <path d="M4135 5099 c-27 -6 -79 -24 -115 -41 -56 -27 -99 -65 -315 -279
+                            l-250 -248 522 -523 523 -523 251 250 c137 138 270 276 293 307 81 106 96 245
+                            41 367 -21 45 -74 104 -288 319 -268 271 -340 330 -431 357 -67 20 -170 26
+                            -231 14z" />
+                                        <path d="M1860 2935 l-1315 -1315 520 -520 520 -520 1320 1320 1320 1320 -515
+                            515 c-283 283 -519 515 -525 515 -6 0 -602 -592 -1325 -1315z" />
+                                        <path d="M131 734 c-92 -415 -131 -606 -127 -629 7 -37 39 -70 83 -85 27 -10
+                            109 8 619 131 324 78 591 144 594 146 5 4 -1021 1033 -1031 1033 -3 0 -65
+                            -268 -138 -596z" />
+                    </g>
+                </svg>
+                </a>
+            </button>
+        </div>
+    <%
+        }
+    %>
 </main>
 <%- include("includes/footer"); %>

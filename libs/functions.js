@@ -145,7 +145,7 @@ function random_app_template(...args) {
     .replace(/\r?\n|\r|\|$/, '')
     .split('|');
   let rsText = random_element_arr(arrTemplate);
-  let rs = '';
+  let rs = rsText;
   if (screenShoots && screenShoots.length) rs = random_app_content(arrValue, rsText, screenShoots);
   return random_app_text(arrValue, rs);
 }

@@ -33,6 +33,7 @@ const config = require('config');
 const appConf = config.get('app');
 const gameSlug = appConf.gameSlug || 'games';
 const appSlug = appConf.appSlug || 'apps';
+const Roles = db.role;
 // http://domain
 exports.homePage = async (req, res) => {
   try {
@@ -435,6 +436,7 @@ exports.ajaxPostHome = async (req, res) => {
 // Xử lý tập hợp URL của Home
 async function execHomePage(req, res) {
   try {
+    var userRole = req.session.role;
     var curLang = req.curLang,
       query = req.query.s,
       preview = req.query.preview;
@@ -535,6 +537,12 @@ async function execHomePage(req, res) {
         if (breadcrumbs && breadcrumbs.schema) {
             arrSchema.push(breadcrumbs.schema);
         } */
+
+    var role = await Roles.findOne({
+      where: {
+        rolename: "Administrator"
+      },
+    });
     var catesSidebar = [];
     var appsSidebar = [];
     var rootCateSlug = 'games';
@@ -555,6 +563,8 @@ async function execHomePage(req, res) {
       homeLastestBlogs: homeLastestBlogs,
       catesSidebar: catesSidebar,
       appsSidebar: appsSidebar,
+      userRole: userRole,
+      role: role
     };
     res.render('web/index', { page: page });
   } catch (err) {
@@ -1109,6 +1119,7 @@ exports.execPostPage = async (req, res) => {
 // Xử lý tập hợp URL của Apk / Post / Page
 async function execPostPage(req, res) {
   try {
+    var userRole = req.session.role;
     var comments = [];
     var countComments = 0;
     var countCommentsAll = 0;
@@ -1151,6 +1162,12 @@ async function execPostPage(req, res) {
       pageContent.title,
       req.url
     );
+    // role
+    var role = await Roles.findOne({
+      where: {
+        rolename: "Administrator"
+      },
+    });
     // SEO Meta tags
     var arrLangsExists = await Post.findPostLangAvailable(curLang.id, pageContent.id);
     var seoTitle = pageContent.seotitle == '' ? pageContent.title : pageContent.seotitle;
@@ -1410,6 +1427,8 @@ async function execPostPage(req, res) {
       screenshoots: screenshoots,
       toc: toc.toc || [],
       tags: tags ? tags : [],
+      userRole: userRole,
+      role: role
     };
     res.render(renderText, { page: page });
   } catch (err) {
@@ -1422,6 +1441,7 @@ async function execPostPage(req, res) {
 // Xử lý tập hợp URL của Category
 async function execCategoryPage(req, res) {
   try {
+    var userRole = req.session.role;
     var curPage = req.params.page ? parseInt(req.params.page) : 1,
       curLang = req.curLang,
       curUrl = req.url,
@@ -1555,6 +1575,12 @@ async function execCategoryPage(req, res) {
       curPage,
       maxPage
     );
+    // role
+    var role = await Roles.findOne({
+      where: {
+        rolename: "Administrator"
+      },
+    });
     // SEO schema structure
     var homePage = await postController.getPostByLangAndSlugAttr('home', curLang);
     homePage = !curLang.ismain ? functions.postMaping(homePage) : homePage;
@@ -1592,6 +1618,8 @@ async function execCategoryPage(req, res) {
       pagination: pagination,
       breadcrumbs: breadcrumbs,
       sort: sort,
+      userRole: userRole,
+      role: role
     };
     res.render(renderText, { page: page });
   } catch (err) {

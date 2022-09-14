@@ -39,14 +39,14 @@ router.post('/getapk', logApkController.singleApkFileLoading);
 router.get("/:langid/download", webController.execDownloadApkPage); */
 // Trang download App
 // https://gamestoremobi.com/download/adobe-lightroom-cc
-router.get('/download/:slug', webController.execDownloadApkPage);
-router.get('/:langid/download/:slug', webController.execDownloadApkPage);
+// router.get('/download/:slug', webController.execDownloadApkPage);
+// router.get('/:langid/download/:slug', webController.execDownloadApkPage);
 // https://gamestoremobi.com/download/mod/adobe-lightroom-cc-{1}
-router.get('/download/mod/:slug', webController.execDownloadApkPage2);
-router.get('/:langid/download/mod/:slug', webController.execDownloadApkPage2);
+// router.get('/download/mod/:slug', webController.execDownloadApkPage2);
+// router.get('/:langid/download/mod/:slug', webController.execDownloadApkPage2);
 // https://gamestoremobi.com/download/original/adobe-lightroom-cc-{1}
-router.get('/download/original/:slug', webController.execDownloadApkPage2);
-router.get('/:langid/download/original/:slug', webController.execDownloadApkPage2);
+// router.get('/download/original/:slug', webController.execDownloadApkPage2);
+// router.get('/:langid/download/original/:slug', webController.execDownloadApkPage2);
 
 /* // New Link Download
 router.get("/:slug/download", webController.execDownloadApkPage);

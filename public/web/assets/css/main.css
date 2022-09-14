@@ -50,6 +50,9 @@ body {
 
 * {
     outline: none;
+}
+
+*, ::after, ::before {
     box-sizing: border-box;
 }
 
@@ -87,7 +90,7 @@ body {
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
-    height: 44px;
+    height: 50px;
 }
 
 a {
@@ -99,12 +102,19 @@ li {
     list-style: none;
 }
 
+.logo-text {
+    margin: 0;
+}
+
 #text-logo {
     color: #212529;
     font-weight: 600;
     font-size: 1.75rem;
     line-height: 1.2;
-    margin-right: 8px;
+}
+
+#text-logo img {
+    height: 44px;
 }
 
 .nav-menu {
@@ -231,6 +241,12 @@ button {
     padding-right: 8px;
 }
 
+.col-md-12 {
+    position: relative;
+    width: 100%;
+    
+}
+
 .col-md-6, .col-lg-9, .col-12 {
     flex: 0 0 100%;
     max-width: 100%;
@@ -264,15 +280,28 @@ button {
     }
 }
 
+@media (max-width: 400px) {
+    .btn-nav-menu {
+        margin-right: 10px;
+    }
+}
+
+@media (max-width: 560px) {
+    .logo-text {
+        display: none;
+    }
+
+}
+
 @media (min-width: 576px) and (max-width: 767px) {
     .btn-nav-menu {
-        margin-right: -25px;
+        margin-right: 12px;
     }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
     .btn-nav-menu {
-        margin-right: -155px;
+        margin-right: -78px;
     }
 }
 
@@ -330,6 +359,13 @@ button {
 
     .overlay-open {
         display: block;
+    }
+
+    .entry-content img {
+        display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto
     }
 }
 
@@ -441,9 +477,78 @@ img {
 .text-body {
     color: #212529;
 }
-
+/* 
 .mr-top-3 {
-    /* margin-top: 20px; */
+    margin-top: 20px;
+} */
+
+.display-slide {
+    max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 32px;
+}
+
+.display-posi {
+    position: relative;
+}
+
+.custom-scrollbar {
+    display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style-type: none;
+  margin-top: 10px;
+}
+
+.scrollbar-bot {
+    width: 50px;
+    height: 5px;
+    background-color: #3cbcfd;
+    margin-right: 5px;
+    opacity: .45;
+    border-radius: 35px;
+    width: 22px;
+    cursor: pointer;
+}
+  
+.custom-scrollbar .active {
+    width: 59px;
+    opacity: 1;
+}
+
+.width-next {
+    width: 30px !important;
+    height: 30px !important;
+}
+  
+.btn-display-right .width-next {
+    transform: rotate(180deg);
+}
+
+.btn-prev-next {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+  
+  
+.btn-display-left,
+.btn-display-right {
+border: none;
+padding: 0;
+border-radius: 50px;
+}
+  
+.btn-display-left {
+margin-left: -38px;
+}
+
+.btn-display-right {
+margin-right: -38px;
 }
 
 .pt-3 {
@@ -573,7 +678,7 @@ a:hover, .dp-bg-block a:hover {
 .lead {
     margin-top: 0;
     margin-bottom: 8px;
-    font-size: 18px;
+    font-size: 24px;
 }
 
 .bg-light {
@@ -590,7 +695,7 @@ a:hover, .dp-bg-block a:hover {
     margin: 0;
 }
 
-table {
+.table {
     border-collapse: collapse;
 }
 
@@ -598,6 +703,20 @@ table {
     width: 100%;
     color: #212529;
     margin-bottom: 16px;
+}
+
+.table td,
+.table th {
+  padding: .75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6
+}
+
+.table tbody+tbody,
+.table td,
+.table th,
+.table thead th {
+  border: 0
 }
 
 .table th {
@@ -1116,4 +1235,23 @@ button, .btn {
     margin: 0;
     font-size: 90%;
     padding: 16px;
+}
+
+.sidebar-add svg {
+    width: 48px;
+    height: 48px;
+
+}
+
+.add-new, .eidt {
+    background-color: #3ca21a;
+    border: 1px;
+}
+
+.sidebar-add {
+    display: grid;
+    row-gap: 10px;
+    top: 300px;
+    left: 10px;
+    position: fixed;
 }
