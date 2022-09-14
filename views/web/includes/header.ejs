@@ -219,7 +219,8 @@
         var dptype = (pageContent.posttype) ? "p" : "";
         dptype = (pageContent.catetype) ? "c" : dptype;
         var dpid = (pageContent.id) ? pageContent.id : "",
-        className = (className) ? className : '';    
+        className = (className) ? className : '';
+        console.log('pageContent 223: ',pageContent.slug);
 %>
 <body class="<%=className%>">
     <div id="adminBar" data-pid="<%=dpid%>" data-ptype="<%=dptype%>"></div>
@@ -234,7 +235,21 @@
             </button>
             <div>
                 <a class="d-flex mr-top" id="text-logo" href="<%=homeUrl%>" rel="home">
-                    <img src="/assets/image/favicon.png" alt=""><h1 class="logo-text" id="text-logo">MODYOLO.APP</h1>
+                    <img src="/assets/image/favicon.png" alt="">
+                <%
+                    if(pageContent.slug === 'home'){
+                %>
+                    <h1 class="logo-text" id="text-logo">MODYOLO.APP</h1>
+                <%
+                    }
+                %>
+                <%
+                    if(pageContent.slug !== 'home'){
+                %>
+                    <h2 class="logo-text" id="text-logo">MODYOLO.APP</h2>
+                <%
+                    }
+                %>
                 </a>
             </div>
             <nav class="site-nav">
