@@ -1,10 +1,10 @@
 const md5 = require('md5');
-const domainName = 'modotest.tk';
-const siteName = 'modotest';
-const siteAlterName = 'Modo test';
+const domainName = 'modyolo.app';
+const siteName = 'modyolo';
+const siteAlterName = 'Modyolo';
 const emailSupport = `support@${domainName}`;
 const listSocials = `[
-    "https://www.facebook.com/modotest"
+    "https://www.facebook.com/modyoloapp"
 ]`;
 
 async function Organization(curLang, Languages, homeContent) {

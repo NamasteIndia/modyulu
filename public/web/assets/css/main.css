@@ -1255,3 +1255,7 @@ button, .btn {
     left: 10px;
     position: fixed;
 }
+
+.font-h1 {
+    font-size: 28px;
+}

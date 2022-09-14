@@ -1,6 +1,6 @@
 {
   "app": {
-    "siteName": "modotest.tk",
+    "siteName": "modyolo.app",
     "siteSlug": "modyolo",
     "apkText": " Apk",
     "modText": " Mod",
@@ -12,8 +12,8 @@
     "langLeechDescription": "Khac en langLeech = ?lang=pt"
   },
   "server": {
-    "port": 8989,
-    "domain": "https://modotest.tk",
+    "port": 8686,
+    "domain": "https://modyolo.app",
     "dashboard": "admin",
     "secret": "hm-secret-keyznfe"
   },
