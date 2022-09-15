@@ -1,5 +1,5 @@
 "use strict";
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     // begin first table
     $('#datatable-sside').DataTable({
         responsive: false,
@@ -9,29 +9,29 @@ jQuery(document).ready(function() {
         dom: '<"top">t<"bottom"lp><"clear">', // off search box
         ajax: `/${dashboard}/post/post-apk/datatable/`,
         columns: [
-            { 
-                data: function(data, type, dataToSet) {
-                    if(data.roledel == true || data.mine == data.author){
+            {
+                data: function (data, type, dataToSet) {
+                    if (data.roledel == true || data.mine == data.author) {
                         return '<input type="checkbox" name="id[]" value="' + $('<div/>').text(data.id).html() + '">';
                     }
                     return "";
                 }
             },
-            { 
-                data: function(data, type, dataToSet) {
+            {
+                data: function (data, type, dataToSet) {
                     var domRoleHtml = '';
-                    if(data.roleedit == true || data.mine == data.author){
+                    if (data.roleedit == true || data.mine == data.author) {
                         domRoleHtml = `<a target="_blank" class="btnDTR" href="/${dashboard}/post/${posttype}/edit/${data.id}">Edit</a>`;
                     }
                     return `<div class="row-name">${data.title}</div>
                             <div class="row-actions">
-                                <a target="_blank" class="btnDTR" href="/${data.slug}/">View</a>
+                                <a target="_blank" class="btnDTR" href="/${data.slug}.html">View</a>
                                 ${domRoleHtml}
                             </div>`;
                 }
             },
             {
-                data: function(data, type, dataToSet) {
+                data: function (data, type, dataToSet) {
                     if (data.Author != null) {
                         return `<a href="javascript:void(0);" alt="${data.Author.username}">${data.Author.username}</a>`;
                     }
@@ -39,7 +39,7 @@ jQuery(document).ready(function() {
                 }
             },
             {
-                data: function(data, type, dataToSet) {
+                data: function (data, type, dataToSet) {
                     if (data.categories != null) {
                         var catename = '';
                         data.categories.forEach(category => {
@@ -52,7 +52,7 @@ jQuery(document).ready(function() {
                 }
             },
             {
-                data: function(data, type, dataToSet) {
+                data: function (data, type, dataToSet) {
                     if (data.developer != null) {
                         var catename = '';
                         data.developer.forEach(category => {
@@ -65,7 +65,7 @@ jQuery(document).ready(function() {
                 }
             },
             {
-                data: function(data, type, dataToSet) {
+                data: function (data, type, dataToSet) {
                     if (data.Ads != null) {
                         return data.Ads.name;
                     }
@@ -73,19 +73,19 @@ jQuery(document).ready(function() {
                 }
             },
             {
-                data: function(data, type, dataToSet) {
+                data: function (data, type, dataToSet) {
                     let offall = data.offadsall || false;
-                    if(offall){
+                    if (offall) {
                         return `<div aria-hidden="true" title="Off All" class="score-icon"></div>`;
-                    }else{
+                    } else {
                         let dom = '<div class="colAdsFrame">';
                         let offen = data.offads || false;
-                        if(offen) dom += `<div class="adsStatus"><img src="/${dashboard}/assets/img/flags/us.png"><span class="off" title="Off en"></span></div>`;
+                        if (offen) dom += `<div class="adsStatus"><img src="/${dashboard}/assets/img/flags/us.png"><span class="off" title="Off en"></span></div>`;
                         else dom += `<div class="adsStatus"><img src="/${dashboard}/assets/img/flags/us.png"><span class="on" title="On en"></span></div>`;
                         let langs = (data.PostLang) ? data.PostLang : [];
                         langs.forEach(l => {
                             let off = l.offadslang || false;
-                            if(off) dom += `<div class="adsStatus"><img src="/${dashboard}/assets/img/flags/${l.langid}.png"><span class="off" title="Off ${l.langid}"></span></div>`;
+                            if (off) dom += `<div class="adsStatus"><img src="/${dashboard}/assets/img/flags/${l.langid}.png"><span class="off" title="Off ${l.langid}"></span></div>`;
                             else dom += `<div class="adsStatus"><img src="/${dashboard}/assets/img/flags/${l.langid}.png"><span class="on" title="On ${l.langid}"></span></div>`;
                         });
                         dom += '</div>';
@@ -98,7 +98,7 @@ jQuery(document).ready(function() {
             { data: 'allowindex' },
             { data: 'poststatus' },
             { data: 'commentcount' },
-            { data: 'modifiedat' }            
+            { data: 'modifiedat' }
         ],
         columnDefs: [{
             'targets': 0,
@@ -108,7 +108,7 @@ jQuery(document).ready(function() {
         }, {
             targets: 7,
             orderable: false,
-            render: function(data, type, full, meta) {
+            render: function (data, type, full, meta) {
                 if (data) {
                     return `<div class="text-center"><div aria-hidden="true" title="All languages" class="score-icon good"></div></div>`;
                 } else {
@@ -118,7 +118,7 @@ jQuery(document).ready(function() {
         }, {
             targets: 8,
             orderable: false,
-            render: function(data, type, full, meta) {
+            render: function (data, type, full, meta) {
                 if (data) {
                     return `<div class="text-center"><div aria-hidden="true" title="Follow" class="score-icon good"></div></div>`;
                 } else {
@@ -128,7 +128,7 @@ jQuery(document).ready(function() {
         }, {
             targets: 9,
             orderable: false,
-            render: function(data, type, full, meta) {
+            render: function (data, type, full, meta) {
                 if (data) {
                     return `<div class="text-center"><div aria-hidden="true" title="Index" class="score-icon good"></div></div>`;
                 } else {
@@ -138,7 +138,7 @@ jQuery(document).ready(function() {
         }, {
             targets: 10,
             orderable: false,
-            render: function(data, type, full, meta) {
+            render: function (data, type, full, meta) {
                 if (data == "published")
                     return `<div class="text-center"><div aria-hidden="true" title="Publish" class="score-icon good"></div></div>`;
                 if (data == "pending")
@@ -149,12 +149,12 @@ jQuery(document).ready(function() {
             },
         }, {
             targets: 11,
-            render: function(data, type, full, meta) {
+            render: function (data, type, full, meta) {
                 return `<div class="text-right">${data}</div>`;
             },
         }, {
             targets: 12,
-            render: function(data, type, full, meta) {
+            render: function (data, type, full, meta) {
                 var dateText = formart_datetime(data, "full");
                 return `<div class="text-right">${dateText}</div>`;
             },
