@@ -25,6 +25,7 @@
     var comments = (page.comments && page.comments.rows) ? page.comments.rows : [];
     var role = (page.role) ? page.role : {};
     var userRole = (page.userRole) ? page.userRole : {};
+    var id = page.pageContent.id;
 %>
 <%- include("includes/header"); %>
 <main class="main-mr-top">
@@ -456,7 +457,7 @@
                 </a>
             </button>
             <button class="eidt">
-                <a href="/<%=dashboard%>/post/post-apk">
+                <a href="/<%=dashboard%>/post/post-apk/edit/<%=id%>">
                     <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="512.000000pt"
                     height="512.000000pt" viewBox="0 0 512.000000 512.000000"
                     preserveAspectRatio="xMidYMid meet">
